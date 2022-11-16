@@ -1,0 +1,226 @@
+<main class="main">
+    <section class="pt-150 pb-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 m-auto">
+                    <div class="row" style="display: flex;justify-content: center;">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-6">
+                            <div class="login_wrap widget-taber-content p-30 background-white border-radius-5">
+                                <div class="padding_eight_all bg-white">
+                                    <div class="heading_s1">
+                                        <h3 class="mb-30">Create an Account</h3>
+                                    </div>
+                                    <p class="mb-50 font-sm">
+                                        Your personal data will be used to support your experience throughout this
+                                        website, to manage access to your account, and for other purposes described in
+                                        our privacy policy
+                                    </p>
+                                    <form action="">
+                                        <p id="error" class="text-center" style="color: rgb(400, 90, 32);"></p>
+                                        <div class="form-group">
+                                            <input type="text" required="" name="username" placeholder="Username"
+                                                id="username">
+                                            <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" required="" name="email" placeholder="Email" id="email">
+                                            <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="number" required="" name="number" placeholder="Phone Number"
+                                                id="phoneNumber">
+                                            <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <input required="" type="password" name="password" placeholder="Password"
+                                                id="password">
+                                            <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <input required="" type="password" name="password"
+                                                placeholder="Confirm password" id="ConfirmPassword">
+                                            <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
+                                            </p>
+                                        </div>
+                                        <div class="login_footer form-group">
+                                            <div class="chek-form">
+                                                <div class="custome-checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="checkbox"
+                                                        id="exampleCheckbox12" value="">
+                                                    <label class="form-check-label" for="exampleCheckbox12"><span>I
+                                                            agree to terms &amp; Policy.</span></label>
+                                                </div>
+                                            </div>
+                                            <a href="page-privacy-policy.html"><i
+                                                    class="fi-rs-book-alt mr-5 text-muted"></i>Lean more</a>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" onclick="validationSignup()"
+                                                class="btn btn-fill-out btn-block hover-up">Submit
+                                                &amp; Register</button>
+                                        </div>
+                                    </form>
+                                    <div class="divider-text-center mt-15 mb-15">
+                                        <span> or</span>
+                                    </div>
+                                    <ul class="btn-login list_none text-center mb-15">
+                                        <li><a href="#" class="btn btn-facebook hover-up mb-lg-0 mb-sm-4">Login With
+                                                Facebook</a></li>
+                                        <li><a href="#" class="btn btn-google hover-up">Login With Google</a></li>
+                                    </ul>
+                                    <div class="text-muted text-center">Already have an account? <a
+                                            href="/user_signin">Sign in now</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<script>
+    function validationSignup() {
+        const username = document.getElementById('username');
+        const email = document.getElementById('email');
+        const phoneNumber = document.getElementById('phoneNumber');
+        const password = document.getElementById('password');
+        const ConfirmPassword = document.getElementById('ConfirmPassword');
+
+
+        const usernameval = username.value.trim()
+        const emailval = email.value.trim()
+        const phoneNumberval = phoneNumber.value.trim()
+        const passwordval = password.value.trim()
+        const ConfirmPasswordval = ConfirmPassword.value.trim();
+
+        const error1 = username.parentElement.querySelector('p');
+        const error2 = email.parentElement.querySelector('p');
+        const error3 = phoneNumber.parentElement.querySelector('p');
+        const error4 = password.parentElement.querySelector('p')
+        const error5 = ConfirmPassword.parentElement.querySelector('p');
+
+        let flag = 1;
+
+        error1.innerText = "";
+        error2.innerText = "";
+        error3.innerText = "";
+        error4.innerText = "";
+        error5.innerText = "";
+
+
+        const arr = [username,email, phoneNumber,password,ConfirmPassword]
+
+        arr.forEach((e) => {
+      e.addEventListener("keyup", () => {
+        e.parentElement.querySelector('p').innerText = ""
+      })
+    })
+
+
+        if (usernameval == "") {
+            error1.innerText = 'This field is required'
+            flag = 2;
+        } else if (usernameval.length < 5) {
+            error1.innerText = "Username must be 5 characters"
+            flag = 2;
+        } else if (usernameval.length >= 7) {
+            error1.innerText = "Username should not have more than 7 alphabet"
+            flag = 2;
+        }
+        else if (!usernameval.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+            error1.innerText = "Enter valid details"
+            flag = 2;
+        }
+
+
+        if (emailval == "") {
+            error2.innerText = 'This field is required'
+            flag = 2;
+        } else if (!emailval.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            error2.innerText = "Enter a vaild Email"
+            flag = 2;
+        }
+
+
+
+        if (phoneNumber == "") {
+            error3.innerText = 'This field is required'
+            flag = 2;
+        } else if (!phoneNumberval.match(/^(\+\d{1,3}[- ]?)?\d{10}$/) && !(phoneNumberval.match(/0{5,}/))) {
+            error3.innerText = "Enter a valid mobile number"
+            flag = 2
+        }
+
+
+
+
+
+
+
+
+        if (passwordval == "") {
+            error4.innerText = 'This field is required'
+            flag = 2;
+        } else if (passwordval.length < 8) {
+            error4.innerText = "Must be minimum 8 characters"
+        } else if (!passwordval.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+            error4.innerText = "Password should contain atleast one letter and one number"
+            flag = 2;
+        }
+
+
+        if (ConfirmPasswordval == "") {
+            error5.innerText = "This field is required"
+            flag = 2;
+        } else if (ConfirmPasswordval !== passwordval) {
+            error5.innerText = "Enter password correctly"
+            flag = 2;
+        }
+
+
+
+        if (flag == 1) {
+            submit(usernameval, emailval, passwordval, phoneNumberval)
+        }
+
+        function submit(Username, Email, Password, PhoneNumber) {
+            fetch('/user_registration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: Username,
+                    email: Email,
+                    password: Password,
+                    phoneNumber: PhoneNumber
+                })
+
+            }).then(res => res.json())
+                .then((res) => {
+
+                    if (res.value == "Success") {
+                        window.location.href = "/"
+
+                    } else if(res.value =="block"){
+                        document.getElementById('error').innerText = "Admin Was Bolck You"
+                    }
+                    
+                    else {
+
+                        document.getElementById('error').innerText = "Email Already exist"
+
+                    }
+                })
+
+        }
+
+    }
+
+</script>

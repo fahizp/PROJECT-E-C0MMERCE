@@ -1,0 +1,176 @@
+<section class="content-main">
+    <div class="content-header">
+        <div>
+            <h2 class="content-title card-title">Categories</h2>
+        </div>
+        <div>
+            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Categories" class="form-control bg-white" />
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <form action="">
+                        <p id="error" class="text-center"></p>
+                        <div class="mb-4">
+                            <label for="product_name" class="form-label">Name</label>
+                            <input required name="categories" type="text" placeholder="Type here" class="form-control"
+                                id="cate" />
+                            <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
+                            </p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" placeholder="Type here" class="form-control"
+                                id="dis"></textarea>
+                            <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
+                            </p>
+                        </div>
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="button" onclick="add()">Create category</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-9">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="myTable">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" />
+                                        </div>
+                                    </th>
+                                    <th class="text-center">No</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Description</th>
+                                    <!-- <th>Slug</th> -->
+                                    <th class="text-center">Action</th>
+                                </tr>
+                            </thead>
+                            <% category?.forEach(element=> { %>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" />
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td class="text-center">
+                                            <%= element.categories %>
+                                        </td>
+                                        <td class="text-center">
+                                            <%= element.description %>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="/admin_panel/category/edit_categories/<%= element._id %> "
+                                                class="btn btn-sm font-sm rounded btn-brand">
+                                                <i class="material-icons md-edit"></i> Edit
+                                            </a>
+                                            <a href="/admin_panel/category/delete_categories/<%= element._id %> "
+                                                class="btn btn-sm font-sm btn-light rounded">
+                                                <i class="material-icons md-delete_forever"></i> Delete
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                                <% }); %>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function add() {
+        let cate = document.getElementById('cate')
+        let dis = document.getElementById('dis')
+
+        cateval = cate.value.trim();
+        disval = dis.value.trim();
+
+        let error1 = cate.parentElement.querySelector('p');
+        let error2 = dis.parentElement.querySelector('p');
+
+        error1.innerText = "";
+        error2.innerText = "";
+
+        const arr = [cate, dis];
+
+
+        arr.forEach((e) => {
+            e.addEventListener("keyup", () => {
+                e.parentElement.querySelector('p').innerText = ""
+            })
+        })
+
+
+        let flag = 1;
+        if (cateval == "") {
+            error1.innerText = "Category field is required"
+            flag = 2;
+        }
+
+        if (disval == "") {
+            error2.innerText = "Description field is required"
+            flag = 2;
+        }
+
+        if (flag == 1) {
+            submit(cateval, disval)
+        }
+
+        function submit(cate, dis) {
+
+            fetch('/admin_panel/category/add_categories', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    categories: cate,
+                    description: dis,
+                })
+            }).then((res) => res.json())
+                .then((res) => {
+                    if (res.value == "error") {
+                        var error = document.getElementById('error')
+                        error.style.color = 'rgb(500,0,0)'
+                        error.innerText = 'Category already exist'
+                    } else {
+                        var error = document.getElementById('error')
+                        error.innerText = 'Category added Succesfully'
+                        error.style.color = "rgb(53,200,0)"
+                        setTimeout(() => {
+                            window.location.href = "/admin_panel/category"
+                        }, 1000)
+
+                    }
+                })
+        }
+    }
+
+/// search bar ///
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
