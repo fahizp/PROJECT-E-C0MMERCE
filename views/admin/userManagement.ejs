@@ -70,13 +70,15 @@
                             <td><%= element.phoneNumber %></td>
                             <td>08.07.2020</td>
                             <td class="text-end">
-                               
+                                <% if(!element.status){ %>
                                     <a href="/admin_panel/users/Unblock_user/<%= element._id %>" class="btn btn-sm font-sm rounded btn-brand">
                                          Unblock
                                     </a>
+                                    <% }else{ %>
                                     <a href="/admin_panel/users/block_user/<%= element._id %> " class="btn btn-sm font-sm btn-light rounded">
                                         </i> Block
                                     </a>
+                                    <%   } %> 
                                
                             </td>
                         </tr>

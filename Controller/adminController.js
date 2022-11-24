@@ -4,6 +4,7 @@ const productHelpers = require("../helpers/productHelpers");
 const adminHelpers = require("../helpers/adminHelpers");
 const session = require("express-session");
 const userHelpers = require("../helpers/userHelpers");
+const orderHelpers = require("../helpers/orderHelpers");
 const { admin } = require("../Model/connection");
 
 module.exports = {
@@ -17,15 +18,13 @@ module.exports = {
         });
       } else {
         res.redirect("/admin_panel/admin_login");
-      } 
+      }
     } catch (error) {
       console.log(error);
-    }  
+    }
   },
 
-
   //Admin Login Management
-
 
   // Admin Login Page
 
@@ -38,15 +37,13 @@ module.exports = {
           layout: "admin-layout",
           admin: true,
         });
-      } 
+      }
     } catch (error) {
       console.log(error);
     }
-
   },
 
-  
-// Admin Login Post
+  // Admin Login Post
 
   postAdminlogin: (req, res) => {
     adminHelpers
@@ -63,7 +60,6 @@ module.exports = {
       .catch((err) => console.log(err));
   },
 
-
   // Admin Logout
 
   getAdminlogout: (req, res) => {
@@ -77,186 +73,234 @@ module.exports = {
     }
   },
 
-
   /////product Management//////
-
 
   // Get Add Product
 
   getAddproduct: (req, res) => {
-    productHelpers.getAllcategory().then((category) => {
-      res.render("admin/add-product", {
-        layout: "admin-layout",
-        category,
-      });
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .getAllcategory()
+      .then((category) => {
+        res.render("admin/add-product", {
+          layout: "admin-layout",
+          category,
+        });
+      })
+      .catch((err) => console.log(err));
   },
 
-
-// Get Product
+  // Get Product
 
   getProducts: (req, res) => {
-    productHelpers.getAllproduct().then((product) => {
-      res.render("admin/productManagement", {
-        layout: "admin-layout",
-        product,
-      });
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .getAllproduct()
+      .then((product) => {
+        res.render("admin/productManagement", {
+          layout: "admin-layout",
+          product,
+        });
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Post Add Product
 
   postAddproduct: (req, res) => {
-    productHelpers.addProduct(req.body).then((insertedId) => {
-      let name = insertedId;
-      req.files?.image?.forEach((element, index) => {
-        element.mv(
-          "./public/productImages/" + name + index + ".jpg",
-          (err, done) => {
-            if (!err) {
-              console.log("product add");
-            } else {
-              console.log(err);
+    productHelpers
+      .addProduct(req.body)
+      .then((insertedId) => {
+        let name = insertedId;
+        req.files?.image?.forEach((element, index) => {
+          element.mv(
+            "./public/productImages/" + name + index + ".jpg",
+            (err, done) => {
+              if (!err) {
+                console.log("product add");
+              } else {
+                console.log(err);
+              }
             }
-          }
-        );
-      });
-      res.redirect("/admin_panel/products/add_product");
-    }).catch((err)=>console.log(err));
+          );
+        });
+        res.redirect("/admin_panel/products/add_product");
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Delete Product
 
   deleteProduct: (req, res) => {
     let proId = req.params.id;
-    productHelpers.deleteProduct(proId).then(() => {
-      res.redirect("/admin_panel/products");
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .deleteProduct(proId)
+      .then(() => {
+        res.redirect("/admin_panel/products");
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Edit Product
 
   editProduct: (req, res) => {
     let proId = req.params.id;
-    productHelpers.getProduct(proId).then((product) => {
-      res.render("admin/edit-product", {
-        layout: "admin-layout",
-        product,
-      });
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .getProduct(proId)
+      .then((product) => {
+        res.render("admin/edit-product", {
+          layout: "admin-layout",
+          product,
+        });
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Update Product
 
   updateProduct: (req, res) => {
     let proId = req.params.id;
     let body = req.body;
-    productHelpers.updateProduct(proId, body).then(() => {
-      req?.files?.image1?.mv("./public/productImages/" + proId + "0.jpg");
-      req?.files?.image2?.mv("./public/productImages/" + proId + "1.jpg");
-      req?.files?.image3?.mv("./public/productImages/" + proId + "2.jpg");
-      req?.files?.image4?.mv("./public/productImages/" + proId + "3.jpg");
-      res.redirect("/admin_panel/products");
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .updateProduct(proId, body)
+      .then(() => {
+        req?.files?.image1?.mv("./public/productImages/" + proId + "0.jpg");
+        req?.files?.image2?.mv("./public/productImages/" + proId + "1.jpg");
+        req?.files?.image3?.mv("./public/productImages/" + proId + "2.jpg");
+        req?.files?.image4?.mv("./public/productImages/" + proId + "3.jpg");
+        res.redirect("/admin_panel/products");
+      })
+      .catch((err) => console.log(err));
   },
 
+  /////user Management/////
 
- /////user Management/////
-
- // Get All Users
+  // Get All Users
 
   getAllusers: (req, res) => {
-    userHelpers.getAllusers().then((users) => {
-      res.render("admin/userManagement", {
-        layout: "admin-layout",
-        users,
-      });
-    }).catch((err)=>console.log(err));
+    userHelpers
+      .getAllusers()
+      .then((users) => {
+        res.render("admin/userManagement", {
+          layout: "admin-layout",
+          users,
+        });
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Block Users
 
   blockUser: (req, res) => {
     let userId = req.params.id;
-    userHelpers.blockUser(userId).then(() => {
-      res.redirect("/admin_panel/users");
-    }).catch((err)=>console.log(err));
+    userHelpers
+      .blockUser(userId)
+      .then(() => {
+        res.redirect("/admin_panel/users");
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Unblock Users
 
   unblockUser: (req, res) => {
     let userId = req.params.id;
-    userHelpers.unblockUser(userId).then(() => {
-      res.redirect("/admin_panel/users");
-    }).catch((err)=>console.log(err));
+    userHelpers
+      .unblockUser(userId)
+      .then(() => {
+        res.redirect("/admin_panel/users");
+      })
+      .catch((err) => console.log(err));
   },
 
- /////Category Management/////
+  /////Category Management/////
 
-
-
- // Get Category
+  // Get Category
 
   getCategory: (req, res) => {
-    productHelpers.getAllcategory().then((category) => {
-      res.render("admin/add-category", {
-        layout: "admin-layout",
-        category,
-      });
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .getAllcategory()
+      .then((category) => {
+        res.render("admin/add-category", {
+          layout: "admin-layout",
+          category,
+        });
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Add Category
 
   addCategory: (req, res) => {
-    productHelpers.addCategory(req.body).then((response) => {
-      if (response == false) {
-        res.send({ value: "error" });
-      } else {
-        res.send({ value: "good" });
-      }
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .addCategory(req.body)
+      .then((response) => {
+        if (response == false) {
+          res.send({ value: "error" });
+        } else {
+          res.send({ value: "good" });
+        }
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Delete Category
 
   deleteCategory: (req, res) => {
     let catId = req.params.id;
-    productHelpers.deleteCategory(catId).then(() => {
-      res.redirect("/admin_panel/category");
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .deleteCategory(catId)
+      .then(() => {
+        res.redirect("/admin_panel/category");
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Edit Category
 
   editCategory: (req, res) => {
     let catId = req.params.id;
-    productHelpers.getCategory(catId).then((category) => {
-      res.render("admin/edit-catagory", {
-        layout: "admin-layout",
-        category,
-      });
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .getCategory(catId)
+      .then((category) => {
+        res.render("admin/edit-catagory", {
+          layout: "admin-layout",
+          category,
+        });
+      })
+      .catch((err) => console.log(err));
   },
-
 
   // Update Category
 
   updateCategory: (req, res) => {
     let cate = req.body;
     let cateId = req.params.id;
-    productHelpers.updateCategory(cate, cateId).then(() => {
-      res.redirect("/admin_panel/category");
-    }).catch((err)=>console.log(err));
+    productHelpers
+      .updateCategory(cate, cateId)
+      .then(() => {
+        res.redirect("/admin_panel/category");
+      })
+      .catch((err) => console.log(err));
+  },
+
+  // Get Admin Orders //
+
+  getAdminOrders: (req, res) => {
+    orderHelpers
+      .getAdminOrders(req.session.user._id)
+      .then((data) => {
+        res.render("admin/order_management", { data, layout: "admin-layout" });
+      })
+      .catch((err) => console.log(err));
+  },
+
+  // Get Admin Orders Detailes //
+
+  getAdminOrdersDetailes: (req, res) => {
+    orderHelpers
+      .getAdminOrdersDetailes(req.session.user._id)
+      .then((data) => {
+        res.render("admin/order_detailes", { data, layout: "admin-layout" });
+      })
+      .catch((err) => console.log(err));
   },
 };

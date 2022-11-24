@@ -88,9 +88,9 @@
                                 </a>
                             </div>
                             <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="shop-cart.html">
+                                <a class="mini-cart-icon" href="/cart">
                                     <img alt="Evara" src="/assets/imgs/theme/icons/icon-cart.svg" />
-                                    <span class="pro-count blue">2</span>
+                                    <span class="pro-count blue" id="cart-count"><%= locals.cartCount %> </span>
                                 </a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                     <ul>/
@@ -389,7 +389,7 @@
                     <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
                         <nav>
                             <ul>
-                                <li><a class="active" href="index.html">Home <i class="fi-rs-angle-down"></i></a>
+                                <li><a class="active" href="/">Home <i class="fi-rs-angle-down"></i></a>
                                     <ul class="sub-menu">
                                         <li><a href="index.html">Home 1</a></li>
                                         <li><a href="index-2.html">Home 2</a></li>
@@ -479,7 +479,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="blog-category-grid.html">Blog <i class="fi-rs-angle-down"></i></a>
+                                <li><a href="/orders">Orders <i class="fi-rs-angle-down"></i></a>
                                     <ul class="sub-menu">
                                         <li><a href="blog-category-grid.html">Blog Category Grid</a></li>
                                         <li><a href="blog-category-list.html">Blog Category List</a></li>

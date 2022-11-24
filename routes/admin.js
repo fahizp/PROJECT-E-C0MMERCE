@@ -76,5 +76,13 @@ router.get('/category/edit_categories/:id',adminController.editCategory);
 
 router.post('/category/edit_categories/:id',adminController.updateCategory);
 
+// Get Admin Orders Router //
+
+router.get('/order_management',adminController.getAdminOrders)
+
+// Get Admin Order Detailes Router //
+
+router.get('/order_management/details',adminController.getAdminOrdersDetailes)
+
 
 module.exports = router;

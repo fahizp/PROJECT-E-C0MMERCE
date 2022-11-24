@@ -44,6 +44,33 @@ router.get('/otp_verify',userController.getOtpverify);
 
 router.get('/view_product/:id',userController.getProductPage)
 
+//Get Cart Page //
+
+router.get('/cart',userController.getCartpage)
+
+//Add To Cart //
+
+router.get('/addtocart/:id',userController.getAdtoCart)
+
+// Change Product Quantity // 
+
+router.post('/change-product-quantity',userController.changeProductQuantity)
+
+// Delete Cart Product //
+
+router.post('/deleteCartItems',userController.deleteCartProduct)
+
+// Check Out Page //
+
+router.get('/proceedToCheckOut',userController.checkOut)
+
+// Place Order Page //
+
+router.post('/place-order',userController.placeOrder)
+
+// Order History Page //
+router.get('/orders',userController.orders)
+
 
 
 module.exports = router;

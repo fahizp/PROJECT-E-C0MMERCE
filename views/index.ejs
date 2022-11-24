@@ -2,7 +2,7 @@
     
 
     <!-- Modal -->
-<div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
+<!-- <div class="modal fade custom-modal" id="onloadModal" tabindex="-1" aria-labelledby="onloadModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Quick view -->
 <div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
@@ -484,7 +484,7 @@
                     <span class="old-price">$245.8</span>
                   </div>
                   <div class="product-action-1 show">
-                    <a aria-label="Add To Cart" class="action-btn hover-up" href="shop-cart.html"><i class="fi-rs-shopping-bag-add"></i></a>
+                    <a aria-label="Add To Cart" class="action-btn hover-up" ><i class="fi-rs-shopping-bag-add" onclick="addtocart('<%= element.id %>')" ></i></a>
                   </div>
                 </div>
               </div>
@@ -2675,3 +2675,20 @@
 
 
 Mirrored from wp.alithemes.com/html/evara/evara-frontend/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:25:49 GMT -->
+
+
+<script>
+  function addtocart(proId) {
+    $.ajax({
+        url:'/addtocart/'+proId,
+        method:'get',
+        success:(response)=>{
+           if (response.status) {
+            let count=$('#cart-count').html()
+            count =parseInt(count)+1
+            $('#cart-count').html(count)
+           }
+        }
+    })
+}
+</script>

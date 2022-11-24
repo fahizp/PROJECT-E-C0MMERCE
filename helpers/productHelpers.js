@@ -3,12 +3,10 @@ const { categories } = require("../Model/connection");
 const db = require("../Model/connection");
 
 module.exports = {
-
-
   // Get All Product
 
   getAllproduct: () => {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
         let product = await db.products.find({});
         resolve(product);
@@ -35,12 +33,11 @@ module.exports = {
 
   // Delete Product
 
-
   deleteProduct: (proId) => {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
-       await db.products.deleteOne({ _id: proId })
-          resolve();
+        await db.products.deleteOne({ _id: proId });
+        resolve();
       } catch (error) {
         console.log(error);
       }
@@ -64,22 +61,21 @@ module.exports = {
   // Update Product
 
   updateProduct: (proId, body) => {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
-       await db.products
-          .updateOne(
-            { _id: proId },
-            {
-              $set: {
-                name: body.name,
-                brand: body.brand,
-                category: body.category,
-                price: body.price,
-                description: body.description,
-              },
-            }
-          )
-            resolve();
+        await db.products.updateOne(
+          { _id: proId },
+          {
+            $set: {
+              name: body.name,
+              brand: body.brand,
+              category: body.category,
+              price: body.price,
+              description: body.description,
+            },
+          }
+        );
+        resolve();
       } catch (error) {
         console.log(error);
       }
@@ -112,32 +108,28 @@ module.exports = {
   },
 
   // Get All Category
-  
+
   getAllcategory: () => {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
-    let category=   await db.categories.find({})
-          resolve(category);
+        let category = await db.categories.find({});
+        resolve(category);
       } catch (error) {
         console.log(error);
       }
     });
   },
-
-
 
   deleteCategory: (cateId) => {
-    return new Promise(async(resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
-      await  db.categories.deleteOne({ _id: cateId })
-          resolve();
+        await db.categories.deleteOne({ _id: cateId });
+        resolve();
       } catch (error) {
         console.log(error);
       }
     });
   },
-
-
 
   getCategory: (cateId) => {
     return new Promise(async (resolve, reject) => {
@@ -149,8 +141,6 @@ module.exports = {
       }
     });
   },
-
-
 
   updateCategory: (cate, cateId) => {
     return new Promise(async (resolve, reject) => {
@@ -170,7 +160,4 @@ module.exports = {
       }
     });
   },
-
-
-
 };
