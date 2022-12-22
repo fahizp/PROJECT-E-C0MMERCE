@@ -1,0 +1,204 @@
+<section class="mt-50 mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="mb-25">
+            <h4>Delivery address</h4>
+          </div>
+          <div class="mb-sm-15">
+            
+            <div class="address-list mb-3">
+              
+              <div class="form-check mb-3 custome-radio choose-address">
+                <input value="6392c774ea7ff621cd82d73e" class="form-check-input deliveryAddress" type="radio" name="deliveryAddress" id="deliveryAddress-1" checked="">
+                <label class="form-check-label" for="deliveryAddress-1">
+                  muhammed fahiz fahiz,
+                  01234567890,
+                  fahiz,
+                  fahiz...
+                  <a class="me-2" onclick="editAddress(
+                    '6392c671ea7ff621cd82d73c',
+                    '6392c774ea7ff621cd82d73e',
+                    'muhammed fahiz fahiz',
+                    '01234567890',
+                    'fahiz',
+                    'india',
+                    'fahiz',
+                    '421454',
+                    'fahizp3@gmail.com',
+                    )" style="color:#088178; float:right;">Edit</a>
+                </label>
+              </div>
+              
+              <div class="form-check mb-3 custome-radio choose-address">
+                <input value="6392c7a5ea7ff621cd82d73f" class="form-check-input deliveryAddress" type="radio" name="deliveryAddress" id="deliveryAddress-2">
+                <label class="form-check-label" for="deliveryAddress-2">
+                  muhammed fahiz fahiz,
+                  01234567890,
+                  fahiz,
+                  fahiz...
+                  <a class="me-2" onclick="editAddress(
+                    '6392c671ea7ff621cd82d73c',
+                    '6392c7a5ea7ff621cd82d73f',
+                    'muhammed fahiz fahiz',
+                    '01234567890',
+                    'fahiz',
+                    'india',
+                    'fahiz',
+                    '1234555',
+                    'fahizp3@gmail.com',
+                    )" style="color:#088178; float:right;">Edit</a>
+                </label>
+              </div>
+              
+            </div>
+            
+            <div class="toggle_info">
+              <span><i class="fi-rs-user mr-10"></i><span class="text-muted">Want to ship to a new location?</span> <a href="#newAddress" data-bs-toggle="collapse" class="" aria-expanded="true">Add new address</a></span>
+            </div>
+            <div class="panel-collapse login_form collapse show" id="newAddress" style="">
+              <div class="panel-body">
+                <form id="add-address-checkout" action="">
+                  <div class="form-group">
+                    <input id="Name" required="" type="text" name="name" placeholder="Full name *" onchange="validateName()">
+                    <span id="name" class="mt-2 text-danger" style="font-size: 13px"></span>
+                  </div>
+                  <div class="form-group">
+                    <input required="" type="text" name="addressLine" placeholder="Address *">
+                  </div>
+                  <div class="form-group">
+                    <input required="" type="text" name="city" placeholder="City / Town *">
+                  </div>
+                  <div class="form-group">
+                    <input required="" type="text" name="state" placeholder="State / County *">
+                  </div>
+                  <div class="form-group">
+                    <input required="" id="pin" type="text" name="zipCode" placeholder="Postcode / ZIP *" onchange="validZipcode()">
+                    <span id="pinError" class="mt-2 text-danger" style="font-size: 13px"></span>
+                  </div>
+                  <div class="form-group">
+                    <input required="" id="phonenumber" type="text" name="phone" placeholder="Phone *" onchange="validEmail()">
+                    <span id="phonenumbers" class="mt-2 text-danger" style="font-size: 13px"></span>
+                  </div>
+                  <div class="form-group">
+                    <input required="" id="Email" type="text" name="email" placeholder="Email address *" onchange="validEmail()">
+                    <span id="email" class="mt-2 text-danger" style="font-size: 13px"></span>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white border-radius-5 btn-shadow-brand hover-up" name="login">Add address</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="order_review">
+            <div class="coupon mb-30">
+              <div class="toggle_info">
+                <span><i class="fi-rs-label mr-10"></i>
+                  <span class="text-muted">Have a coupon?</span>
+                  <a href="#coupon" data-bs-toggle="collapse" class="collapsed" aria-expanded="false">Click here to enter your
+                    code</a>
+                </span>
+              </div>
+              <div class="panel-collapse coupon_form collapse" id="coupon" style="">
+                <div class="panel-body">
+                  <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
+                  
+                  <form method="post" action="/checkout/apply-coupon">
+                    <div class="couponWrap">
+                      <div class="couponFormWrap">
+                        <input name="coupon" type="text" required="" placeholder="Enter Coupon Code..." value="EVARA50">
+                        <input name="userId" type="text" required="" hidden="" value="6392c671ea7ff621cd82d73c">
+                      </div>
+                      <div class="couponBtnWrap">
+                        <button class="btn btn-md btn-primary" name="login">Apply Coupon</button>
+                      </div>
+                    </div>
+                  </form>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive order_table text-center">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th colspan="2">Product</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                  
+                  <tr>
+                    <td class="image product-thumbnail"><img src="/products-uploads/productImages_1667796176934.jpg" alt="Unisex Black Phase Laptop Backpack">
+                    </td>
+                    <td>
+                      <h5>
+                        Unisex Black Phase Laptop Backpack
+                      </h5> <span class="product-qty">x 1
+                      </span>
+                    </td>
+                    <td>₹<span>
+                        399
+                      </span></td>
+                  </tr>
+                  
+                  
+                  <tr>
+                    <th>Total</th>
+                    <td class="product-subtotal" colspan="2">₹<span id="checkoutTotal">
+                        
+                        499
+                      </span></td>
+                  </tr>
+                  <tr>
+                    <th>Product discount</th>
+                    <td colspan="2"><em>
+                        
+                        -₹100
+                      </em></td>
+                  </tr>
+                  
+                  <tr>
+                    <th>Shipping</th>
+                    <td colspan="2"><em>Free Shipping</em></td>
+                  </tr>
+                  <tr>
+                    <th>Grand total</th>
+                    <td colspan="2" class="product-subtotal"><span class="font-xl text-brand fw-900">₹<span id="checkoutTotal">399</span></span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="bt-1 border-color-1 mt-30 mb-30"></div>
+            <div class="payment_method">
+              <div class="mb-25">
+                <h5>Payment</h5>
+              </div>
+              <div id="payment_option">
+                <div class="custome-radio">
+                  <input value="razorPay" class="form-check-input payment_option" type="radio" name="flexRadioDefault" id="razorPay">
+                  <label class="form-check-label" for="razorPay">Razorpay</label>
+                </div>
+                <div class="custome-radio">
+                  <input value="Paypal" class="form-check-input payment_option" type="radio" name="flexRadioDefault" id="Paypal">
+                  <label class="form-check-label" for="Paypal">Paypal</label>
+                </div>
+                <div class="custome-radio">
+                  <input value="COD" class="form-check-input payment_option" type="radio" name="flexRadioDefault" id="COD" checked="">
+                  <label class="form-check-label" for="COD">Cash on delivery</label>
+                </div>
+              </div>
+            </div>
+            <button onclick="placeOrder()" class="btn btn-fill-out btn-block mt-30 checkoutBtn">
+              Place order<div class="spinner-border text-light" role="status"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

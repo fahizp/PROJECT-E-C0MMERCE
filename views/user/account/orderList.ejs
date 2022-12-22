@@ -1,0 +1,146 @@
+
+<main class="main">
+  <div class="page-header breadcrumb-wrap">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html" rel="nofollow">Home</a>
+        <span></span> My account
+      </div>
+    </div>
+  </div>
+  <section class="pt-150 pb-150">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 m-auto">
+          <div class="row">
+            <div class="col-md-4">
+
+              <div class="dashboard-menu">
+                <ul class="nav flex-column" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/my-account"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/my-account/orders"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/my-account/address" class="nav-link"><i class="fi-rs-marker mr-10"></i>My Address</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/my-account/profile"><i class="fi-rs-user mr-10"></i>Account details</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" onclick="swalpopUpSign()"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                  </li>
+                </ul>
+              </div>
+
+
+            </div>
+
+
+
+            <% const dataToReadable=(date)=>{
+              function formatAMPM(date) {
+               var hours = date.getHours();
+               var minutes = date.getMinutes();
+               var ampm = hours >= 12 ? 'PM' : 'AM';
+               hours = hours % 12;
+               hours = hours ? hours : 12; // the hour '0' should be '12'
+               minutes = minutes < 10 ? '0' +minutes : minutes; var strTime=hours + ':' + minutes + ampm; return strTime;
+               } 
+               const date_ = new Date(date);
+               let month = ['Jan','Feb','March','April','May','June','July','Aug','Sept','Nov','Dec']
+               let day = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+               let dd = date_.getDate();
+               let mm = date_.getMonth()-1;
+               let da=date_.getDay();
+               let dayText=day[da]
+               let monthText = month[mm]
+               let yyyy = date_.getFullYear();      
+               let time=formatAMPM(date_)
+                   return `${dayText}, ${monthText} ${isNaN(dd)?'00':dd}, ${isNaN(yyyy)?'0000':yyyy},
+                   ${time} ` }; %>
+       
+            <div class="col-md-8">
+              <div class="tab-content dashboard-content">
+                <div class="tab-pane fade active show" id="orders" role="tabpanel" aria-labelledby="orders-tab">
+                  <div class="card">
+                    <div class="card-header">
+                      <h5 class="mb-0">Your Orders</h5>
+                    </div>
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <% if (orders) { %>
+                        <table class="table" id="myDataTable">
+                          <thead>
+                            <tr>
+                              <th>Order ID</th>
+                              <th>Date</th>
+                              <th>Total</th>
+                              <th>Order Status</th>
+                              <th>Items</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% console.log(orders); %> 
+                            <% orders.forEach(element => { %>
+                              
+                           
+                            <tr>
+                              <td><a href="/orders">#<%= element?.orders?.uuid%> </a></td>
+                              <td><%=dataToReadable(element?.orders?.createdAt)%> </td>
+                              <td>₹<%= element.orders.totalPrice%></td>
+                              <td>
+                                <% if (element.orders.paymentStatus=='PAID') { %>
+                                  <span class="badge rounded-pill alert-success">Success</span>
+                                  <% } else { %>
+                                    <span class="badge rounded-pill alert-danger">Pending</span>
+                               <% } %> 
+                                
+                                
+                              </td>
+                              <td><%= element?.orders.productDetails.length %> items</td>
+                              <td><a href="/my-account/orders/<%= element.orders._id%>" class="btn-small d-block">View</a></td>
+                            </tr>
+                            <% }); %> 
+                          </tbody>
+                        </table>
+                        <% } else { %>
+                        <div>You haven't placed any orders yet!</div>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+  function swalpopUpSign() {
+    Swal.fire({
+      position: 'top',
+      icon: 'warning',
+      title: 'Are you sure',
+      text: 'want to Log out?',
+      showDenyButton: true,
+      confirmButtonText: 'Yes, Logout',
+      denyButtonText: `No`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Successfully logout!', '', 'success').then(() => {
+          location.href = "/user_logout"
+        })
+      }
+    })
+  }
+</script>

@@ -20,6 +20,7 @@
                                         <h3 class="mb-30">Login</h3>
                                     </div>
                                     <form action="">
+                                        <div id="numfield">
                                         <div class="form-group mb-4">
 
                                             <input id="phonenumber" type="number" value="" name="phonenumber"
@@ -46,14 +47,17 @@
                                             <p class="mb-20 font-sm mt-3">Please enter the OTP to login.</p>
 
                                         </div>
+                                    </div>
 
-
+                                         <div hidden  id="otpfield" >
                                         <div class="form-group mb-4">
                                             <input type="number" id="verify" name="otp" placeholder="OTP" required>
                                             <div class="d-flex justify-content-between">
                                                 <p id="confirm" style='color: rgb(300,0,0)'></p>
-                                                <a class="d-flex justify-content-end" id="resendOtp" onclick="sendOtp()"
-                                                    style="display: none !important;">Resend otp</a>
+                                                <p id="ResentTimer" class="text-info mt-2" style='color: rgb(53,200,0);'></p>
+                                                <!-- <a class="d-flex justify-content-end" hidden id="resendOtp" onclick="sendOtp()"
+                                                    >Resend otp</a> -->
+                                                    <a class="mx-2" id="resentOtp" onclick="sendOtp()" hidden>Resent Otp</a>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -63,6 +67,7 @@
                                                 class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ml-15 border-radius-5 btn-shadow-brand hover-up"
                                                 name="login">Cancel</a>
                                         </div>
+                                    </div>
 
                                     </form>
                                 </div>
@@ -98,6 +103,9 @@
 
         
         function sumbit() {
+            const resentOtp = document.getElementById('resentOtp')
+            resentOtp.setAttribute("hidden", "")
+            document.getElementById('ResentTimer').innerText=""
             let sendOtp = document.getElementById('send').innerText = 'Otp send'
             let num = document.getElementById('phonenumber').value.trim()
             fetch('/otp_login?phoneNumber=91' + num + '&channel=sms', {
@@ -106,6 +114,13 @@
                     'Content-Type': 'application/json'
                 }
             })
+             let numField =document.getElementById('numfield')
+             let otpField =document.getElementById('otpfield')
+             setTimeout(() => {
+                otpField.removeAttribute("hidden")
+                numField.setAttribute("hidden", "")
+             }, 1000);
+             
         }
     }
 
@@ -126,9 +141,27 @@
                     document.getElementById('confirm').innerText = 'Admin Was Bolcked You'
                 } else {
                     document.getElementById('confirm').innerText = 'Otp not valid'
-
-                    let resendOtp = document.getElementById('resendOtp')
-                    resendOtp.style.display = 'flex'
+              var c = 0
+              var d = setInterval(() => {
+                document.getElementById('confirm').innerText = ''
+                c += 1
+                if (c == 60) {
+                  clearInterval(d)
+                }
+                // console.log("hi");
+                if(c<=50){
+                document.getElementById('ResentTimer').innerText = "00:" + (60 - c)
+              }else{
+                  document.getElementById('ResentTimer').innerText = "00:0" + (60 - c)
+                }
+              }, 1000)
+              setTimeout(() => {
+                document.getElementById('ResentTimer').innerText = ""
+                const resentOtp = document.getElementById('resentOtp')
+                resentOtp.removeAttribute("hidden")
+              }, 60000)
+                   
+                   
                 }
             })
     }

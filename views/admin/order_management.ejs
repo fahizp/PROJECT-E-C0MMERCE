@@ -47,17 +47,17 @@
                     </thead>
                     <tbody>
                         <% data.forEach(element => { %>
-                            
+                           
                      
                         <tr>
-                            <td><%= element._id  %></td>
+                            <td>#<%= element?.orders?.uuid%></td>
                             <td><b><%= element.orders.fName  %></b></td>
                             <td><%= element?.orders?.shippingAddress?.email %> </td>
                             <td>₹<%= element.orders.productDetails.productPrice  * element.orders.productDetails.quantity  %></td>
                             <td><span class="badge rounded-pill alert-warning">Pending</span></td>
                             <td>03.12.2020</td>
                             <td class="text-end">
-                                <a href="/admin_panel/order_management/details" class="btn btn-md rounded font-sm">Detail</a>
+                                <a href="/admin_panel/order_management/details/<%= element?.orders._id  %> " class="btn btn-md rounded font-sm">Detail</a>
                                 <div class="dropdown">
                                     <a href="#" data-bs-toggle="dropdown" class="btn btn-light rounded btn-sm font-sm"> <i class="material-icons md-more_horiz"></i> </a>
                                     <div class="dropdown-menu">

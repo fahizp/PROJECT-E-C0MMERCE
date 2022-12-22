@@ -1,0 +1,50 @@
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/">Home</a>
+                <span></span> Login with OTP
+            </div>
+        </div>
+    </div>
+    <section class="pt-150 pb-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-lg-5 mx-auto">
+                            <div
+                                class="login_wrap widget-taber-content p-30 background-white border-radius-10 mb-md-5 mb-lg-0 mb-sm-5">
+                                <div class="padding_eight_all bg-white">
+                                    <div class="heading_s1">
+                                        <% if (guestUser) { %>
+                                            <h4>Welcome back, <%= guestUser.name %>!</h4>
+                                            <p class="mb-20 font-sm mt-3">Please enter the OTP to login.</p>
+                                            <% } %>
+                                    </div>
+                                    <% if(userLoginError) { %>
+                                        <h5 class="p-2 mb-3 alert-danger">
+                                            <%= userLoginError %>
+                                        </h5>
+                                    <% } %>
+                                    <form method="post" action="verify-otp">
+                                        <div class="form-group mb-4">
+                                            <input type="number" value="" required name="otp" placeholder="OTP">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-fill-out btn-block hover-up me-2"
+                                                name="login">Login</button>
+                                            <a href="/login"
+                                                class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white ml-15 border-radius-5 btn-shadow-brand hover-up"
+                                                name="login">Cancel</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

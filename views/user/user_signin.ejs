@@ -125,7 +125,9 @@
         })
       }).then(res => res.json()).then((res) => {
         if (res.value == "Successlogin") {
-          window.location.href = "/"
+          let url =res.url
+          console.log(url);
+          window.location.href = url
         } else if (res.value == "block") {
           document.getElementById('error').innerText = 'Admin Was Bolcked You'
         }

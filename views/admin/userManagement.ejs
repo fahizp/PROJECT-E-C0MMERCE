@@ -28,6 +28,17 @@
                 </div>
             </div>
         </header> <!-- card-header end// -->
+        <% const dataToReadable=(date)=>{
+
+            const date_=new Date(date);
+            let dd=date_.getDate()
+            let mm=date_.getMonth()
+            let yyyy=date_.getFullYear()
+          
+            return `${isNaN(dd)?'00':dd}.${isNaN(dd)?'00':dd}.${isNaN(yyyy)?'0000':yyyy}`
+          
+            } %>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -68,7 +79,7 @@
                              <%   } %> 
 
                             <td><%= element.phoneNumber %></td>
-                            <td>08.07.2020</td>
+                            <td><%=dataToReadable(element?.createdAt)%> </td>
                             <td class="text-end">
                                 <% if(!element.status){ %>
                                     <a href="/admin_panel/users/Unblock_user/<%= element._id %>" class="btn btn-sm font-sm rounded btn-brand">
@@ -91,12 +102,19 @@
     <div class="pagination-area mt-15 mb-50">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-start">
-                <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                <% for (let i = 1; i <= docCount; i++) { %> 
+                    <% if (currentPage==i) { %>
+                        <li class="page-item active"><a class="page-link" href="/admin_panel/users?page=<%= i %>&limit=2">0<%= i %> </a></li>
+                  <%  } else { %>
+                         <li class="page-item "><a class="page-link" href="/admin_panel/users?page=<%= i %>&limit=2">0<%= i %> </a></li>
+                   <% } %>            
+                <% } %> 
+                <!-- <li class="page-item active"><a class="page-link" href="#">01</a></li>
                 <li class="page-item"><a class="page-link" href="#">02</a></li>
                 <li class="page-item"><a class="page-link" href="#">03</a></li>
                 <li class="page-item"><a class="page-link dot" href="#">...</a></li>
                 <li class="page-item"><a class="page-link" href="#">16</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li> -->
             </ul>
         </nav>
     </div>

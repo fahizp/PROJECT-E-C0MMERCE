@@ -106,7 +106,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       let cartCount = 0;
       db.cart
-        .findOne({ user: user._id })
+        .findOne({ user: user?._id })
         .then((cart) => {
           if (cart) {
             for (let i = 0; i < cart.cartProducts.length; i++) {
@@ -227,4 +227,30 @@ module.exports = {
         .catch((err) => console.log(err));
     });
   },
+
+  checkCartQuantity: async (userId, proId) => {
+    console.log(proId);
+    return new Promise(async (resolve, reject) => {
+        let cart = await db.cart.findOne({ user: userId })
+        if (cart) {
+            let cartIndex = cart?.cartProducts?.findIndex(cart => cart.item == proId)
+            if (cartIndex == -1) {
+              console.log('0');
+              let quantity = 0
+              resolve({ status: true, quantity: quantity })
+            } else {
+              console.log('685');
+              
+              let quantity = cart?.cartProducts[cartIndex]?.quantity
+              console.log(quantity);
+              resolve({ status: true, quantity: quantity })
+            }
+          } else {
+          console.log('false');
+            resolve({ status: false })
+        }
+
+    })
+
+},
 };

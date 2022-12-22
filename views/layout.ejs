@@ -15,15 +15,19 @@
     <meta property="og:image" content="">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="/assets/imgs/theme/favicon.svg">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Template CSS -->
     <link rel="stylesheet" href="/assets/css/main.css">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://unpkg.com/easyinvoice/dist/easyinvoice.min.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=<%= locals.paypalClientId %>&currency=USD"></script>
     
    
     
 </head>
 <body>
+    
     <% if(!locals.nav) { %>
         <%- include('partials/user-header') %>
   <%  } %> 
@@ -35,9 +39,58 @@
         <%- include('partials/user-footer') %>
   <%  } %> 
 
+<script>
 
+  function toast() {
+    Swal.fire({
+      toast: true,
+      icon: 'success',
+      title: 'Item Added To Cart',
+      animation: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+  }
+  function toast2() {
+    Swal.fire({
+      toast: true,
+      icon: 'success',
+      title: 'Item Added To Wishlist',
+      animation: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+  }
+  function toastOutOfStock() {
+    Swal.fire({
+      toast: true,
+      icon: 'error',
+      title: 'Product Out Of Stock!',
+      animation: true,
+      position: 'bottom',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+  }
+</script>
 
-   
     <script src="/assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="/assets/js/vendor/jquery-3.6.0.min.js"></script>
     <script src="/assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
@@ -61,6 +114,8 @@
     <!-- Template  JS -->
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/shop.js"></script>
+
+    <script src="/public/javascripts/logout.js"></script>
     
 </body>
 

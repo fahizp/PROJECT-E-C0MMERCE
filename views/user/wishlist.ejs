@@ -1,0 +1,148 @@
+<section class="mt-50 mb-50">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table shopping-summery text-center">
+                        <thead>
+                            <tr class="main-heading">
+                                <th scope="col" colspan="2">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Stock Status</th>
+                                <th scope="col">Action</th>
+                                <th scope="col">Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% wishlistItems.forEach(element => { %>
+                                
+                           
+                            <tr>
+                                <td class="image product-thumbnail"><img src="/productImages/<%= element?.Product?._id %>0.jpg " alt="#"></td>
+                                <td class="product-des product-name">
+                                    <h5 class="product-name"><a href="shop-product-right.html"><%= element?.Product?.name %> </a></h5>
+                                    <p class="font-xs"><%= element?.Product?.description %> <br> <%= element?.Product?.category %>.
+                                    </p>
+                                </td>
+                                <td class="price" data-title="Price"><span>₹<%= element?.Product?.price%> </span></td>
+                                <% if (element?.Product?.quantity==0) { %>
+                                     <td class="text-center" data-title="Stock">
+                                    <span class="text-danger font-weight-bold">Out of stock</span>
+                                </td>
+                              <%  } else { %>
+                                    <td class="text-center" data-title="Stock">
+                                    <span class="color3 font-weight-bold">In Stock</span>
+                                </td>
+                              <%  } %> 
+                                
+                                <% if (element?.Product?.quantity==0) { %>
+                                    <td class="text-right" data-title="Cart">
+                                    <button class="btn btn-sm btn-secondary"><i class="fi-rs-headset mr-5"></i>Contact Us</button>
+                                    </td>
+                              <%  } else { %>
+                                    <td class="text-right" data-title="Cart">
+                                    <button class="btn btn-sm" onclick="addtocart('<%= element.Product?._id %>','<%= element?.Product?.quantity %>')"><i class="fi-rs-shopping-bag mr-5"  ></i>Add to cart</button>
+                                   </td>
+                               <% } %>   
+                                <td class="action" data-title="Remove"><a href="#"><i class="fi-rs-trash" onclick="deleteWishlist('<%= element?._id %>','<%= element?.Product?._id %>',)"></i></a></td>
+                            </tr>
+                            <% }); %> 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+     function addtocart(proId,stock) {
+    console.log('hihihihi');
+  $.ajax({
+    url:'/check-cart-quantity/'+ proId,
+    method:'get',
+    success:(response)=>{
+      console.log(response);
+      if (response.status) {
+        if (stock - response.quantity <= 0) {
+            console.log("stok ");
+            toastOutOfStock()
+          }  else {
+            $.ajax({
+        url:'/addtocart/'+proId,
+        method:'get',
+        success:(response)=>{
+           if (response.status) {
+            
+              let count=$('#cart-count').html()
+            count =parseInt(count)+1
+            $('#cart-count').html(count)
+            toast()           
+           }
+        }
+    })
+        }
+      } else if (response.status==false && stock == 0) {
+        console.log("stok 0");
+          toastOutOfStock()
+        }else {
+          $.ajax({
+        url:'/addtocart/'+proId,
+        method:'get',
+        success:(response)=>{
+           if (response.status) {
+            
+              let count=$('#cart-count').html()
+            count =parseInt(count)+1
+            $('#cart-count').html(count)
+            toast()
+            
+            
+            
+           }
+        }
+    })
+
+       
+      }
+    }
+
+  })
+    
+}
+
+
+
+function deleteWishlist(cartId, proId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '/deleteWishlistItems',
+          method: 'DELETE',
+          data: {
+            cart: cartId,
+            product: proId
+          },
+
+          success: (response) => {
+            if (response.removeProduct) {
+              location.reload()
+            }
+          }
+        })
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+  }
+</script>

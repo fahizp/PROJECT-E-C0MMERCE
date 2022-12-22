@@ -1,0 +1,265 @@
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html" rel="nofollow">Home</a>
+                <span></span> My account
+            </div>
+        </div>
+    </div>
+    <section class="pt-100 pb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="dashboard-menu">
+                                <ul class="nav flex-column" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/my-account"><i
+                                                class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/my-account/orders"><i
+                                                class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="/my-account/address" class="nav-link "><i
+                                                class="fi-rs-marker mr-10"></i>My
+                                            Address</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="/my-account/profile"><i
+                                                class="fi-rs-user mr-10"></i>Account details</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" onclick="swalpopUpSign()"><i
+                                                class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="tab-content dashboard-content">
+                                <div class="tab-pane fade active show" id="address" role="tabpanel"
+                                    aria-labelledby="address-tab">
+
+                                    <div class="row mx-1 mt-2">
+
+
+                                        <div class="card pt-3">
+
+                                            <div class="panel-body">
+                                                <form>
+
+                                                    <div class="form-group">
+                                                        <label class="w-25">First Name *</label>
+                                                        <input type="text" required="" name="fname" id="fNamePro"
+                                                            placeholder="First name *" value="<%= locals.user.fName %> ">
+                                                        <p class="d-flex w-75 justify-content-start"
+                                                            style="color: rgb(230, 43, 40);"></p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="w-25">Last Name *</label>
+                                                        <input type="text" required="" name="lname" id="lNamePro"
+                                                            placeholder="Last name *" value="<%= locals.user.lName %> ">
+                                                        <p class="d-flex w-75 justify-content-start"
+                                                            style="color: rgb(230, 43, 40);"></p>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="w-25">Email address *</label>
+                                                        <input required="" type="text" name="email" id="emailPro"
+                                                            placeholder="Email address *" value="<%= locals.user.email %> ">
+                                                        <p class="d-flex w-75 justify-content-start"
+                                                            style="color: rgb(230, 43, 40);"></p>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="w-50">Current password </label>
+                                                        <input type="password" name="billing_address"
+                                                            id="currentPasswordPro" required=""
+                                                            placeholder="Current password *">
+                                                        <p class="d-flex w-75 justify-content-start"
+                                                            style="color: rgb(230, 43, 40);"></p>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label class="w-50">New password </label>
+                                                        <input required="" type="password" name="zipcode"
+                                                            id="newPasswordPro" placeholder="New password *">
+                                                        <p class="d-flex w-75 justify-content-start"
+                                                            style="color: rgb(230, 43, 40);"></p>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="w-25">Confirm new password</label>
+                                                        <input required="" type="password" name="phone"
+                                                            id="confirmPasswordPro"
+                                                            placeholder="Confirm new password *">
+                                                        <p class="d-flex w-75 justify-content-start"
+                                                            style="color: rgb(230, 43, 40);"></p>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <button type="button" onclick="changeProfile()"
+                                                            class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white border-radius-5 btn-shadow-brand hover-up">SAVE
+                                                            CHANGES</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    function changeProfile() {
+        const fName = document.getElementById('fNamePro')
+        const lName = document.getElementById('lNamePro')
+        const email = document.getElementById('emailPro')
+        const currentPassword = document.getElementById('currentPasswordPro')
+        const newPasswordPro = document.getElementById('newPasswordPro')
+        const confirmPasswordPro = document.getElementById('confirmPasswordPro')
+        const fNameValue = fName.value.trim()
+        const lNameValue = lName.value.trim()
+        const emailValue = email.value.trim()
+        const currentPasswordValue = currentPassword.value.trim()
+        const newPasswordProValue = newPasswordPro.value.trim()
+        const confirmPasswordProValue = confirmPasswordPro.value.trim()
+        const error1 = fName.parentElement.querySelector('p')
+        const error2 = lName.parentElement.querySelector('p')
+        const error3 = email.parentElement.querySelector('p')
+        const error4 = currentPassword.parentElement.querySelector('p')
+        const error5 = newPasswordPro.parentElement.querySelector('p')
+        const error6 = confirmPasswordPro.parentElement.querySelector('p')
+        error1.innerText = ""
+        error2.innerText = ""
+        error3.innerText = ""
+        error4.innerText = ""
+        error5.innerText = ""
+        error6.innerText = ""
+        let flag = 1
+        let arr = [fName, lName, email, currentPassword, newPasswordPro, confirmPasswordPro]
+        arr.forEach((element) => {
+            element.addEventListener("keyup", () => {
+                element.parentElement.querySelector('p').innerText = ""
+            })
+        })
+        /////////////////////////////////First Name Validation////////////////////////
+        if (fNameValue == "") {
+            error1.innerText = "This field is required"
+            flag = 2
+        } else if (fNameValue.length <= 2) {
+            error1.innerText = "First name must be minimum 2 characters"
+            flag = 2
+        } else if (!fNameValue.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+            error1.innerText = "Enter valid details"
+            flag = 2
+        }
+        /////////////////////////////////Last Name Validation////////////////////////
+        if (lNameValue == "") {
+            error2.innerText = "This field is required"
+            flag = 2
+        } else if (!lNameValue.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+            error2.innerText = "Enter valid details"
+            flag = 2
+        }
+        ///////////////////////////////Email Validation//////////////////////////////
+        if (emailValue == "") {
+            error3.innerText = "This field is required"
+            flag = 2
+        } else if (!emailValue.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            error3.innerText = "Enter a valid email"
+            flag = 2
+        }
+        ///////////////////////////////Password Validation//////////////////////////////
+        if (currentPasswordValue == "") {
+            error4.innerText = "This field is required"
+            flag = 2
+        } else if (currentPasswordValue.length < 8) {
+            error4.innerText = "Password Not valid"
+            flag = 2
+        }
+        if (newPasswordProValue == "") {
+            error5.innerText = "This field is required"
+            flag = 2
+        } else if (newPasswordProValue.length < 8) {
+            error5.innerText = "Must be minimum 8 characters"
+            flag = 2
+        } else if (!newPasswordProValue.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
+            error5.innerText = "Password should contain atleast one letter and one number"
+            error5.style.textAlign = 'end'
+            flag = 2
+        }
+        ///////////////////////////////Confirm Password Validation//////////////////////////////
+        if (confirmPasswordProValue == "") {
+            error6.innerText = "This field is required"
+            flag = 2
+        } else if (confirmPasswordProValue !== newPasswordProValue) {
+            error6.innerText = "Enter password correctly"
+            flag = 2
+        }
+        if (flag == 1) {
+            updateProfile(fNameValue, lNameValue, emailValue, currentPasswordValue, confirmPasswordProValue)
+        }
+    }
+
+    function updateProfile(fNameValue, lNameValue, emailValue, currentPasswordValue, confirmPasswordProValue) {
+        $.ajax({
+            url: '/accounts/profile/updateProfile',
+            method: 'PUT',
+            data: {
+                fName: fNameValue,
+                lName: lNameValue,
+                email: emailValue,
+                currentPassword: currentPasswordValue,
+                confirmPasswordPro: confirmPasswordProValue
+            },
+            success:(response)=>{
+                if(response.status==true){
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Your profile has been updated',
+              showConfirmButton: false,
+              timer: 1000
+            }).then(() => {
+              setTimeout(() => {
+                location.reload()
+              }, 500)
+            })
+          }else{
+            document.getElementById('passwordChange').innerText = "Wrong password"
+          }
+            }
+        })
+    }
+
+
+    function swalpopUpSign() {
+    Swal.fire({
+      position: 'top',
+      icon: 'warning',
+      title: 'Are you sure',
+      text: 'want to Log out?',
+      showDenyButton: true,
+      confirmButtonText: 'Yes, Logout',
+      denyButtonText: `No`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Successfully logout!', '', 'success').then(() => {
+          location.href = "/user_logout"
+        })
+      }
+    })
+  }
+</script>

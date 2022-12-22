@@ -11,42 +11,58 @@
     <section class="mt-50 mb-50">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 mb-sm-15">
 
-                    <div class="toggle_info">
-                        
-                           <input type="radio">
-                         
-                    </div>
-                    <div class="panel-collapse collapse login_form" id="loginform">
-                        <div class="panel-body">
-                            <p class="mb-30 font-sm">If you have shopped with us before, please enter your details
-                                below. If you are a new customer, please proceed to the Billing &amp; Shipping section.
-                            </p>
-                            <form method="post">
-                                <div class="form-group">
-                                    <input type="text" name="email" placeholder="Username Or Email">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" placeholder="Password">
-                                </div>
-                                <div class="login_footer form-group">
-                                    <div class="chek-form">
-                                        <div class="custome-checkbox">
-                                            <input class="form-check-input" type="checkbox" name="checkbox"
-                                                id="remember" value="">
-                                            <label class="form-check-label" for="remember"><span>Remember
-                                                    me</span></label>
-                                        </div>
-                                    </div>
-                                    <a href="#">Forgot password?</a>
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-md" name="login">Log in</button>
-                                </div>
-                            </form>
+                <div class="col-lg-6 mb-sm-15 py-2"
+                    style="border:1px solid #e2e9e1; background-color:#f7f8f9; border-radius: 10px;">
+                    <% address[0]?.address?.forEach((element,index)=> { %>
+
+
+                        <div class="custome-radio">
+                            <input class="form-check-input" onclick="autoFill('<%= element._id %>')" required=""
+                                type="radio" role="button" name="addressRadio" data-toggle="collapse" href="#collapse-3"
+                                aria-expanded="true" aria-controls="collapse-3" id="addressRadio<%=index%>" checked=""
+                                value="">
+                            <label class="form-check-label" for="addressRadio<%=index%>" data-bs-toggle="collapse"
+                                data-target="#bankTranfer" aria-controls="bankTranfer">
+                                <%= element.fName %>, <%= element.address %>, <%= element.postcode%> . . .
+                            </label>
                         </div>
-                    </div>
+
+                        <% }); %>
+                            <div class="row">
+                                <span class="text-info addAddress" onclick="clearAll()">Add new address</span>
+                            </div>
+                            <div class="panel-collapse collapse login_form" id="loginform">
+                                <div class="panel-body">
+                                    <p class="mb-30 font-sm">If you have shopped with us before, please enter your
+                                        details
+                                        below. If you are a new customer, please proceed to the Billing &amp; Shipping
+                                        section.
+                                    </p>
+                                    <form method="post">
+                                        <div class="form-group">
+                                            <input type="text" name="email" placeholder="Username Or Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="password" placeholder="Password">
+                                        </div>
+                                        <div class="login_footer form-group">
+                                            <div class="chek-form">
+                                                <div class="custome-checkbox">
+                                                    <input class="form-check-input" type="checkbox" name="checkbox"
+                                                        id="remember" value="">
+                                                    <label class="form-check-label" for="remember"><span>Remember
+                                                            me</span></label>
+                                                </div>
+                                            </div>
+                                            <a href="#">Forgot password?</a>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-md" name="login">Log in</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
 
                 </div>
@@ -59,14 +75,15 @@
                     <div class="panel-collapse collapse coupon_form " id="coupon">
                         <div class="panel-body">
                             <p class="mb-30 font-sm">If you have a coupon code, please apply it below.</p>
-                            <form method="post">
+                            <p class="mx-auto" id="errorCoupon"></p>
                                 <div class="form-group">
-                                    <input type="text" placeholder="Enter Coupon Code...">
+                                    <input type="text" placeholder="Enter Coupon Code..." id="couponId">
                                 </div>
                                 <div class="form-group">
-                                    <button class="btn  btn-md" name="login">Apply Coupon</button>
+                                    <button class="btn  btn-md" type="button" onclick="couponCheck()" name="login">Apply
+                                        Coupon</button>
                                 </div>
-                            </form>
+                    
                         </div>
                     </div>
                 </div>
@@ -92,252 +109,14 @@
                         </div>
                         <div class="form-group">
                             <div class="custom_select">
+
                                 <select class="form-control select-active" id="country">
                                     <option value="">Select an option...</option>
-                                    <option value="AX">Aland Islands</option>
-                                    <option value="AF">Afghanistan</option>
-                                    <option value="AL">Albania</option>
-                                    <option value="DZ">Algeria</option>
-                                    <option value="AD">Andorra</option>
-                                    <option value="AO">Angola</option>
-                                    <option value="AI">Anguilla</option>
-                                    <option value="AQ">Antarctica</option>
-                                    <option value="AG">Antigua and Barbuda</option>
-                                    <option value="AR">Argentina</option>
-                                    <option value="AM">Armenia</option>
-                                    <option value="AW">Aruba</option>
-                                    <option value="AU">Australia</option>
-                                    <option value="AT">Austria</option>
-                                    <option value="AZ">Azerbaijan</option>
-                                    <option value="BS">Bahamas</option>
-                                    <option value="BH">Bahrain</option>
-                                    <option value="BD">Bangladesh</option>
-                                    <option value="BB">Barbados</option>
-                                    <option value="BY">Belarus</option>
-                                    <option value="PW">Belau</option>
-                                    <option value="BE">Belgium</option>
-                                    <option value="BZ">Belize</option>
-                                    <option value="BJ">Benin</option>
-                                    <option value="BM">Bermuda</option>
-                                    <option value="BT">Bhutan</option>
-                                    <option value="BO">Bolivia</option>
-                                    <option value="BQ">Bonaire, Saint Eustatius and Saba</option>
-                                    <option value="BA">Bosnia and Herzegovina</option>
-                                    <option value="BW">Botswana</option>
-                                    <option value="BV">Bouvet Island</option>
-                                    <option value="BR">Brazil</option>
-                                    <option value="IO">British Indian Ocean Territory</option>
-                                    <option value="VG">British Virgin Islands</option>
-                                    <option value="BN">Brunei</option>
-                                    <option value="BG">Bulgaria</option>
-                                    <option value="BF">Burkina Faso</option>
-                                    <option value="BI">Burundi</option>
-                                    <option value="KH">Cambodia</option>
-                                    <option value="CM">Cameroon</option>
-                                    <option value="CA">Canada</option>
-                                    <option value="CV">Cape Verde</option>
-                                    <option value="KY">Cayman Islands</option>
-                                    <option value="CF">Central African Republic</option>
-                                    <option value="TD">Chad</option>
-                                    <option value="CL">Chile</option>
-                                    <option value="CN">China</option>
-                                    <option value="CX">Christmas Island</option>
-                                    <option value="CC">Cocos (Keeling) Islands</option>
-                                    <option value="CO">Colombia</option>
-                                    <option value="KM">Comoros</option>
-                                    <option value="CG">Congo (Brazzaville)</option>
-                                    <option value="CD">Congo (Kinshasa)</option>
-                                    <option value="CK">Cook Islands</option>
-                                    <option value="CR">Costa Rica</option>
-                                    <option value="HR">Croatia</option>
-                                    <option value="CU">Cuba</option>
-                                    <option value="CW">CuraÇao</option>
-                                    <option value="CY">Cyprus</option>
-                                    <option value="CZ">Czech Republic</option>
-                                    <option value="DK">Denmark</option>
-                                    <option value="DJ">Djibouti</option>
-                                    <option value="DM">Dominica</option>
-                                    <option value="DO">Dominican Republic</option>
-                                    <option value="EC">Ecuador</option>
-                                    <option value="EG">Egypt</option>
-                                    <option value="SV">El Salvador</option>
-                                    <option value="GQ">Equatorial Guinea</option>
-                                    <option value="ER">Eritrea</option>
-                                    <option value="EE">Estonia</option>
-                                    <option value="ET">Ethiopia</option>
-                                    <option value="FK">Falkland Islands</option>
-                                    <option value="FO">Faroe Islands</option>
-                                    <option value="FJ">Fiji</option>
-                                    <option value="FI">Finland</option>
-                                    <option value="FR">France</option>
-                                    <option value="GF">French Guiana</option>
-                                    <option value="PF">French Polynesia</option>
-                                    <option value="TF">French Southern Territories</option>
-                                    <option value="GA">Gabon</option>
-                                    <option value="GM">Gambia</option>
-                                    <option value="GE">Georgia</option>
-                                    <option value="DE">Germany</option>
-                                    <option value="GH">Ghana</option>
-                                    <option value="GI">Gibraltar</option>
-                                    <option value="GR">Greece</option>
-                                    <option value="GL">Greenland</option>
-                                    <option value="GD">Grenada</option>
-                                    <option value="GP">Guadeloupe</option>
-                                    <option value="GT">Guatemala</option>
-                                    <option value="GG">Guernsey</option>
-                                    <option value="GN">Guinea</option>
-                                    <option value="GW">Guinea-Bissau</option>
-                                    <option value="GY">Guyana</option>
-                                    <option value="HT">Haiti</option>
-                                    <option value="HM">Heard Island and McDonald Islands</option>
-                                    <option value="HN">Honduras</option>
-                                    <option value="HK">Hong Kong</option>
-                                    <option value="HU">Hungary</option>
-                                    <option value="IS">Iceland</option>
-                                    <option value="IN">India</option>
-                                    <option value="ID">Indonesia</option>
-                                    <option value="IR">Iran</option>
-                                    <option value="IQ">Iraq</option>
-                                    <option value="IM">Isle of Man</option>
-                                    <option value="IL">Israel</option>
-                                    <option value="IT">Italy</option>
-                                    <option value="CI">Ivory Coast</option>
-                                    <option value="JM">Jamaica</option>
-                                    <option value="JP">Japan</option>
-                                    <option value="JE">Jersey</option>
-                                    <option value="JO">Jordan</option>
-                                    <option value="KZ">Kazakhstan</option>
-                                    <option value="KE">Kenya</option>
-                                    <option value="KI">Kiribati</option>
-                                    <option value="KW">Kuwait</option>
-                                    <option value="KG">Kyrgyzstan</option>
-                                    <option value="LA">Laos</option>
-                                    <option value="LV">Latvia</option>
-                                    <option value="LB">Lebanon</option>
-                                    <option value="LS">Lesotho</option>
-                                    <option value="LR">Liberia</option>
-                                    <option value="LY">Libya</option>
-                                    <option value="LI">Liechtenstein</option>
-                                    <option value="LT">Lithuania</option>
-                                    <option value="LU">Luxembourg</option>
-                                    <option value="MO">Macao S.A.R., China</option>
-                                    <option value="MK">Macedonia</option>
-                                    <option value="MG">Madagascar</option>
-                                    <option value="MW">Malawi</option>
-                                    <option value="MY">Malaysia</option>
-                                    <option value="MV">Maldives</option>
-                                    <option value="ML">Mali</option>
-                                    <option value="MT">Malta</option>
-                                    <option value="MH">Marshall Islands</option>
-                                    <option value="MQ">Martinique</option>
-                                    <option value="MR">Mauritania</option>
-                                    <option value="MU">Mauritius</option>
-                                    <option value="YT">Mayotte</option>
-                                    <option value="MX">Mexico</option>
-                                    <option value="FM">Micronesia</option>
-                                    <option value="MD">Moldova</option>
-                                    <option value="MC">Monaco</option>
-                                    <option value="MN">Mongolia</option>
-                                    <option value="ME">Montenegro</option>
-                                    <option value="MS">Montserrat</option>
-                                    <option value="MA">Morocco</option>
-                                    <option value="MZ">Mozambique</option>
-                                    <option value="MM">Myanmar</option>
-                                    <option value="NA">Namibia</option>
-                                    <option value="NR">Nauru</option>
-                                    <option value="NP">Nepal</option>
-                                    <option value="NL">Netherlands</option>
-                                    <option value="AN">Netherlands Antilles</option>
-                                    <option value="NC">New Caledonia</option>
-                                    <option value="NZ">New Zealand</option>
-                                    <option value="NI">Nicaragua</option>
-                                    <option value="NE">Niger</option>
-                                    <option value="NG">Nigeria</option>
-                                    <option value="NU">Niue</option>
-                                    <option value="NF">Norfolk Island</option>
-                                    <option value="KP">North Korea</option>
-                                    <option value="NO">Norway</option>
-                                    <option value="OM">Oman</option>
-                                    <option value="PK">Pakistan</option>
-                                    <option value="PS">Palestinian Territory</option>
-                                    <option value="PA">Panama</option>
-                                    <option value="PG">Papua New Guinea</option>
-                                    <option value="PY">Paraguay</option>
-                                    <option value="PE">Peru</option>
-                                    <option value="PH">Philippines</option>
-                                    <option value="PN">Pitcairn</option>
-                                    <option value="PL">Poland</option>
-                                    <option value="PT">Portugal</option>
-                                    <option value="QA">Qatar</option>
-                                    <option value="IE">Republic of Ireland</option>
-                                    <option value="RE">Reunion</option>
-                                    <option value="RO">Romania</option>
-                                    <option value="RU">Russia</option>
-                                    <option value="RW">Rwanda</option>
-                                    <option value="ST">São Tomé and Príncipe</option>
-                                    <option value="BL">Saint Barthélemy</option>
-                                    <option value="SH">Saint Helena</option>
-                                    <option value="KN">Saint Kitts and Nevis</option>
-                                    <option value="LC">Saint Lucia</option>
-                                    <option value="SX">Saint Martin (Dutch part)</option>
-                                    <option value="MF">Saint Martin (French part)</option>
-                                    <option value="PM">Saint Pierre and Miquelon</option>
-                                    <option value="VC">Saint Vincent and the Grenadines</option>
-                                    <option value="SM">San Marino</option>
-                                    <option value="SA">Saudi Arabia</option>
-                                    <option value="SN">Senegal</option>
-                                    <option value="RS">Serbia</option>
-                                    <option value="SC">Seychelles</option>
-                                    <option value="SL">Sierra Leone</option>
-                                    <option value="SG">Singapore</option>
-                                    <option value="SK">Slovakia</option>
-                                    <option value="SI">Slovenia</option>
-                                    <option value="SB">Solomon Islands</option>
-                                    <option value="SO">Somalia</option>
-                                    <option value="ZA">South Africa</option>
-                                    <option value="GS">South Georgia/Sandwich Islands</option>
-                                    <option value="KR">South Korea</option>
-                                    <option value="SS">South Sudan</option>
-                                    <option value="ES">Spain</option>
-                                    <option value="LK">Sri Lanka</option>
-                                    <option value="SD">Sudan</option>
-                                    <option value="SR">Suriname</option>
-                                    <option value="SJ">Svalbard and Jan Mayen</option>
-                                    <option value="SZ">Swaziland</option>
-                                    <option value="SE">Sweden</option>
-                                    <option value="CH">Switzerland</option>
-                                    <option value="SY">Syria</option>
-                                    <option value="TW">Taiwan</option>
-                                    <option value="TJ">Tajikistan</option>
-                                    <option value="TZ">Tanzania</option>
-                                    <option value="TH">Thailand</option>
-                                    <option value="TL">Timor-Leste</option>
-                                    <option value="TG">Togo</option>
-                                    <option value="TK">Tokelau</option>
-                                    <option value="TO">Tonga</option>
-                                    <option value="TT">Trinidad and Tobago</option>
-                                    <option value="TN">Tunisia</option>
-                                    <option value="TR">Turkey</option>
-                                    <option value="TM">Turkmenistan</option>
-                                    <option value="TC">Turks and Caicos Islands</option>
-                                    <option value="TV">Tuvalu</option>
-                                    <option value="UG">Uganda</option>
-                                    <option value="UA">Ukraine</option>
-                                    <option value="AE">United Arab Emirates</option>
-                                    <option value="GB">United Kingdom (UK)</option>
-                                    <option value="US">USA (US)</option>
-                                    <option value="UY">Uruguay</option>
-                                    <option value="UZ">Uzbekistan</option>
-                                    <option value="VU">Vanuatu</option>
-                                    <option value="VA">Vatican</option>
-                                    <option value="VE">Venezuela</option>
-                                    <option value="VN">Vietnam</option>
-                                    <option value="WF">Wallis and Futuna</option>
-                                    <option value="EH">Western Sahara</option>
-                                    <option value="WS">Western Samoa</option>
-                                    <option value="YE">Yemen</option>
-                                    <option value="ZM">Zambia</option>
-                                    <option value="ZW">Zimbabwe</option>
+                                    <% locals?.country.forEach((element)=>{ %>
+                                        <option>
+                                            <%-element.name%>
+                                        </option>
+                                        <% }) %>
                                 </select>
                                 <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
                             </div>
@@ -704,7 +483,7 @@
                                                 <h5><a href="shop-product-full.html">
                                                         <%= element?.Product?.name %>
                                                     </a></h5> <span class="product-qty">x <%= element?.quantity %>
-                                                        </span>
+                                                </span>
                                             </td>
                                             <td>₹<%= element?.Product?.price*element.quantity %>
                                             </td>
@@ -716,20 +495,25 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <th>Coupon Discount</th>
+                                                <td id="discPrice" colspan="2">Rs 0
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <th>Shipping</th>
                                                 <td colspan="2"><em>Free Shipping</em></td>
                                             </tr>
                                             <tr>
                                                 <th>Total</th>
                                                 <td colspan="2" class="product-subtotal"><span
-                                                        class="font-xl text-brand fw-900">₹<%= total %> </span></td>
+                                                        class="font-xl text-brand fw-900" id="totalCartPrice">₹<%= total %> </span></td>
                                             </tr>
                                 </tbody>
 
                             </table>
                         </div>
                         <div class="bt-1 border-color-1 mt-30 mb-30"></div>
-                        <div class="payment_method">
+                        <!-- <div class="payment_method">
                             <div class="mb-25">
                                 <h5>Payment</h5>
                             </div>
@@ -739,25 +523,65 @@
                                         id="cod" checked="" value="COD">
                                     <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse"
                                         data-target="#bankTranfer" aria-controls="bankTranfer">Cash On Delivery</label>
-                                    <div class="form-group collapse in" id="">
-                                        <p class="text-muted mt-5">There are many variations of passages of Lorem Ipsum
-                                            available, but the majority have suffered alteration. </p>
-                                    </div>
+                                </div>
+                                <div class="custome-radio">
+                                    <input class="form-check-input" required="" type="radio" name="payment_option"
+                                        id="cod" checked="" value="razorpay">
+                                    <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse"
+                                        data-target="#bankTranfer" aria-controls="bankTranfer">Razorpay</label>
+                                    
+                                </div>
+                                <div class="custome-radio"> 
+                                    <input class="form-check-input" required="" type="radio" name="payment_option"
+                                        id="cod" checked="" value="paypal" >
+                                    <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse"
+                                        data-target="#bankTranfer" aria-controls="bankTranfer">Paypal</label>
+                                        <div id="paypal"></div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="payment_method">
+                            <div class="mb-25">
+                                <h5>Payment Method</h5>
+                            </div>
+                            <div class="payment_option">
+                                <div class="custome-radio" id="paymentMethod">
+                                    <input class="form-check-input" required="" type="radio" id="cod" value="COD"
+                                        name="paymentMethod" checked="" />
+                                    <label class="form-check-label" name="paymentMethod" for="cod"
+                                        aria-controls="bankTranfer">Cash on Delivery</label>
+                                </div>
+                                <div class="custome-radio">
+                                    <input class="form-check-input" required="" type="radio" name="paymentMethod"
+                                        id="razorpay" value="razorpay" checked="" />
+                                    <label class="form-check-label" name="paymentMethod" for="razorpay"
+                                        aria-controls="checkPayment">Razorpay</label>
+                                </div>
+                                <div class="custome-radio">
+                                    <input class="form-check-input" required="" name="paymentMethod" type="radio"
+                                        id="paypal" value="paypal" checked="" />
+                                    <label class="form-check-label" for="paypal" name="paymentMethod"
+                                        aria-controls="paypal">Paypal</label>
+                                    <div id="paypal1"></div>
                                 </div>
                             </div>
                         </div>
-                        <a  onclick="validator()" class="btn btn-fill-out btn-block mt-30">Place Order</a>
+                        <a onclick="validator(this)" class="btn btn-fill-out btn-block mt-30">Place Order</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </main>
+
+
 <script>
-    const inputsId = ['fName', 'lName', 'address', 'landmark', 'town', 'country', 'postcode', 'mobile', 'email'];
+    
+    let couponData = ""
 
 
-    function validator() {
+    function validator(a) {
 
         const fName = document.getElementById('fName')
         const lName = document.getElementById('lName')
@@ -768,7 +592,7 @@
         const postcode = document.getElementById('postcode')
         const mobile = document.getElementById('mobile')
         const email = document.getElementById('email')
-        const cod = document.getElementById('cod')
+        const payment = document.getElementById('paymentMethod')
 
 
 
@@ -781,8 +605,13 @@
         const postcodeValue = postcode.value.trim()
         const mobileValue = mobile.value.trim()
         const emailValue = email.value.trim()
-        const codValue = cod.checked
-        const codMain = cod.value
+        const paymentMethod = a.parentElement.querySelector('input[name="paymentMethod"]:checked').value
+
+
+
+
+
+
 
 
 
@@ -796,7 +625,15 @@
         const error7 = mobile.parentElement.querySelector('p')
         const error8 = email.parentElement.querySelector('p')
         const error9 = country.parentElement.querySelector('p')
-        const error10 = cod.parentElement.querySelector('p')
+
+
+        let arr = [fName, lName, street, apartment, town, country, postcode, mobile, email]
+        arr.forEach((element) => {
+            element.addEventListener("keyup", () => {
+                element.parentElement.querySelector('p').innerText = ""
+            })
+        })
+
 
 
 
@@ -813,7 +650,7 @@
         error7.innerText = ""
         error8.innerText = ""
         error9.innerText = ""
-        error10.innerText = ""
+
 
 
         //First Name
@@ -876,21 +713,18 @@
             error8.innerText = "Enter a valid email"
             flag = 2
         }
-        if (countryValue == 'Select your Country') {
+        if (countryValue == 'Select an option...') {
             error9.innerText = "This field is required"
             flag = 2
         }
-        if (codValue == false) {
-            error10.innerText = "This field is required"
-            flag = 2
-        }
+
         if (flag == 1) {
-            submit(fNameValue, lNameValue, streeValue, apartmentValue, townValue, countryValue, postcodeValue, mobileValue, emailValue, codMain)
+            submit(fNameValue, lNameValue, streeValue, apartmentValue, townValue, countryValue, postcodeValue, mobileValue, emailValue, paymentMethod)
         }
     }
 
 
-    function submit(fName, lName, address, landmark, town, country, postcode, mobile, email, cod) {
+    function submit(fName, lName, address, landmark, town, country, postcode, mobile, email, paymentMethod) {
         $.ajax({
             url: '/place-order',
             method: 'post',
@@ -904,10 +738,12 @@
                 postcode: postcode,
                 mobile: mobile,
                 email: email,
-                paymentMethod: cod,
+                paymentMethod: paymentMethod,
+                couponName: couponData,
             },
             success: (response) => {
-                if (response.status) {
+                console.log(response);
+                if (response.statusCod) {
                     let timerInterval
                     Swal.fire({
                         icon: 'success',
@@ -924,19 +760,296 @@
                         },
                         willClose: () => {
                             clearInterval(timerInterval)
-                           
+
                         }
-                        
+
                     }).then((result) => {
                         /* Read more about handling dismissals below */
                         if (result.dismiss === Swal.DismissReason.timer) {
                             console.log('I was closed by the timer')
                         }
-                    }).then(()=>{
-                        window.location.href='/orders'
+                    }).then(() => {
+                        window.location.href = '/my-account/orders'
+                    })
+                } else if (response.paypal == true) {
+                    console.log(response)
+                    paypalPayment(response.total)
+                } else {
+                    razorpay(response)
+                }
+            }
+        })
+    }
+
+
+    function razorpay(data) {
+        var options = {
+            "key": "rzp_test_I16cKMa15BIgoA", // Enter the Key ID generated from the Dashboard
+            "amount": data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Evara",
+            "description": "Test Transaction",
+            "image": "https://evara.ml/user-assets/imgs/theme/logo.svg",
+            "order_id": data.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+            "handler": function (response) {
+                verifyPayment(response, data)
+            },
+            "prefill": {
+                "name": data.userName,
+                "email": data.email,
+                "contact": data.mobile
+            },
+            "notes": {
+                "address": "DM Corporate Office"
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.open();
+    }
+
+    function verifyPayment(payment, order) {
+        $.ajax({
+            url: '/verify-payment',
+            method: 'post',
+            data: {
+                payment,
+                order
+            },
+            error: (error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: error.responseJSON.message,
+                })
+            },
+            success: (response) => {
+                if (response.status) {
+                    let timerInterval
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Order Success!',
+                        html: 'You will be redirected to orders in  <b></b> milliseconds.',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                                b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    }).then((result) => {
+                        /* Read more about handling dismissals below */
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            console.log('I was closed by the timer')
+                        }
+                    }).then(function () {
+                        window.location = "/my-account/orders";
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Payment failed',
+                        icon: 'question',
+                        iconHtml: 'X',
                     })
                 }
             }
         })
     }
+
+
+
+    function paypalPayment(total) {
+        paypal
+            .Buttons({
+                createOrder: function () {
+                    return fetch("/create-order", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            total: total,
+                            items: [{
+                                id: 1,
+                            }]
+                        }),
+                    })
+                        .then(res => {
+                            if (res.ok) return res.json()
+                            return res.json().then(json => Promise.reject(json))
+                        })
+                        .then(({
+                            id
+                        }) => {
+                            return id
+                        })
+                        .catch(e => {
+                            console.error(e.error)
+                        })
+                },
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(() => {
+                        console.log(data);
+                        $.ajax({
+                            url: '/paypal-success',
+                            method: 'get',
+                            success: (response) => {
+                                if (response.status) {
+                                    location.replace('/orders')
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!',
+                                        footer: '<a href="/">Goto home page</a>'
+                                    })
+                                }
+                            }
+                        })
+                    })
+                },
+            })
+            .render("#paypal1")
+    }
+
+
+
+    // function couponCheck() {
+    //     let couponName = document.getElementById('couponId').value.trim()
+    //     couponData = couponName
+    //     console.log(couponData);
+    //     $.ajax({
+    //         url: "/checkout/coupon_verify",
+    //         method: "POST",
+    //         data: {
+    //             coupon: couponName
+    //         },
+    //         success: (response) => {
+    //             if (response.status == true || response.coupon == true) {
+    //                 $.ajax({
+    //                     url: '/checkout/verify_coupon_checked',
+    //                     method: 'POST',
+    //                     data: {
+    //                         couponName: couponName
+    //                     },
+    //                     success: (response) => {
+    //                         if (response.purchased == false) {
+    //                             $.ajax({
+    //                                 url: '/checkout/apply_coupon',
+    //                                 method: 'post',
+    //                                 data: {
+    //                                     couponName: couponName
+    //                                 },
+    //                                 success:(response)=>{
+
+    //                                 }
+    //                             })
+    //                         }
+    //                     }
+    //                 })
+    //             }
+    //         }
+    //     })
+    // }
+
+
+
+    function couponCheck() {
+    let couponName = document.getElementById('couponId').value.trim()
+    couponData = couponName
+    $.ajax({
+      url: '/proceedToCheckOut/coupon_verify',
+      method: 'post',
+      data: {
+        coupon: couponName
+      },
+      success: (response) => {
+        if (response.status == true || response.coupon == true) {
+          $.ajax({
+            url: '/proceedToCheckOut/verify_coupon_checked',
+            method: 'post',
+            data: {
+              couponCheck: couponName
+            },
+            success: (response) => {
+              console.log(response);
+              if (response.purchased == false) {
+                console.log("hi not purchased");
+                $.ajax({
+                  url: '/proceedToCheckOut/apply_coupon',
+                  method: 'post',
+                  data: {
+                    couponName: couponName
+                  },
+                  success: (response) => {
+                    if (response.couponExpired == true) {
+                      let errorCoupon = document.getElementById('errorCoupon')
+                      errorCoupon.innerText = "This coupon is already expired."
+                      errorCoupon.style.color = 'rgb(300,0,0) '
+                      errorCoupon.style.fontSize = 'x-small'
+                    }
+                    console.log(response);
+                    if (response.finalAmount) {
+                      document.getElementById('totalCartPrice').innerText = "Rs " + response.finalAmount
+                      let errorCoupon = document.getElementById('errorCoupon')
+                      errorCoupon.innerText = "Coupen applied successfully."
+                      errorCoupon.style.color = 'rgb(53,200,0) '
+                      errorCoupon.style.fontSize = 'x-small'
+                      discPrice.innerText ='Rs  '+ response.discountAmount
+                    } else if (response.couponNotApplicable == true) {
+                      let errorCoupon = document.getElementById('errorCoupon')
+                      errorCoupon.innerText = "This coupon is only valid for products between Rs " + response.amountValid[0] + " and " + response.amountValid[1] + "."
+                      errorCoupon.style.color = 'rgb(300,0,0) '
+                      errorCoupon.style.fontSize = 'x-small'
+                    }
+                  }
+                })
+              } else {
+                let errorCoupon = document.getElementById('errorCoupon')
+                errorCoupon.innerText = "This coupon is already used."
+                errorCoupon.style.color = 'rgb(300,0,0) '
+                errorCoupon.style.fontSize = 'x-small'
+              }
+            }
+          })
+        } else {
+          let errorCoupon = document.getElementById('errorCoupon')
+          errorCoupon.innerText = "Invalid Coupon !"
+          errorCoupon.style.color = 'rgb(300,0,0) '
+          errorCoupon.style.fontSize = 'x-small'
+        }
+      }
+    })
+  }
+
+
+
+
+
+
+
+    function autoFill(addressId) {
+
+        const inputsId = ['fName', 'lName', 'address', 'landmark', 'town', 'country', 'postcode', 'mobile', 'email'];
+        $.ajax({
+            url: '/autofill-address/' + addressId,
+            method: 'GET',
+            success: (response) => {
+                let data = response[0].address
+
+                inputsId.forEach((e) => {
+                    document.getElementById(e).value = data[e]
+                })
+
+            }
+        })
+    }
+
 </script>

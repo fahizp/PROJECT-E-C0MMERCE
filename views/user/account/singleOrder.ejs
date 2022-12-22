@@ -1,0 +1,430 @@
+<main class="main">
+  <div class="page-header breadcrumb-wrap">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html" rel="nofollow">Home</a>
+        <span></span> Shop
+        <span></span> Your Cart
+      </div>
+    </div>
+  </div>
+
+  <% const dataToReadable=(date)=>{
+       function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0' +minutes : minutes; var strTime=hours + ':' + minutes + ampm; return strTime;
+        } 
+        const date_ = new Date(date);
+        let month = ['Jan','Feb','March','April','May','June','July','Aug','Sept','Nov','Dec']
+        let day = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+        let dd = date_.getDate();
+        let mm = date_.getMonth()-1;
+        let da=date_.getDay();
+        let dayText=day[da]
+        let monthText = month[mm]
+        let yyyy = date_.getFullYear();      
+        let time=formatAMPM(date_)
+            return `${dayText}, ${monthText} ${isNaN(dd)?'00':dd}, ${isNaN(yyyy)?'0000':yyyy},
+            ${time} ` }; %>
+
+
+
+  <section class="mt-50 mb-50">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <section class="content-main">
+            <div class="content-header">
+              <div>
+                <h2 class="content-title card-title">Orders</h2>
+                <p>Details for Order ID:<%user?._id %>
+                </p>
+              </div>
+            </div>
+            <% console.log(orders[0].orders); %>
+            <% orders?.forEach((element,index )=> { %>
+
+            <div class="card " style="margin-bottom: 50px;">
+              <header class="card-header">
+                <div class="row align-items-center">
+                  <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                    <span>
+                      <i class="material-icons md-calendar_today"></i> <b>
+                        <%= dataToReadable(element?.orders?.createdAt) %>
+                      </b>
+                    </span> <br>
+                    <small class="text-muted">Order ID:<%= element._id %></small>
+                  </div>
+                </div>
+              </header> <!-- card-header end// -->
+              <div class="card-body">
+                <div class="row mb-50 mt-20 order-info-wrap">
+                  <div class="col-md-4">
+                    <article class="icontext align-items-start">
+                      <span class="icon icon-sm rounded-circle bg-primary-light">
+                        <i class="text-primary material-icons md-person"></i>
+                      </span>
+                      <div class="text">
+                        <h6 class="mb-1">Customer</h6>
+                        <p class="mb-1">
+                          <%= element.orders.fName %> <br> <template class="__cf_email__" data-cfemail="e2838e879aa2879a838f928e87cc818d8f">[email&#160;protected]</template>
+                          <br> +91<%= element.orders.mobile%>
+                        </p>
+                        <a href="#">View profile</a>
+                      </div>
+                    </article>
+                  </div> <!-- col// -->
+                  <div class="col-md-4">
+                    <article class="icontext align-items-start">
+                      <span class="icon icon-sm rounded-circle bg-primary-light">
+                        <i class="text-primary material-icons md-local_shipping"></i>
+                      </span>
+                      <div class="text">
+                        <h6 class="mb-1">Order info</h6>
+                        <p class="mb-1">
+                          Shipping: Fargo express <br> Pay method: <%=
+                                                                        element.orders.paymentMethod %> <br> Status: new
+                        </p>
+                        <a href="#">Download info</a>
+                      </div>
+                    </article>
+                  </div> <!-- col// -->
+                  <div class="col-md-4">
+                    <article class="icontext align-items-start">
+                      <span class="icon icon-sm rounded-circle bg-primary-light">
+                        <i class="text-primary material-icons md-place"></i>
+                      </span>
+                      <div class="text">
+                        <h6 class="mb-1">Deliver to</h6>
+                        <p class="mb-1">
+                          City: <%= element?.orders?.shippingAddress?.address,
+                                                                        %>
+                          <%= element?.orders?.shippingAddress?.town%>
+                          <br>
+                          <%= element?.orders?.shippingAddress?.landmark
+                                                                                %> <br>
+                          <%= element?.orders?.shippingAddress?.postcode
+                                                                                    %>
+                        </p>
+                        <a href="#">View profile</a>
+                      </div>
+                    </article>
+                  </div> <!-- col// -->
+                </div> <!-- row // -->
+                <div class="row">
+                  <div class="col-lg-7">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th width="40%">Product</th>
+                            <th width="20%">Unit Price</th>
+                            <th width="20%">Quantity</th>
+                            <th width="20%" class="text-end">Total</th>
+                            <th width="40%">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+
+
+
+
+                          <tr>
+                            <td>
+                              <a class="itemside" href="#">
+                                <div class="left">
+                                  <img src="/productImages/<%= element.orders.productDetails._id?._id %>0.jpg" width="40" height="40" class="img-xs" alt="Item">
+                                </div>
+                                <div class="info">
+                                  <%= element.orders.productDetails.productName
+                                                                                            %>
+                                </div>
+                              </a>
+                            </td>
+                            <td> ₹ <%=
+                                                                                    element.orders.productDetails.productPrice
+                                                                                    %>
+                            </td>
+                            <td>
+                              <%= element.orders.productDetails.quantity
+                                                                                    %>
+                            </td>
+                            <td class="text-end">₹<%=
+                                                                                    element.orders.productDetails.productPrice
+                                                                                    *
+                                                                                    element.orders.productDetails.quantity
+                                                                                    %>
+                            </td>
+                            <% if
+                                                                                (element.orders.productDetails.status&&element.orders.productDetails.Delivery!='Delivered'
+                                                                                ) { %>
+                            <td><button class="btn" style="background-color:rgb(234, 34, 4); border: none;" onclick="cancelOrder('<%= element.orders.productDetails._id %>','<%=element?.orders._id%>')">Cancel</button>
+                            </td>
+                            <% }else if(element.orders.productDetails.Delivery=='Product Returned'){ %>
+                              <td><button class="btn" style="background-color:rgb(36, 173, 247); border: none; " disabled >returned</button></td>
+                              
+                              <% } else if(element.orders.productDetails.Delivery=='Delivered'){ %>
+                                <td><button class="btn" onclick="returnOrder('<%= element.orders.productDetails._id %>','<%=element?.orders._id%>')" style="background-color:rgb(36, 173, 247); border: none;">return</button>
+                              <a onclick="downloadInvoice('<%= element?.orders?._id %>','<%= element?.orders?.productDetails?._id %>')" style="color:  #088178;">Download info</a>
+                            </td>
+                              
+                              <% }else if(!element.orders.productDetails.status){ %>
+                                
+                                <td><button class="btn" style="background-color:rgb(234, 34, 4); border: none;" disabled>Canceled</button>
+                              <% }%>
+
+                          </tr>
+
+                          <tr>
+                            <td colspan="5">
+                              <article class="float-end">
+                                <dl class="dlist mx-2">
+                                  <dt>Subtotal: ₹<%=
+                                                                                                    element.orders.totalPrice%>
+                                  </dt>
+
+                                </dl>
+                                <dl class="dlist">
+                                  <dt>Shipping cost: free</dt>
+
+                                </dl>
+                                <dl class="dlist">
+                                  <dt>Grand total: <b class="h5"> ₹<%=
+                                                                                                        element.orders.totalPrice
+                                                                                                        %> </b></dt>
+
+                                </dl>
+                                <dl class="dlist">
+
+                                  <dt class="text-muted">
+                                    Status: <% if
+                                                                                                    (element.orders.paymentStatus=='PAID'
+                                                                                                    ) { %>
+                                    <span class="badge rounded-pill alert-success text-success">Payment
+                                      done</span>
+                                  </dt>
+                                  <% }else{ %>
+                                  <span class="badge rounded-pill alert-warning text-warning">Payment
+                                    Pending</span></dt>
+                                  <% } %>
+
+                                </dl>
+                              </article>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                    </div> <!-- table-responsive// -->
+                  </div> <!-- col// -->
+                  <div class="col-lg-1"></div>
+                  <div class="col-lg-4">
+
+                    <div class="h-25 pt-4">
+
+                    </div>
+                  </div> <!-- col// -->
+                </div>
+              </div> <!-- card-body end// -->
+            </div> <!-- card end// -->
+            <% }); %>
+          </section> <!-- content-main end// -->
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/easyinvoice/dist/easyinvoice.min.js"></script>
+<script>
+  function cancelOrder(proId, ordId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3cc75c',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Cancel The Order!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '/orders',
+          data: {
+            proId: proId,
+            orderId: ordId
+          },
+          method: 'post',
+          success: (response) => {
+            if (response.status) {
+              location.reload()
+            }
+          }
+        })
+
+        Swal.fire(
+          'Caneled!',
+          'Order is Cancelled',
+          'success'
+        )
+      }
+    })
+  }
+
+  function returnOrder(proId, orderId) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Are you sure',
+      text: "You won't be able to revert this!",
+      showDenyButton: true,
+      confirmButtonText: 'Yes, Return',
+      denyButtonText: `No`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+
+        $.ajax({
+          url: '/returnOrder',
+          method: 'put',
+          data: {
+            orderId: orderId,
+            proId: proId
+          },
+          success: (response) => {
+            if (response.status) {
+              Swal.fire('Returned!', '', 'success').then(() => {
+                location.reload()
+              })
+
+            } else {
+              Swal.fire('The Product Return validity expired', '', 'warning').then(() => {
+
+              })
+
+            }
+          }
+        })
+
+      }
+    })
+  }
+
+
+
+
+  function downloadInvoice(orderId, proId) {
+    $.ajax({
+      url: '/order-invoice-products?product=' + proId + '&orderId=' + orderId,
+      method: 'GET',
+      success: (response) => {
+        if (response.status) {
+
+          let details = response.data
+
+          const getDate = (date) => {
+            let orderDate = new Date(date)
+
+            let day = orderDate.getDate();
+
+            let month = orderDate.getMonth();
+            month += 1
+            let year = orderDate.getFullYear();
+
+            return `${isNaN(day)?00:day}-${isNaN(month)?00:month}-${isNaN(year)?0000:year}`
+
+          }
+
+
+          var data = {
+            "images": {
+              // The logo on top of your invoice
+              "logo": "https://public.easyinvoice.cloud/img/logo_en_original.png",
+              // The invoice background
+              "background": "https://public.easyinvoice.cloud/img/watermark-draft.jpg"
+
+            },
+            // Your own data
+            "sender": {
+              "company": "EVARA",
+              "address": "EVARA- ECOMMERCE KALAMASSERY,KERALA",
+              "zip": "602021",
+              "city": "Cochin",
+              "country": "INDIA"
+              //"custom1": "custom value 1",
+              //"custom2": "custom value 2",
+              //"custom3": "custom value 3"
+            },
+            // Your recipient
+            "client": {
+              "First Name": details.orders.fName,
+              "Last Name": details.orders.lName,
+              "Email": details.orders.shippingAddress.email,
+              "address": details.orders.shippingAddress.address,
+              "zip": details.orders.shippingAddress.postcode,
+              "city": details.orders.shippingAddress.town,
+              "country:": details.orders.shippingAddress.country
+              // "custom1": "custom value 1",
+              // "custom2": "custom value 2",
+              // "custom3": "custom value 3"
+            },
+            "information": {
+              // Invoice number
+              "number": '#' + details.orders._id,
+              // Invoice data
+              "date": getDate(details.orders.createdAt),
+              "due-date": getDate(details.orders.createdAt)
+            },
+            // The products you would like to see on your invoice
+            // Total values are being calculated automatically
+            "products": [{
+              "quantity": details.orders.productDetails.quantity,
+              "description": details.orders.productDetails.productName,
+              "tax-rate": 0,
+              "price": details.orders.productDetails.productPrice
+            }],
+            // The message you would like to display on the bottom of your invoice
+            "bottom-notice": "Thank you for puchasing from EVARA",
+            // Settings to customize your invoice
+            "settings": {
+              "currency": "INR", // See documentation 'Locales and Currency' for more info. Leave empty for no currency.
+              // "locale": "nl-NL", // Defaults to en-US, used for number formatting (See documentation 'Locales and Currency')
+              "tax-notation": "gst", // Defaults to 'vat'
+              // "margin-top": 25, // Defaults to '25'
+              // "margin-right": 25, // Defaults to '25'
+              // "margin-left": 25, // Defaults to '25'
+              // "margin-bottom": 25, // Defaults to '25'
+              "format": "A4", // Defaults to A4, options: A3, A4, A5, Legal, Letter, Tabloid
+              // "height": "1000px", // allowed units: mm, cm, in, px
+              // "width": "500px", // allowed units: mm, cm, in, px
+              // "orientation": "landscape", // portrait or landscape, defaults to portrait
+            },
+          };
+          console.log("fahiz");
+
+          //Create your invoice! Easy!
+          easyinvoice.createInvoice(data, function(result) {
+            easyinvoice.download('myInvoice.pdf', result.pdf);
+            // console.log("fahiz");
+            //The response will contain a base64 encoded PDF file
+            // easyinvoice.download('myInvoice.pdf', result.pdf);
+            // console.log('PDF base64 string: ', result.pdf);
+          });
+
+
+
+
+        }
+      }
+
+    })
+  }
+</script>

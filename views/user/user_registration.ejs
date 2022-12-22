@@ -19,8 +19,14 @@
                                     <form action="">
                                         <p id="error" class="text-center" style="color: rgb(400, 90, 32);"></p>
                                         <div class="form-group">
-                                            <input type="text" required="" name="username" placeholder="Username"
-                                                id="username">
+                                            <input type="text" required="" name="fName" placeholder="fName"
+                                                id="fName">
+                                            <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" required="" name="lName" placeholder="lName"
+                                                id="lName">
                                             <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
                                             </p>
                                         </div>
@@ -86,24 +92,27 @@
 </main>
 <script>
     function validationSignup() {
-        const username = document.getElementById('username');
+        const fName = document.getElementById('fName');
+        const lName = document.getElementById('lName');
         const email = document.getElementById('email');
         const phoneNumber = document.getElementById('phoneNumber');
         const password = document.getElementById('password');
         const ConfirmPassword = document.getElementById('ConfirmPassword');
 
 
-        const usernameval = username.value.trim()
+        const fNameval = fName.value.trim()
+        const lNameval = lName.value.trim()
         const emailval = email.value.trim()
         const phoneNumberval = phoneNumber.value.trim()
         const passwordval = password.value.trim()
         const ConfirmPasswordval = ConfirmPassword.value.trim();
 
-        const error1 = username.parentElement.querySelector('p');
-        const error2 = email.parentElement.querySelector('p');
-        const error3 = phoneNumber.parentElement.querySelector('p');
-        const error4 = password.parentElement.querySelector('p')
-        const error5 = ConfirmPassword.parentElement.querySelector('p');
+        const error1 = fName.parentElement.querySelector('p');
+        const error2 = lName.parentElement.querySelector('p');
+        const error3 = email.parentElement.querySelector('p');
+        const error4 = phoneNumber.parentElement.querySelector('p');
+        const error5 = password.parentElement.querySelector('p')
+        const error6 = ConfirmPassword.parentElement.querySelector('p');
 
         let flag = 1;
 
@@ -112,9 +121,10 @@
         error3.innerText = "";
         error4.innerText = "";
         error5.innerText = "";
+        error6.innerText = "";
 
 
-        const arr = [username,email, phoneNumber,password,ConfirmPassword]
+        const arr = [fName,lName,email, phoneNumber,password,ConfirmPassword]
 
         arr.forEach((e) => {
       e.addEventListener("keyup", () => {
@@ -123,21 +133,30 @@
     })
 
 
-        if (usernameval == "") {
-            error1.innerText = 'This field is required'
-            flag = 2;
-        } else if (usernameval.length < 5) {
-            error1.innerText = "Username must be 5 characters"
-            flag = 2;
-        } else if (usernameval.length >= 7) {
-            error1.innerText = "Username should not have more than 7 alphabet"
-            flag = 2;
+        /////////////////////////////////First Name Validation////////////////////////
+        if(fNameval == ""){
+            error1.innerText = "This field is required"
+            flag=2
         }
-        else if (!usernameval.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+       else if(fNameval.length <= 2){
+            error1.innerText = "First name must be minimum 2 characters"
+            flag=2
+       }
+       else if(!fNameval.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)){
             error1.innerText = "Enter valid details"
-            flag = 2;
+            flag=2
+       }
+       
+       /////////////////////////////////Last Name Validation////////////////////////
+       if(lNameval == ""){
+            error2.innerText = "This field is required"
+            flag=2
         }
-
+       else if(!lNameval.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)){
+            error2.innerText = "Enter valid details"
+            flag=2
+       }
+       
 
         if (emailval == "") {
             error2.innerText = 'This field is required'
@@ -186,17 +205,18 @@
 
 
         if (flag == 1) {
-            submit(usernameval, emailval, passwordval, phoneNumberval)
+            submit(fNameval,lNameval, emailval, passwordval, phoneNumberval)
         }
 
-        function submit(Username, Email, Password, PhoneNumber) {
+        function submit(fName,lName, Email, Password, PhoneNumber) {
             fetch('/user_registration', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    username: Username,
+                    fName: fName,
+                    lName: lName,
                     email: Email,
                     password: Password,
                     phoneNumber: PhoneNumber

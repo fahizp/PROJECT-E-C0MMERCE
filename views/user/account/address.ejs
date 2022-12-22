@@ -1,0 +1,644 @@
+<main class="main">
+  <div class="page-header breadcrumb-wrap">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html" rel="nofollow">Home</a>
+        <span></span> My account
+      </div>
+    </div>
+  </div>
+  <section class="pt-100 pb-100">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 m-auto">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="dashboard-menu">
+                <ul class="nav flex-column" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/my-account"><i class="fi-rs-settings-sliders mr-10"></i>Dashboard</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/my-account/orders"><i class="fi-rs-shopping-bag mr-10"></i>Orders</a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="/my-account/address" class="nav-link active"><i class="fi-rs-marker mr-10"></i>My
+                      Address</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/my-account/profile"><i class="fi-rs-user mr-10"></i>Account details</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" onclick="swalpopUpSign()"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-8">
+              <div class="tab-content dashboard-content">
+                <div class="tab-pane fade active show" id="address" role="tabpanel" aria-labelledby="address-tab">
+                  <div class="row">
+                  
+
+                      <% address.forEach(element => { %>
+                        <% for(i=0;i<element.address.length;i++){ %>
+                      <div id="635ca7d65dd256aa4b725ca0" class="col-lg-6 mb-4">
+                        <div class="card mb-3 mb-lg-0">
+                          <div class="card-header">
+                            <h5 class="mb-0">
+                              <%= element.address[i].fName %>
+                                <%= element.address[i].lName %> - <%= element.address[i].mobile %>
+                            </h5>
+                          </div>
+                          <div class="card-body">
+                            <address class="mb-1">
+                              <%= element.address[i].fName %>,<br>
+                              <%= element.address[i].fName %>
+                                  <%= element.address[i].address %>, <%= element.address[i].postcode %>,<br>
+                                      <%= element.address[i].town %>, <%= element.address[i].country %>
+                            </address>
+                            <a  data-bs-toggle="modal" data-bs-target="#exampleModalLong<%=element.address[i]._id%>" class="btn-small text-muted">Edit</a>
+                            <a onclick="deleteAddress('<%= element.address[i]._id  %>')"
+                              class="btn-small text-danger ms-2">Delete</a>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="modal fade" id="exampleModalLong<%=element.address[i]._id%>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form>
+                                <div class="form-group">
+                                  <input type="text" required="" name="fname" id="fNameEdit" placeholder="First name *" value="<%= element.address[i].fName %>">
+                                  <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                </div>
+                                <div class="form-group">
+                                  <input type="text" required="" name="lnameEdit" id="lNameEdit" placeholder="Last name *" value=" <%= element.address[i].lName %>">
+                                  <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                </div>
+                                <div class="form-group">
+                                  <div class="custom_select">
+                      
+                                    <select class="form-control select-active" id="countryEdit" style="width: 250px;">
+                                      <option value=" <%= element.address[i].country %>">Select an option...</option>
+                                      <% locals?.country.forEach((element)=>{ %>
+                                        <option>
+                                          <%-element.name%>
+                                        </option>
+                                        <% }) %>
+                                    </select>
+                                    <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <input type="text" name="billing_address" id="addressEdit" required=""
+                                    placeholder="Address *"  value=" <%= element.address[i].address %>">
+                                  <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                </div>
+                                <div class="form-group">
+                                  <input required="" type="text" name="city" id="townEdit" placeholder="City / Town *"  value=" <%= element.address[i].town %>">
+                                  <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                </div>
+                                <div class="form-group">
+                                  <input required="" type="text" name="landmark" id="landmarkEdit"
+                                    placeholder="Appartments, suite, unit etc ... *"  value=" <%= element.address[i].landmark %>">
+                                  <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                </div>
+                                <div class="form-group">
+                                  <input required="" type="text" name="zipcode" id="postcodeEdit" placeholder="Postcode / ZIP *"  value=" <%= element.address[i].postcode %>">
+                                  <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                </div>
+                                <div class="form-group">
+                                  <input required="" type="text" name="phone" id="mobileEdit" placeholder="Phone *"  value=" <%= element.address[i].mobile %>">
+                                  <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                </div>
+                                <div class="form-group">
+                                  <input required="" type="text" name="email" id="emailEdit" placeholder="Email address *"  value=" <%= element.address[i].email %>">
+                                  <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn " style="background-color: rgb(230, 43, 40); border: none;" data-bs-dismiss="modal">Close</button>
+                              <button type="button" onclick="editAddress('<%= element.address[i]._id%>',this)" class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white border-radius-5 btn-shadow-brand hover-up">Save changes</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    
+
+                      <% } %>
+                      <% }); %>
+                  </div>
+                  <div class="row mx-1 mt-2">
+                    <div class="toggle_info">
+                      <span><i class="fi-rs-user mr-10"></i> <a href="#newAddress" data-bs-toggle="collapse"
+                          class="collapsed" aria-expanded="false">Add new address</a></span>
+                    </div>
+                    <div class="panel-collapse collapse login_form" id="newAddress">
+                      <div class="panel-body">
+                        <form>
+                          <div class="form-group">
+                            <input type="text" required="" name="fname" id="fName" placeholder="First name *">
+                            <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" required="" name="lname" id="lName" placeholder="Last name *">
+                            <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                          </div>
+                          <div class="form-group">
+                            <div class="custom_select">
+
+                              <select class="form-control select-active" id="country" style="width: 250px;">
+                                <option value="">Select an option...</option>
+                                <% locals?.country.forEach((element)=>{ %>
+                                  <option>
+                                    <%-element.name%>
+                                  </option>
+                                  <% }) %>
+                              </select>
+                              <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <input type="text" name="billing_address" id="addressId" required=""
+                              placeholder="Address *">
+                            <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                          </div>
+                          <div class="form-group">
+                            <input required="" type="text" name="city" id="town" placeholder="City / Town *">
+                            <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                          </div>
+                          <div class="form-group">
+                            <input required="" type="text" name="landmark" id="landmark"
+                              placeholder="Appartments, suite, unit etc ... *">
+                            <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                          </div>
+                          <div class="form-group">
+                            <input required="" type="text" name="zipcode" id="postcode" placeholder="Postcode / ZIP *">
+                            <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                          </div>
+                          <div class="form-group">
+                            <input required="" type="text" name="phone" id="mobile" placeholder="Phone *">
+                            <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                          </div>
+                          <div class="form-group">
+                            <input required="" type="text" name="email" id="email" placeholder="Email address *">
+                            <p class="d-flex w-75 justify-content-start" style="color: rgb(230, 43, 40);"></p>
+                          </div>
+                          <div class="form-group">
+                            <button type="button" onclick="validatoraddAddress()"
+                              class="btn btn-outline btn-lg btn-brand-outline font-weight-bold text-brand bg-white text-hover-white border-radius-5 btn-shadow-brand hover-up">Add
+                              address</button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+<!-- Modal -->
+
+
+
+
+
+
+
+
+
+<script>
+
+  function validatoraddAddress() {
+
+    const fName = document.getElementById('fName')
+    const lName = document.getElementById('lName')
+    const street = document.getElementById('addressId')
+    const apartment = document.getElementById('landmark')
+    const town = document.getElementById('town')
+    const country = document.getElementById('country')
+    const postcode = document.getElementById('postcode')
+    const mobile = document.getElementById('mobile')
+    const email = document.getElementById('email')
+
+    const fNameValue = fName.value.trim()
+    const lNameValue = lName.value.trim()
+    const streeValue = street.value.trim()
+    const apartmentValue = apartment.value.trim()
+    const townValue = town.value.trim()
+    const countryValue = country.options[country.selectedIndex].text
+    const postcodeValue = postcode.value.trim()
+    const mobileValue = mobile.value.trim()
+    const emailValue = email.value.trim()
+
+
+
+
+
+
+
+
+
+
+
+    const error1 = fName.parentElement.querySelector('p')
+    const error2 = lName.parentElement.querySelector('p')
+    const error3 = street.parentElement.querySelector('p')
+    const error4 = apartment.parentElement.querySelector('p')
+    const error5 = town.parentElement.querySelector('p')
+    const error6 = postcode.parentElement.querySelector('p')
+    const error7 = mobile.parentElement.querySelector('p')
+    const error8 = email.parentElement.querySelector('p')
+    const error9 = country.parentElement.querySelector('p')
+
+
+
+
+
+    let flag = 1
+
+
+    error1.innerText = ""
+    error2.innerText = ""
+    error3.innerText = ""
+    error4.innerText = ""
+    error5.innerText = ""
+    error6.innerText = ""
+    error7.innerText = ""
+    error8.innerText = ""
+    error9.innerText = ""
+
+    let arr = [fName, lName, street, apartment, town, country, postcode, mobile, email]
+    arr.forEach((element) => {
+      element.addEventListener("keyup", () => {
+        element.parentElement.querySelector('p').innerText = ""
+      })
+    })
+
+
+
+    //First Name
+    if (fNameValue == "") {
+      error1.innerText = 'This field is required'
+      flag = 2
+    } else if (fNameValue.length <= 2) {
+      error1.innerText = "First name must be minimum 2 characters"
+      flag = 2
+    } else if (!fNameValue.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+      error1.innerText = "Enter valid details"
+      flag = 2
+    }
+    //Last Name
+    if (lNameValue == "") {
+      error2.innerText = 'This field is required'
+    } else if (lNameValue.length < 2) {
+      error2.innerText = "Last name must be minimum 1 characters"
+      flag = 2
+    } else if (!lNameValue.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+      error2.innerText = "Enter valid details"
+      flag = 2
+    }
+    //Street Value
+    if (streeValue == "") {
+      error3.innerText = 'This field is required'
+      flag = 2
+    }
+    //Apartment Value
+    if (apartmentValue == "") {
+      error4.innerText = 'This field is required'
+      flag = 2
+    }
+    //Town Value
+    if (townValue == "") {
+      error5.innerText = 'This field is required'
+      flag = 2
+    }
+    //Postcode Value
+    if (postcodeValue == "") {
+      error6.innerText = 'This field is required'
+      flag = 2
+    } else if (postcodeValue.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+      error6.innerText = 'Enter valid details'
+      flag = 2
+    }
+    //Phone Number
+    if (mobileValue == "") {
+      error7.innerText = "This field is required"
+      flag = 2
+    } else if (!mobileValue.match(/^(\+\d{1,3}[- ]?)?\d{10}$/)) {
+      error7.innerText = 'Enter valid phone number'
+      flag = 2
+    }
+    //Email Valued
+    if (emailValue == "") {
+      error8.innerText = "This field is required"
+      flag = 2
+    } else if (!emailValue.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      error8.innerText = "Enter a valid email"
+      flag = 2
+    }
+    if (countryValue == 'Select an option...') {
+      error9.innerText = "This field is required"
+      flag = 2
+    }
+
+    if (flag == 1) {
+      submit(fNameValue, lNameValue, streeValue, apartmentValue, townValue, countryValue, postcodeValue, mobileValue, emailValue)
+    }
+  }
+
+
+  function submit(fName, lName, address, landmark, town, country, postcode, mobile, email) {
+    $.ajax({
+      url: '/my-account/address/add_address',
+      method: 'PUT',
+      data: {
+        fName: fName,
+        lName: lName,
+        address: address,
+        landmark: landmark,
+        town: town,
+        country: country,
+        postcode: postcode,
+        mobile: mobile,
+        email: email,
+      },
+      success: (response) => {
+        if (response.status) {
+          let timerInterval
+          Swal.fire({
+            icon: 'success',
+            title: 'Address added successfully',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+              const b = Swal.getHtmlContainer().querySelector('b')
+              timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log('I was closed by the timer')
+            }
+          }).then(function () {
+            location.reload()
+          });
+        }
+      }
+    })
+  }
+
+
+
+
+  function editAddress(Id,input) {
+      const fName = input.parentElement.parentElement.querySelector('#fNameEdit')
+      const lName = input.parentElement.parentElement.querySelector('#lNameEdit')
+      const street = input.parentElement.parentElement.querySelector('#addressEdit')
+      const apartment = input.parentElement.parentElement.querySelector('#landmarkEdit')
+      const town = input.parentElement.parentElement.querySelector('#townEdit')
+      const country = input.parentElement.parentElement.querySelector('#countryEdit')
+      const postcode = input.parentElement.parentElement.querySelector('#postcodeEdit')
+      const mobile = input.parentElement.parentElement.querySelector('#mobileEdit')
+      const email = input.parentElement.parentElement.querySelector('#emailEdit')
+      const fNameValue = fName.value.trim()
+      const lNameValue = lName.value.trim()
+      const streeValue = street.value.trim()
+      const apartmentValue = apartment.value.trim()
+      const townValue = town.value.trim()
+      const countryValue = country.value.trim()
+      const postcodeValue = postcode.value.trim()
+      const mobileValue = mobile.value.trim()
+      const emailValue = email.value.trim()
+      const error1 = fName.parentElement.querySelector('p')
+      const error2 = lName.parentElement.querySelector('p')
+      const error3 = street.parentElement.querySelector('p')
+      const error4 = apartment.parentElement.querySelector('p')
+      const error5 = town.parentElement.querySelector('p')
+      const error6 = postcode.parentElement.querySelector('p')
+      const error7 = mobile.parentElement.querySelector('p')
+      const error8 = email.parentElement.querySelector('p')
+      const error9 = country.parentElement.querySelector('p')
+      let flag = 1
+      error1.innerText = ""
+      error2.innerText = ""
+      error3.innerText = ""
+      error4.innerText = ""
+      error5.innerText = ""
+      error6.innerText = ""
+      error7.innerText = ""
+      error8.innerText = ""
+      error9.innerText = ""
+      let arr = [fName, lName, street, apartment, town, country, postcode, mobile, email]
+      arr.forEach((element) => {
+        element.addEventListener("keyup", () => {
+          element.parentElement.querySelector('p').innerText = ""
+        })
+      })
+      //First Name
+      if (fNameValue == "") {
+        error1.innerText = 'This field is required'
+        flag = 2
+      } else if (fNameValue.length <= 2) {
+        error1.innerText = "First name must be minimum 2 characters"
+        flag = 2
+      } else if (!fNameValue.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+        error1.innerText = "Enter valid details"
+        flag = 2
+      }
+      //Last Name
+      if (lNameValue == "") {
+        error2.innerText = 'This field is required'
+      } else if (lNameValue.length < 2) {
+        error2.innerText = "Last name must be minimum 1 characters"
+        flag = 2
+      } else if (!lNameValue.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+        error2.innerText = "Enter valid details"
+        flag = 2
+      }
+      //Street Value
+      if (streeValue == "") {
+        error3.innerText = 'This field is required'
+        flag = 2
+      }
+      //Apartment Value
+      if (apartmentValue == "") {
+        error4.innerText = 'This field is required'
+        flag = 2
+      }
+      //Town Value
+      if (townValue == "") {
+        error5.innerText = 'This field is required'
+        flag = 2
+      }
+      //Postcode Value
+      if (postcodeValue == "") {
+        error6.innerText = 'This field is required'
+        flag = 2
+      } else if (postcodeValue.match(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+        error6.innerText = 'Enter valid details'
+        flag = 2
+      }
+      //Phone Number
+      if (mobileValue == "") {
+        error7.innerText = "This field is required"
+        flag = 2
+      } else if (!mobileValue.match(/^(\+\d{1,3}[- ]?)?\d{10}$/)) {
+        error7.innerText = 'Enter valid phone number'
+        flag = 2
+      }
+      //Email Valued
+      if (emailValue == "") {
+        error8.innerText = "This field is required"
+        flag = 2
+      } else if (!emailValue.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+        error8.innerText = "Enter a valid email"
+        flag = 2
+      }
+      if (countryValue == "") {
+        error9.innerText = "This field is required"
+        flag = 2
+      }
+      if (flag == 1) {
+        submitEdit(fNameValue, lNameValue, streeValue, apartmentValue, townValue, countryValue, postcodeValue, mobileValue, emailValue, Id)
+      }
+    }
+
+
+    function submitEdit(fName, lName, address, landmark, town, country, postcode, mobile, email, Id) {
+      $.ajax({
+        url: '/accounts/address/' + Id,
+        method: 'PUT',
+        data: {
+          fName: fName,
+          lName: lName,
+          address: address,
+          landmark: landmark,
+          town: town,
+          country: country,
+          postcode: postcode,
+          mobile: mobile,
+          email: email,
+        },
+        // error: (error) => {
+        //   Swal.fire({
+        //     icon: 'error',
+        //     title: 'Oops...',
+        //     text: error.responseJSON.message,
+        //   })
+        // },
+        success: (response) => {
+          if (response.status) {
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Your address has been updated',
+              showConfirmButton: false,
+              timer: 1000
+            }).then(() => {
+              setTimeout(() => {
+                location.reload()
+              }, 500)
+            })
+          }
+        }
+      })
+    }
+
+
+
+    
+  
+
+
+
+  function deleteAddress(addressId) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '/my-account/address/delete-address/' + addressId,
+          method: 'DELETE',
+          success: (response) => {
+            location.reload()
+          }
+        }),
+          Swal.fire(
+            'Deleted!',
+            'Address is deleted.',
+            'success'
+          )
+      }
+    })
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+  function swalpopUpSign() {
+    Swal.fire({
+      position: 'top',
+      icon: 'warning',
+      title: 'Are you sure',
+      text: 'want to Log out?',
+      showDenyButton: true,
+      confirmButtonText: 'Yes, Logout',
+      denyButtonText: `No`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire('Successfully logout!', '', 'success').then(() => {
+          location.href = "/user_logout"
+        })
+      }
+    })
+  }
+</script>

@@ -6,6 +6,11 @@ const session = require("express-session");
 const userHelpers = require("../helpers/userHelpers");
 const orderHelpers = require("../helpers/orderHelpers");
 const { admin } = require("../Model/connection");
+const chartHelpers = require("../helpers/chartHelpers");
+const couponHelpers=require("../helpers/couponHelpers")
+const bannerHelpers=require("../helpers/bannerHelpers")
+var voucher_codes = require("voucher-code-generator");
+const { response } = require("../app");
 
 module.exports = {
   //Admin IndexPage
@@ -92,12 +97,15 @@ module.exports = {
   // Get Product
 
   getProducts: (req, res) => {
+  
     productHelpers
-      .getAllproduct()
-      .then((product) => {
+      .getAllproduct(req.query.page,req.query.limit)
+      .then((response) => {
         res.render("admin/productManagement", {
           layout: "admin-layout",
-          product,
+          product:response.product,
+          docCount:response.docCount,
+          currentPage:req.query.page,     
         });
       })
       .catch((err) => console.log(err));
@@ -141,14 +149,16 @@ module.exports = {
 
   // Edit Product
 
-  editProduct: (req, res) => {
+  editProduct: async(req, res) => {
     let proId = req.params.id;
+   let category= await productHelpers.getAllcategory()
     productHelpers
       .getProduct(proId)
       .then((product) => {
         res.render("admin/edit-product", {
           layout: "admin-layout",
           product,
+          category,
         });
       })
       .catch((err) => console.log(err));
@@ -177,11 +187,13 @@ module.exports = {
 
   getAllusers: (req, res) => {
     userHelpers
-      .getAllusers()
-      .then((users) => {
+      .getAllusers(req.query.page,req.query.limit)
+      .then((response) => {
         res.render("admin/userManagement", {
           layout: "admin-layout",
-          users,
+          users:response.user,
+          docCount:response.docCount,
+          currentPage:req.query.page, 
         });
       })
       .catch((err) => console.log(err));
@@ -297,10 +309,131 @@ module.exports = {
 
   getAdminOrdersDetailes: (req, res) => {
     orderHelpers
-      .getAdminOrdersDetailes(req.session.user._id)
+      .getAdminOrdersDetailes(req.session.user._id,req.params.id)
       .then((data) => {
         res.render("admin/order_detailes", { data, layout: "admin-layout" });
       })
       .catch((err) => console.log(err));
   },
+
+  updateOrder:(req,res)=>{
+    console.log("=>",req.body);
+    orderHelpers.updateOrder(req.body).then((response)=>{
+     res.json(response)
+    })
+  },
+
+  chartGraph:(req,res)=>{
+  chartHelpers.monthWiseSales().then((pricesdata)=>{
+    res.json(pricesdata)
+  })
+},
+
+addCoupon:(req,res)=>{
+  console.log("hihi");
+  res.render("admin/add- coupon",{ layout: "admin-layout"})
+},
+
+getCouponCode: async (req, res) => {
+  try {
+    let coupenCode = await voucher_codes.generate({
+      prefix: 'Evara-',
+      length: 5,
+      count: 1
+    })
+    res.send({ coupenCode })
+  } catch (error) {
+    console.log(error);
+  }
+
+},
+
+postAddCoupon:(req,res)=>{
+  let obj = {
+    coupon: req.body.coupen,
+    discountType: req.body.discountType,
+    cappedAmount: req.body.cappedAmount,
+    amount: req.body.discountAmount,
+    amountValidity: req.body.amountValidity,
+    percentage: req.body.discountPercentage,
+    validity: req.body.validity,
+    description: req.body.description,
+    redeemTime: req.body.redeemTime
+  }
+  console.log("hello",obj);
+  couponHelpers.addCoupon(obj).then((response)=>{
+res.json(response)
+  })
+},
+getCoupon:async(req,res)=>{
+  let couponData = await db.coupon.find({})
+  res.render('admin/couponManagement',{couponData, layout: "admin-layout"})
+},
+
+deleteCoupon:(req,res)=>{
+  console.log("delele");
+  let copId = req.params.id;
+  couponHelpers
+    .deleteCoupon(copId)
+    .then(() => {
+      res.json({status:true});
+    })
+    .catch((err) => console.log(err));
+},
+
+getSalesReportPage:(req,res)=>{
+
+},
+
+
+
+
+
+
+
+
+
+
+bannerManagement:async (req,res)=>{
+  let banners=await db.banner.find()
+  res.render('admin/bannerManagement',{layout: "admin-layout",banners})
+},
+
+addBannerGet:async(req,res)=>{
+  let category= await productHelpers.getAllcategory()
+
+  res.render('admin/add-banner',{layout: "admin-layout",category})
+},
+addBannerPost:(req,res)=>{
+bannerHelpers.addBanner(req.body)
+
+  .then((insertedId) => {
+    let image=req.files.image
+    console.log(image);
+    let bannerName = insertedId;
+    image.mv(`./public/bannerImages/${bannerName}.jpg`, (err) => {
+      if (!err) {
+        console.log("add Banner");
+       
+      } else {
+        console.log(err);
+      }
+    })
+    res.redirect("/admin_panel/banner/add_banner");
+  })
+},
+
+disableBanner:(req,res)=>{
+  
+  bannerHelpers.disableBanner(req.params.id).then(()=>{
+    res.redirect('/admin_panel/banner')
+  })
+},
+
+enableBanner:(req,res)=>{
+  bannerHelpers.enableBanner(req.params.id).then(()=>{
+    res.redirect('/admin_panel/banner')
+  })
+}
+
 };

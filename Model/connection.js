@@ -19,7 +19,9 @@ const productSchema = new mongoose.Schema({
   category: String,
   quantity: Number,
   price: Number,
+  offerprice:Number,
   description: String,
+  createdAt:Date,
 });
 
 // Admin Schema
@@ -32,14 +34,21 @@ const adminShema = new mongoose.Schema({
 // User Schema
 
 const userShema = new mongoose.Schema({
-  username: String,
+  fName: String,
+  lName: String,
   email: String,
   phoneNumber: Number,
   password: String,
+  createdAt: {
+        type: Date,
+        default:new Date(),
+      },
   status: {
     type: Boolean,
     default: true,
   },
+  wallet:Array ,
+  coupon: Array,
 });
 
 // category Schema
@@ -60,6 +69,24 @@ const cartSchema = new mongoose.Schema({
     },
   ],
 });
+
+
+
+// Wishlist Schema
+
+const wishlistSchema = new mongoose.Schema({
+  user: ObjectId,
+  wishlistProducts: [
+    {
+      item: mongoose.Types.ObjectId,
+      status: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  ],
+});
+
 
 // addressSchema
 
@@ -87,15 +114,17 @@ const orderSchema = new mongoose.Schema({
   orders: [
     {
       fName: String,
-      lname: String,
+      lName: String,
       mobile: Number,
       paymentMethod: String,
       productDetails: [{}],
       totalPrice: Number,
       shippingAddress: Object,
-      createdAt: {
-        type: Date,
-        default: new Date(),
+      createdAt:Date,
+      uuid:String,
+      paymentStatus: {
+        type: String,
+        default:'pending',
       },
       status: {
         type: Boolean,
@@ -105,6 +134,46 @@ const orderSchema = new mongoose.Schema({
   ],
 });
 
+
+const countryScheama =new mongoose.Schema({
+  code:String,
+  code3:String,
+  name:String,
+  number:Number
+}) 
+
+
+
+
+const couponSchema = new mongoose.Schema({
+  coupon: String,
+  discountType: String,
+  amount: Number,
+  amountValidity: String,
+  cappedAmount:Number,
+  percentage: Number,
+  description: String,
+  createdAt: {
+      type: Date,
+      default: new Date()
+  },
+  validityTill: Date,
+  usageValidity: Number
+
+})
+
+
+
+const bannerSchema = new mongoose.Schema({
+  mainBannerTitle: String,
+  mainBannerDescription: String,
+  mainBannerCategory : String,
+  checked:{
+      type:Boolean,
+      default:true
+  }
+})
+
 module.exports = {
   products: db.model("product", productSchema),
   admin: db.model("admin", adminShema),
@@ -113,4 +182,8 @@ module.exports = {
   cart: db.model("cart", cartSchema),
   address: db.model("address", addressSchema),
   order: db.model("order", orderSchema),
+  country:db.model('country',countryScheama),
+  coupon: db.model('coupon', couponSchema),
+  wishlist:db.model('wishlist',wishlistSchema),
+  banner:db.model('banner',bannerSchema),
 };

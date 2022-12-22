@@ -5,11 +5,17 @@ const db = require("../Model/connection");
 module.exports = {
   // Get All Product
 
-  getAllproduct: () => {
+  getAllproduct: (page,limit) => {
     return new Promise(async (resolve, reject) => {
       try {
-        let product = await db.products.find({});
-        resolve(product);
+        var docCount ;
+        let product = await db.products.find().countDocuments().then((Documents)=>{
+          
+          docCount=Math.ceil(Documents/limit);
+          return db.products.find().skip((page-1)*limit).limit(limit)
+        })    
+
+        resolve({product,docCount});
       } catch (error) {
         console.log(error);
       }
@@ -19,7 +25,6 @@ module.exports = {
   // Add Product
 
   addProduct: (product) => {
-    console.log(product);
     return new Promise(async (resolve, reject) => {
       try {
         let data = await db.products(product);
@@ -97,7 +102,7 @@ module.exports = {
               await db.categories(category).save();
               resolve();
             } catch (error) {
-              console.log(error);
+              console.log(error);             
             }
           } else {
             let response = false;
@@ -149,8 +154,8 @@ module.exports = {
           { _id: cateId },
           {
             $set: {
-              categories: cate.categories,
-              description: cate.description,
+              categories: cate.categories.toLowerCase(),
+              description: cate.description.toLowerCase(),
             },
           }
         );
@@ -160,4 +165,23 @@ module.exports = {
       }
     });
   },
+
+ 
+    getProductData:()=>{
+        return new Promise(async(resolve, reject) => {
+            try {
+                let products = await db.products.aggregate([
+                    {
+                        $project:{
+                            name:'$name',
+                            category:'$category',
+                        }
+                    }
+                ])
+                resolve(products)
+            } catch (error) {
+                console.log(error);
+            }
+        })
+    },
 };

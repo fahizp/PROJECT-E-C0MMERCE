@@ -1,0 +1,81 @@
+<section class="content-main">
+    <div class="row">
+      <div class="col-9">
+        <div class="content-header">
+          <h2 class="content-title">Add New Banner</h2>
+        </div>
+      </div>
+  
+  
+  
+      <form action="/admin_panel/banner/add_banner" method="POST" enctype="multipart/form-data">
+        <div class="col-lg-10">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4>Basic</h4>
+            </div>
+            <div class="card-body">
+              <div class="mb-4">
+                <label for="product_name" class="form-label"> Title</label>
+                <input required name="title" type="text" placeholder="Type here" class="form-control" id="product_name">
+              </div>
+              
+              <div class="mb-4">
+                <label class="form-label">Description</label>
+                <textarea required name="description" placeholder="Type here" class="form-control" rows="8"></textarea>
+              </div>
+             
+            
+            </div>
+          </div> <!-- card end// -->
+        </div>
+        <div class="col-lg-10">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4>Media</h4>
+            </div>
+            <div class="card-body">
+              <div class="input-upload">
+                <img src="/imgs/theme/upload.svg" id="imgView1" alt="">
+                <input name="image" multiple class="form-control" onchange="viewImage1(event)" type="file">
+              </div>
+            </div>
+          </div> <!-- card end// -->
+        </div>
+        <div class="col-lg-10">
+          <div class="card mb-4">
+            <div class="card-header">
+              <h4>Categories</h4>
+            </div>
+            <div class="card-body">
+              <div class="row gx-2">
+                <div class="col-sm-6 mb-3">
+                  <label class="form-label">Category</label>
+                  <select name="category" class="form-select">
+                    <% category?.forEach(element => { %>
+                    <option><%= element.categories %> </option>
+                    <%  }); %>
+                  </select>
+                </div>
+  
+              </div> <!-- row.// -->
+            </div>
+          </div> <!-- card end// -->
+        </div>
+        <div class="col-lg-10">
+          <div class="card mb-4">
+            <div class="card-body">
+              <button type="submit"  class="btn btn-md rounded font-sm hover-up">Publish</button>
+              <a href="/admin_panel/products" class="btn btn-light rounded font-md ms-1">Cancel</a>
+            </div>
+          </div>
+        </div>
+      </form>
+  
+    </div>
+  </section>
+  <script>
+    function viewImage1(event) {
+      document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+    }
+  </script>

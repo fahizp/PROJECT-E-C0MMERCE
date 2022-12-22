@@ -1,7 +1,30 @@
-(function ($) {
-    "use strict";
+let  temp
 
-    /*Sale statistics Chart*/
+(async function ($) {
+    fetch('/admin_panel/chartGraph', {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }).then(res=>res.json()).then((res)=>{
+        
+        // let yearly = res.yearly
+        // let monthly = res.monthly
+        // let daily = res.daily
+        // let dailyArr =[]
+        // for(i=1;i<+30;i++){
+        //     for(j=0;j<+30;j++){
+        //         if (daily[j]?._id==i) {
+        //             dailyArr[i]=daily[j]?.total
+        //             break;
+        //         } else {
+        //            dailyArr[i]=0 
+        //         }
+        //     }
+        // }
+
+
+         /*Sale statistics Chart*/
     if ($('#myChart').length) {
         var ctx = document.getElementById('myChart').getContext('2d');
         var chart = new Chart(ctx, {
@@ -17,7 +40,7 @@
                         fill: true,
                         backgroundColor: 'rgba(44, 120, 220, 0.2)',
                         borderColor: 'rgba(44, 120, 220)',
-                        data: [18, 17, 4, 3, 2, 20, 25, 31, 25, 22, 20, 9]
+                        data: [res.data[1].total,res.data[1].total,res.data[3].total,res.data[4].total,res.data[5].total,res.data[6].total,res.data[7].total,res.data[8].total,res.data[9].total,res.data[10].total,res.data[11].total,res.data[12].total]
                     },
                     {
                         label: 'Visitors',
@@ -49,6 +72,15 @@
             }
         });
     } //End if
+    
+      })
+      
+
+
+
+    "use strict";
+
+   
 
     /*Sale statistics Chart*/
     if ($('#myChart2').length) {

@@ -1,6 +1,8 @@
 const db = require("../Model/connection");
 
 const bcrypt = require("bcrypt");
+const ObjectId = require("objectid");
+const { response } = require("../app");
 
 module.exports = {
 
@@ -77,11 +79,17 @@ module.exports = {
 
 //Get All User 
 
-  getAllusers:()=>{
+  getAllusers:(page,limit)=>{
     return new Promise(async(resolve, reject) => {
         try {
-            let user=await db.user.find({})
-            resolve(user)
+            var docCount ;
+            let user=await db.user.find({}).countDocuments().then((Documents)=>{
+              
+              docCount=Math.ceil(Documents/limit);
+              return db.user.find().skip((page-1)*limit).limit(limit)
+            })    
+            
+            resolve({user,docCount});
         } catch (error) {
             console.log(error);
         }
@@ -124,5 +132,147 @@ module.exports = {
             console.log(error);
         }
     })
-  }
+  },
+
+  updateProfile:(data,userId)=>{
+    return new Promise(async(resolve, reject) => {
+      let user=await db.user.findOne({_id:ObjectId(userId)})
+      if (user) {
+        bcrypt.compare(data.currentPassword, user.password).then(async(loginTrue)=>{
+          console.log(loginTrue);
+           if (loginTrue) {
+            data.currentPassword=await bcrypt.hash(data.currentPassword,10)
+            console.log("htee");
+            db.user.updateOne({ _id: userId }, {
+              $set: {
+                  fName: data.fName,
+                  lName: data.lName,
+                  email: data.email,
+                  password: data.confirmPasswordPro
+              }
+          }).then(() => {
+              resolve({ status: true })
+          })
+           } else {
+            resolve({status:false})
+           }
+        })
+      }
+    })
+  },
+
+  addToWishlist:(proId,userId)=>{
+    return new Promise(async(resolve, reject) => {
+      proObj = {
+        item: proId,
+        status:true,
+      };
+
+      let userWishlist = await db.wishlist.findOne({ user: userId });
+     
+      if (userWishlist) {
+        console.log("alredt");
+        let prodExist = userWishlist.wishlistProducts.findIndex(
+          (wishlistProducts) => wishlistProducts.item == proId
+        );
+        if (prodExist== -1) {
+          db.wishlist.updateOne({user:userId },{
+            $push:{
+              wishlistProducts: proObj
+            }
+          }).then((e)=>{
+            console.log(e);
+           resolve({status:true})
+          })
+        }else{
+          console.error("sorryh");
+          resolve({status:true})
+        }
+        
+      } else {
+        console.log("alt");
+        let wishlistObj = {
+          user: userId,
+          wishlistProducts: [proObj],
+        };
+        db.wishlist(wishlistObj)
+          .save()
+          .then(() => {
+            resolve();
+          })
+          .catch((err) => console.log(err));
+      }
+      
+
+    })
+  },
+  getwishlistCound:(user)=>{
+    return new Promise((resolve, reject) => {
+      db.wishlist.find({user:user}).then((wish)=>{
+       let wishlistCound=wish[0]?.wishlistProducts.length
+       resolve(wishlistCound)
+      })
+    })
+  },
+
+  getwishlistProducts:(user)=>{
+    return new Promise((resolve, reject) => {
+      db.wishlist
+        .aggregate([
+          {
+            $match: { user: user },
+          },
+          {
+            $unwind: "$wishlistProducts",
+          },
+          {
+            $project: {
+              item: "$wishlistProducts.item",
+              status:"$wishlistProducts.status",
+            },
+          },
+          {
+            $lookup: {
+              from: "products",
+              localField: "item",
+              foreignField: "_id",
+              as: "wishlistItems",
+            },
+          },
+          {
+            $project: {
+              item: 1,
+              status:1,
+              Product: { $arrayElemAt: ["$wishlistItems", 0] },
+            },
+          },
+        ])
+        .then((wishlistItems) => {
+          console.log("asdfghj",wishlistItems);
+          resolve(wishlistItems);
+        })
+        .catch((err) => console.log(err));
+    });
+  },
+
+  // Delete Wishlist Product //
+
+  deleteWishlistProduct: (data, user) => {
+    return new Promise((resolve, reject) => {
+      const id = data.product;
+      db.wishlist
+        .updateOne(
+          { user: user },
+          {
+            $pull: {
+              wishlistProducts: { item: id },
+            },
+          }
+        )
+        .then((e) => {
+          resolve({ removeProduct: true });
+        })
+        .catch((err) => console.log(err));
+    });
+  },
 };
