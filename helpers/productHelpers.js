@@ -1,21 +1,27 @@
 const { response } = require("express");
+const { tryParse } = require("objectid");
 const { categories } = require("../Model/connection");
 const db = require("../Model/connection");
 
 module.exports = {
   // Get All Product
 
-  getAllproduct: (page,limit) => {
+  getAllproduct: (page, limit) => {
     return new Promise(async (resolve, reject) => {
       try {
-        var docCount ;
-        let product = await db.products.find().countDocuments().then((Documents)=>{
-          
-          docCount=Math.ceil(Documents/limit);
-          return db.products.find().skip((page-1)*limit).limit(limit)
-        })    
+        var docCount;
+        let product = await db.products
+          .find()
+          .countDocuments()
+          .then((Documents) => {
+            docCount = Math.ceil(Documents / limit);
+            return db.products
+              .find()
+              .skip((page - 1) * limit)
+              .limit(limit);
+          });
 
-        resolve({product,docCount});
+        resolve({ product, docCount });
       } catch (error) {
         console.log(error);
       }
@@ -91,24 +97,27 @@ module.exports = {
 
   addCategory: (category) => {
     return new Promise((resolve, reject) => {
-      db.categories
-        .find({
-          categories: category.categories,
-        })
-        .then(async (response) => {
-          console.log(response);
-          if (response.length == 0) {
-            try {
-              await db.categories(category).save();
-              resolve();
-            } catch (error) {
-              console.log(error);             
+      try {
+        db.categories
+          .find({
+            categories: category.categories,
+          })
+          .then(async (response) => {
+            if (response.length == 0) {
+              try {
+                await db.categories(category).save();
+                resolve();
+              } catch (error) {
+                console.log(error);
+              }
+            } else {
+              let response = false;
+              resolve(response);
             }
-          } else {
-            let response = false;
-            resolve(response);
-          }
-        });
+          });
+      } catch (error) {
+        reject({ error: "Unauthorized Action" });
+      }
     });
   },
 
@@ -121,6 +130,7 @@ module.exports = {
         resolve(category);
       } catch (error) {
         console.log(error);
+        reject({ error: "Unauthorized Action" });
       }
     });
   },
@@ -132,6 +142,7 @@ module.exports = {
         resolve();
       } catch (error) {
         console.log(error);
+        reject({ error: "Unauthorized Action" });
       }
     });
   },
@@ -143,6 +154,7 @@ module.exports = {
         resolve(catagory);
       } catch (error) {
         console.log(error);
+        reject({ error: "Unauthorized Action" });
       }
     });
   },
@@ -162,26 +174,27 @@ module.exports = {
         resolve();
       } catch (error) {
         console.log(error);
+        reject({ error: "Unauthorized Action" });
       }
     });
   },
 
- 
-    getProductData:()=>{
-        return new Promise(async(resolve, reject) => {
-            try {
-                let products = await db.products.aggregate([
-                    {
-                        $project:{
-                            name:'$name',
-                            category:'$category',
-                        }
-                    }
-                ])
-                resolve(products)
-            } catch (error) {
-                console.log(error);
-            }
-        })
-    },
+  getProductData: () => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        let products = await db.products.aggregate([
+          {
+            $project: {
+              name: "$name",
+              category: "$category",
+            },
+          },
+        ]);
+        resolve(products);
+      } catch (error) {
+        console.log(error);
+        reject({ error: "Unauthorized Action" });
+      }
+    });
+  },
 };

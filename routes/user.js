@@ -86,54 +86,97 @@ router.post('/orders',auth.verifyUserAPI ,userController.cancelOrder)
 // Account Page //
 router.get('/my-account/orders',auth.verifyUserAPI ,userController.orders)
 
+// Account Dashboard //
+
 router.get('/my-account',auth.verifyUser,userController.account)
+
+// Address Get //
 
 router.get('/my-account/address',auth.verifyUserAPI ,userController.addressGet)
 
-//
+// Verify Payment //
 
 router.post('/verify-payment',auth.verifyUserAPI ,userController.verifypayment)
 
-//
+// Papal Order //
 
 
 router.post('/create-order',auth.verifyUserAPI ,userController.paypalOrder)
 
+// Papal Success  //
+
 router.get('/paypal-success',auth.verifyUserAPI ,userController.paypalSuccess)
+
+// Check Cart Quantity  //
 
 router.get('/check-cart-quantity/:id',auth.verifyUserAPI ,userController.checkCartQuantity)
 
+// Shop  //
+
 router.get('/shop',userController.shop)
+
+// Delete Address //
 
 router.delete( '/my-account/address/delete-address/:id',auth.verifyUserAPI ,userController.deleteAddress)
 
+// Single Order //
+
 router.get('/my-account/orders/:id',auth.verifyUserAPI ,userController.singleOrder)
+
+// Order Invoice //
 
 router.get('/order-invoice-products',auth.verifyUserAPI ,userController.orderInvoice)
 
+// Retrun Order //
+
 router.put('/returnOrder',auth.verifyUserAPI ,userController.returnOrder)
+
+// Add Address //
 
 router.put('/my-account/address/add_address',auth.verifyUserAPI ,userController.addAddress)
 
+// Profile //
+
 router.get('/my-account/profile',auth.verifyUserAPI ,userController.profile)
+
+// Update Profile //
 
 router.put('/accounts/profile/updateProfile',auth.verifyUserAPI ,userController.updateProfile)
 
+// Edit Address //
+
 router.put('/accounts/address/:id',auth.verifyUserAPI ,userController.editAddress)
+
+// Get Blog Page //
 
 router.get('/blog',userController.getBlogPage)
 
+// Contact //
+
 router.get('/contact',userController.getContactPage)
+
+// Coupon Verify //
 
 router.post('/proceedToCheckOut/coupon_verify',auth.verifyUserAPI ,userController.verifyCoupon)
 
+// Coupon Checked //
+
 router.post('/proceedToCheckOut/verify_coupon_checked',auth.verifyUserAPI ,userController.couponChecked)
+
+// Apply Coupon //
 
 router.post( '/proceedToCheckOut/apply_coupon',auth.verifyUserAPI ,userController.applyCoupon)
 
+// Add To Wishlist //
+
 router.get('/addtoWishlist/:id',auth.verifyUserAPI ,userController.addToWishlist)
 
+// Delete Wishlist Product //
+
 router.delete('/deleteWishlistItems',auth.verifyUserAPI ,userController.deleteWishlistProduct)
+
+// Get Product Data  //
+
 router.get('/getProductData',userController.getProductData)
 
 

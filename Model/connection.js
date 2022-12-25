@@ -119,6 +119,7 @@ const orderSchema = new mongoose.Schema({
       paymentMethod: String,
       productDetails: [{}],
       totalPrice: Number,
+      totalQuantity: Number,
       shippingAddress: Object,
       createdAt:Date,
       uuid:String,

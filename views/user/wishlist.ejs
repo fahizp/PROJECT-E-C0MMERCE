@@ -1,3 +1,26 @@
+
+<% if (!wishlistItems.length) { %>
+  <section class="mt-50 mb-50">
+    <div class="container">
+      <div class="row">
+
+        
+
+        <div class="col-12 text-center my-5">
+          <h3 class="">Your Wishlist is empty!</h3>
+          <p class="mb-4 mt-2">Add items to it now.</p>
+          <a class="btn" href="/"><i class="fi-rs-shopping-bag mr-10"></i>Return to shop</a>
+        </div>
+
+        
+
+      </div>
+    </div>
+  </section>
+<% } else { %>
+  
+ 
+
 <section class="mt-50 mb-50">
     <div class="container">
         <div class="row">
@@ -37,14 +60,14 @@
                                 
                                 <% if (element?.Product?.quantity==0) { %>
                                     <td class="text-right" data-title="Cart">
-                                    <button class="btn btn-sm btn-secondary"><i class="fi-rs-headset mr-5"></i>Contact Us</button>
+                                   <a href="/contact"> <button class="btn btn-sm btn-secondary"><i class="fi-rs-headset mr-5" ></i>Contact Us</button> </a>
                                     </td>
                               <%  } else { %>
                                     <td class="text-right" data-title="Cart">
                                     <button class="btn btn-sm" onclick="addtocart('<%= element.Product?._id %>','<%= element?.Product?.quantity %>')"><i class="fi-rs-shopping-bag mr-5"  ></i>Add to cart</button>
                                    </td>
                                <% } %>   
-                                <td class="action" data-title="Remove"><a href="#"><i class="fi-rs-trash" onclick="deleteWishlist('<%= element?._id %>','<%= element?.Product?._id %>',)"></i></a></td>
+                                <td class="action" data-title="Remove"><a ><i class="fi-rs-trash" onclick="deleteWishlist('<%= element?._id %>','<%= element?.Product?._id %>',)"></i></a></td>
                             </tr>
                             <% }); %> 
                         </tbody>
@@ -54,6 +77,7 @@
         </div>
     </div>
 </section>
+<% } %>
 <script>
      function addtocart(proId,stock) {
     console.log('hihihihi');
@@ -133,15 +157,18 @@ function deleteWishlist(cartId, proId) {
 
           success: (response) => {
             if (response.removeProduct) {
-              location.reload()
-            }
-          }
-        })
-        Swal.fire(
+              Swal.fire(
           'Deleted!',
           'Your file has been deleted.',
           'success'
-        )
+        ).then(()=>{
+          location.reload()
+        })
+         
+            }
+          }
+        })
+       
       }
     })
   }

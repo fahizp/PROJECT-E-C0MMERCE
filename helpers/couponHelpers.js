@@ -24,13 +24,13 @@ module.exports = {
           description: data.description,
           usageValidity: data.redeemTime,
         };
-        console.log(couponObj);
         let coupon = await db.coupon(couponObj);
 
         await coupon.save();
         resolve({ status: true });
       } catch (error) {
         console.log(error);
+        reject({ error: "Unauthorized Action" });
       }
     });
   },
@@ -40,7 +40,6 @@ module.exports = {
     return new Promise((resolve, reject) => {
       try {
         db.coupon.findOne({ coupon: coupon }).then(async (response) => {
-          console.log("res=>", response);
           if (response) {
             let couponExist = await db.user.findOne({
               _id: user,
@@ -61,7 +60,6 @@ module.exports = {
                   }
                 )
                 .then((e) => {
-                  console.log(e);
                   resolve({ status: true });
                 });
             } else {
@@ -73,36 +71,38 @@ module.exports = {
         });
       } catch (err) {
         console.log(err);
+        reject({ error: "Unauthorized Action" });
       }
     });
   },
   couponChecked: (data, userId) => {
     return new Promise(async (resolve, reject) => {
-      let purchased = await db.user.aggregate([
-        {
-          $match: { _id: userId },
-        },
-        {
-          $unwind: "$coupon",
-        },
-        {
-          $match: {
-            $and: [
-              {
-                "coupon.name": data,
-                "coupon.purchased": false,
-              },
-            ],
+      try {
+        let purchased = await db.user.aggregate([
+          {
+            $match: { _id: userId },
           },
-        },
-      ]);
-      console.log(purchased.length);
-      if (!purchased.length) {
-        console.log("true");
-        resolve({ purchased: true });
-      } else {
-        console.log("false");
-        resolve({ purchased: false });
+          {
+            $unwind: "$coupon",
+          },
+          {
+            $match: {
+              $and: [
+                {
+                  "coupon.name": data,
+                  "coupon.purchased": false,
+                },
+              ],
+            },
+          },
+        ]);
+        if (!purchased.length) {
+          resolve({ purchased: true });
+        } else {
+          resolve({ purchased: false });
+        }
+      } catch (error) {
+        reject({ error: "Unauthorized Action" });
       }
     });
   },
@@ -111,9 +111,11 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       try {
         let couponData = await db.coupon.findOne({ coupon: data });
-        console.log(couponData);
         if (couponData) {
-          if ( new Date(couponData.validityTill) - new Date() > 0 && couponData.usageValidity > 0 ) {
+          if (
+            new Date(couponData.validityTill) - new Date() > 0 &&
+            couponData.usageValidity > 0
+          ) {
             let amountValid = couponData.amountValidity.split("-");
             if (couponData.discountType == "Amount") {
               if (total >= amountValid[0] && total <= amountValid[1]) {
@@ -121,25 +123,25 @@ module.exports = {
                 let finalAmount = Math.floor(total - couponData.amount);
                 resolve({ finalAmount, discountAmount });
               } else {
-                resolve({ couponNotApplicable: true, amountValid })
+                resolve({ couponNotApplicable: true, amountValid });
               }
             } else {
               if (total >= amountValid[0] && total <= amountValid[1]) {
-                let cappedAmount = couponData?.cappedAmount
-                let discountAmount= await ((total * couponData.percentage) / 100)
-                if (discountAmount>cappedAmount) {
-                  discountAmount=cappedAmount
-                  let finalAmount=Math.floor(total-discountAmount)
-                  resolve({ finalAmount, discountAmount })
+                let cappedAmount = couponData?.cappedAmount;
+                let discountAmount = await ((total * couponData.percentage) /
+                  100);
+                if (discountAmount > cappedAmount) {
+                  discountAmount = cappedAmount;
+                  let finalAmount = Math.floor(total - discountAmount);
+                  resolve({ finalAmount, discountAmount });
                 } else {
-                  let finalAmount=Math.floor(total-discountAmount)
-                  discountAmount = Math.floor(discountAmount)
-                  resolve({ finalAmount, discountAmount })
+                  let finalAmount = Math.floor(total - discountAmount);
+                  discountAmount = Math.floor(discountAmount);
+                  resolve({ finalAmount, discountAmount });
                 }
               } else {
-                 resolve({ couponNotApplicable: true, amountValid })
+                resolve({ couponNotApplicable: true, amountValid });
               }
-
             }
           } else {
             resolve({ couponExpired: true });
@@ -147,20 +149,20 @@ module.exports = {
         }
       } catch (error) {
         console.error(error);
+        reject({ error: "Unauthorized Action" });
       }
     });
   },
 
-  deleteCoupon:(copId)=>{
+  deleteCoupon: (copId) => {
     return new Promise(async (resolve, reject) => {
       try {
-        await db.coupon.deleteOne({ _id: copId }).then((e)=>{
-          console.log(e);
-        })
+        await db.coupon.deleteOne({ _id: copId }).then((e) => {});
         resolve();
       } catch (error) {
         console.log(error);
+        reject({ error: "Unauthorized Action" });
       }
     });
-  }
+  },
 };

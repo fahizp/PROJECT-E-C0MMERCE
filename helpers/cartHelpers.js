@@ -27,9 +27,8 @@ module.exports = {
             .then(() => {
               resolve();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => reject({ error: "Unauthorized Action" }));
         } else {
-          console.log("usercart");
           db.cart
             .updateOne(
               { user: user._id },
@@ -42,7 +41,7 @@ module.exports = {
             .then(() => {
               resolve();
             })
-            .catch((err) => console.log(err));
+            .catch((err) => reject({ error: "Unauthorized Action" }));
         }
       } else {
         let cartObj = {
@@ -54,7 +53,7 @@ module.exports = {
           .then(() => {
             resolve();
           })
-          .catch((err) => console.log(err));
+          .catch((err) => reject({ error: "Unauthorized Action" }));
       }
     });
   },
@@ -96,7 +95,7 @@ module.exports = {
         .then((cartItems) => {
           resolve(cartItems);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => reject({ error: "Unauthorized Action" }));
     });
   },
 
@@ -115,7 +114,7 @@ module.exports = {
           }
           resolve(cartCount);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => reject({ error: "Unauthorized Action" }));
     });
   },
 
@@ -127,7 +126,53 @@ module.exports = {
     count = parseInt(details.count);
     quantity = parseInt(details.quantity);
     return new Promise((resolve, reject) => {
-      if (details.count == -1 && details.quantity == 1) {
+      try {
+        if (details.count == -1 && details.quantity == 1) {
+          db.cart
+            .updateOne(
+              { user: user },
+              {
+                $pull: {
+                  cartProducts: { item: id },
+                },
+              }
+            )
+            .then((e) => {
+              resolve({ removeProduct: true });
+            })
+            .catch((err) => {
+              reject({ error: "Unauthorized Action" });
+              console.log(err);
+            });
+        }
+        db.cart
+          .updateOne(
+            { _id: cartId, "cartProducts.item": id },
+            {
+              $inc: {
+                "cartProducts.$.quantity": details.count,
+              },
+            }
+          )
+          .then(() => {
+            resolve({ status: true });
+          })
+          .catch((err) => {
+            reject({ error: "Unauthorized Action" });
+            console.log(err);
+          });
+      } catch (error) {
+        reject({ error: "Unauthorized Action" });
+      }
+    });
+  },
+
+  // Delete Cart Product //
+
+  deleteCartProduct: (data, user) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const id = data.product;
         db.cart
           .updateOne(
             { user: user },
@@ -140,42 +185,10 @@ module.exports = {
           .then((e) => {
             resolve({ removeProduct: true });
           })
-          .catch((err) => console.log(err));
+          .catch((err) => reject({ error: "Unauthorized Action" }));
+      } catch (error) {
+        reject({ error: "Unauthorized Action" });
       }
-      db.cart
-        .updateOne(
-          { _id: cartId, "cartProducts.item": id },
-          {
-            $inc: {
-              "cartProducts.$.quantity": details.count,
-            },
-          }
-        )
-        .then(() => {
-          resolve({ status: true });
-        })
-        .catch((err) => console.log(err));
-    });
-  },
-
-  // Delete Cart Product //
-
-  deleteCartProduct: (data, user) => {
-    return new Promise((resolve, reject) => {
-      const id = data.product;
-      db.cart
-        .updateOne(
-          { user: user },
-          {
-            $pull: {
-              cartProducts: { item: id },
-            },
-          }
-        )
-        .then((e) => {
-          resolve({ removeProduct: true });
-        })
-        .catch((err) => console.log(err));
     });
   },
 
@@ -183,74 +196,76 @@ module.exports = {
 
   getTotalAmount: (userId) => {
     return new Promise(async (resolve, reject) => {
-      db.cart
-        .aggregate([
-          {
-            $match: {
-              user: userId,
+      try {
+        db.cart
+          .aggregate([
+            {
+              $match: {
+                user: userId,
+              },
             },
-          },
-          {
-            $unwind: "$cartProducts",
-          },
-          {
-            $project: {
-              item: "$cartProducts.item",
-              quantity: "$cartProducts.quantity",
+            {
+              $unwind: "$cartProducts",
             },
-          },
-          {
-            $lookup: {
-              from: "products",
-              localField: "item",
-              foreignField: "_id",
-              as: "cartItems",
+            {
+              $project: {
+                item: "$cartProducts.item",
+                quantity: "$cartProducts.quantity",
+              },
             },
-          },
-          {
-            $project: {
-              item: 1,
-              quantity: 1,
-              product: { $arrayElemAt: ["$cartItems", 0] },
+            {
+              $lookup: {
+                from: "products",
+                localField: "item",
+                foreignField: "_id",
+                as: "cartItems",
+              },
             },
-          },
-          {
-            $group: {
-              _id: null,
-              total: { $sum: { $multiply: ["$product.price", "$quantity"] } },
+            {
+              $project: {
+                item: 1,
+                quantity: 1,
+                product: { $arrayElemAt: ["$cartItems", 0] },
+              },
             },
-          },
-        ])
-        .then((total) => {
-          resolve(total[0]?.total);
-        })
-        .catch((err) => console.log(err));
+            {
+              $group: {
+                _id: null,
+                total: { $sum: { $multiply: ["$product.price", "$quantity"] } },
+              },
+            },
+          ])
+          .then((total) => {
+            resolve(total[0]?.total);
+          })
+          .catch((err) => reject({ error: "Unauthorized Action" }));
+      } catch (error) {
+        reject({ error: "Unauthorized Action" });
+      }
     });
   },
 
   checkCartQuantity: async (userId, proId) => {
-    console.log(proId);
     return new Promise(async (resolve, reject) => {
-        let cart = await db.cart.findOne({ user: userId })
+      try {
+        let cart = await db.cart.findOne({ user: userId });
         if (cart) {
-            let cartIndex = cart?.cartProducts?.findIndex(cart => cart.item == proId)
-            if (cartIndex == -1) {
-              console.log('0');
-              let quantity = 0
-              resolve({ status: true, quantity: quantity })
-            } else {
-              console.log('685');
-              
-              let quantity = cart?.cartProducts[cartIndex]?.quantity
-              console.log(quantity);
-              resolve({ status: true, quantity: quantity })
-            }
+          let cartIndex = cart?.cartProducts?.findIndex(
+            (cart) => cart.item == proId
+          );
+          if (cartIndex == -1) {
+            let quantity = 0;
+            resolve({ status: true, quantity: quantity });
           } else {
-          console.log('false');
-            resolve({ status: false })
+            let quantity = cart?.cartProducts[cartIndex]?.quantity;
+            resolve({ status: true, quantity: quantity });
+          }
+        } else {
+          resolve({ status: false });
         }
-
-    })
-
-},
+      } catch (error) {
+        reject({ error: "Unauthorized Action" });
+      }
+    });
+  },
 };

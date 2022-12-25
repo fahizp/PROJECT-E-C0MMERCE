@@ -54,7 +54,12 @@
                             <td><b><%= element.orders.fName  %></b></td>
                             <td><%= element?.orders?.shippingAddress?.email %> </td>
                             <td>₹<%= element.orders.productDetails.productPrice  * element.orders.productDetails.quantity  %></td>
-                            <td><span class="badge rounded-pill alert-warning">Pending</span></td>
+                            <td>  <% if (element.orders.paymentStatus=='PAID') { %>
+                                                        
+                                <span class="badge rounded-pill alert-success text-success">Payment done</span>
+                          <%  } else { %>
+                                <span class="badge rounded-pill alert-warning">Pending</span>
+                           <% } %> </td>
                             <td>03.12.2020</td>
                             <td class="text-end">
                                 <a href="/admin_panel/order_management/details/<%= element?.orders._id  %> " class="btn btn-md rounded font-sm">Detail</a>
@@ -75,16 +80,4 @@
             </div> <!-- table-responsive //end -->
         </div> <!-- card-body end// -->
     </div> <!-- card end// -->
-    <div class="pagination-area mt-15 mb-50">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-start">
-                <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                <li class="page-item"><a class="page-link" href="#">02</a></li>
-                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                <li class="page-item"><a class="page-link dot" href="#">...</a></li>
-                <li class="page-item"><a class="page-link" href="#">16</a></li>
-                <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
-            </ul>
-        </nav>
-    </div>
 </section> <!-- content-main end// -->

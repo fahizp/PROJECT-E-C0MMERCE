@@ -85,35 +85,69 @@ router.get('/order_management',auth.verifyAdmin,adminController.getAdminOrders)
 
 router.get('/order_management/details/:id',auth.verifyAdminAPI,adminController.getAdminOrdersDetailes)
 
+//  UpdateOrder //
 
 router.put('/updateOrder',auth.verifyAdminAPI,adminController.updateOrder)
 
+// chartGraph //
+
 router.get('/chartGraph',auth.verifyAdmin,adminController.chartGraph)
+
+// Coupoun Add //
 
 router.get('/copoun/add_coupon',auth.verifyAdminAPI,adminController.addCoupon)
 
+// Coupoun Generate //
+
 router.get('/coupenManagement/generate_coupon',auth.verifyAdminAPI,adminController.getCouponCode)
+
+// Post Add Coupon
 
 router.post('/couponManagement/add_coupon',auth.verifyAdminAPI,adminController.postAddCoupon)
 
+// Get Coupon //
+
 router.get("/copoun",auth.verifyAdmin, adminController.getCoupon);
 
-// router.delete('/copoun/delete_coupon/:id',adminController.deleteCoupon)
+// Delete Coupon //
 
 router.delete('/coupon/delete_coupon/:id',auth.verifyAdminAPI,adminController.deleteCoupon);
 
-router.get('/salesreport',auth.verifyAdmin,adminController.getSalesReportPage)
+// Banner Management //
 
 router.get('/banner',auth.verifyAdmin,adminController.bannerManagement)
 
+// Add Banner //
+
 router.get('/banner/add_banner',auth.verifyAdmin,adminController.addBannerGet)
+
+// Add Banner Post //
 
 router.post('/banner/add_banner',auth.verifyAdmin,adminController.addBannerPost)
 
+// Banner Disable //
 
 router.get('/banner/disable/:id',auth.verifyAdmin,adminController.disableBanner)
 
+// Banner Enable //
+
 router.get('/banner/enable/:id',auth.verifyAdmin,adminController.enableBanner)
+
+// Get Revenenue Yearly //
+
+router.get('/orderDataAdminYearly',adminController.getrevenueYearly)
+
+// Get Revenenue daily  //
+
+router.get('/orderDataAdminDaily',adminController.getDailydata)
+
+// Get Order Data //
+
+router.get('/orderData',adminController.getOrderdataMontly)
+
+// GenerateExcel  //
+
+router.get('/generateExcel',adminController.getExceldata)
 
 
 module.exports = router;

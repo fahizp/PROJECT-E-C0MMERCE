@@ -1,7 +1,6 @@
 const db = require("../Model/connection");
 
 module.exports = {
-
   //Admin Login
 
   doAdminlogin: (adminData) => {
@@ -18,6 +17,7 @@ module.exports = {
         }
       } catch (error) {
         console.log(error);
+        reject({ error: "Unauthorized Action" });
       }
     });
   },

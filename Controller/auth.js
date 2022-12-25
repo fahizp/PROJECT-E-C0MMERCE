@@ -14,6 +14,7 @@ module.exports = {
                 req.user = null;
             };
         } catch (error) {
+            res.render("user/500Page"); 
             console.log(error);
         }
 
@@ -30,6 +31,7 @@ module.exports = {
             };
             next();
         } catch (error) {
+            res.render("user/500Page"); 
             console.log(error);
         }
     },
@@ -41,6 +43,7 @@ module.exports = {
                 res.redirect('/user_signin');
             }
         } catch (err) {
+            res.render("user/500Page"); 
             console.log(err);
         }
     },
@@ -52,6 +55,7 @@ module.exports = {
                 res.redirect('/admin_panel/admin_login');
             }
         } catch (err) {
+            res.render("user/500Page"); 
             console.log(err);
         }
     },
@@ -63,6 +67,7 @@ module.exports = {
                 next();
             }
         } catch (err) {
+            res.render("user/500Page"); 
             console.log(err);
         }
     },
@@ -74,6 +79,7 @@ module.exports = {
                 next();
             }
         } catch (err) {
+            res.render("user/500Page"); 
             console.log(err);
         }
     },
@@ -87,6 +93,7 @@ module.exports = {
                 res.send({ status: 'error', message: 'Unauthorized Action' });
             }
         } catch (err) {
+            res.render("user/500Page"); 
             console.log(err);
         }
     },
@@ -100,6 +107,7 @@ module.exports = {
                 res.send({ status: 'error', message: 'Unauthorized Action' });
             }
         } catch (err) {
+            res.render("user/500Page"); 
             console.log(err);
         }
     },
@@ -112,6 +120,7 @@ module.exports = {
                 next();
             }
         } catch (err) {
+            res.render("user/500Page"); 
             console.log(err);
         }
     },
