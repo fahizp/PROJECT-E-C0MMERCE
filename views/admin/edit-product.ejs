@@ -6,7 +6,7 @@
         </div>
       </div>
       <% product?.forEach(element => {%>
-      <form action="/admin_panel/products/edit_product/<%= element._id %>" method="POST" enctype="multipart/form-data">
+      <form action="/admin_panel/products/edit_product/<%= element?._id %>" method="POST" enctype="multipart/form-data">
         <div class="col-lg-10">
           <div class="card mb-4">
             <div class="card-header">
@@ -15,22 +15,22 @@
             <div class="card-body">
               <div class="mb-4">
                 <label for="product_name" class="form-label">Product title</label>
-                <input required name="name" type="text" placeholder="Type here" class="form-control" id="product_name" value="<%= element.name %> ">
+                <input required name="name" type="text" placeholder="Type here" class="form-control" id="product_name" value="<%= element?.name %> ">
               </div>
               <div class="mb-4">
                 <label for="product_slug" class="form-label">Slug</label>
-                <input name="brand" type="text" placeholder="Type here" class="form-control" id="product_slug"  value="<%= element.brand %> ">
+                <input name="brand" type="text" placeholder="Type here" class="form-control" id="product_slug"  value="<%= element?.brand %> ">
               </div>
               <div class="mb-4">
                 <label class="form-label">Description</label>
-                <textarea required name="description" placeholder="Type here" class="form-control" rows="8"><%=element.description%></textarea>
+                <textarea required name="description" placeholder="Type here" class="form-control" rows="8"><%=element?.description%></textarea>
               </div>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="mb-4">
                     <label class="form-label">Regular price</label>
                     <div class="row gx-2">
-                      <input required name="price" placeholder="₹" type="number" class="form-control" value="<%= element.price %>">
+                      <input required name="price" placeholder="₹" type="number" class="form-control" value="<%= element?.price %>">
                     </div>
                   </div>
                 </div>
@@ -40,7 +40,7 @@
                   <div class="mb-4">
                     <label class="form-label">Offer price</label>
                     <div class="row gx-2">
-                      <input required name="offerprice" placeholder="₹" type="number" class="form-control" value="<%= element.offerprice %>",
+                      <input required name="offerprice" placeholder="₹" type="number" class="form-control" value="<%= element?.offerprice %>",
                       %>">
                     </div>
                   </div>
@@ -51,7 +51,7 @@
                   <div class="mb-4">
                     <label class="form-label">Quantity</label>
                     <div class="row gx-2">
-                      <input required name="quantity" placeholder="Quantity Type here" type="number" class="form-control" value="<%= element.quantity %>">
+                      <input required name="quantity" placeholder="Quantity Type here" type="number" class="form-control" value="<%= element?.quantity %>">
                     </div>
                   </div>
                 </div>
@@ -66,7 +66,7 @@
             </div>
             <div class="card-body">
               <div class="input-upload">
-                <img src="/productImages/<%= element._id %>0.jpg " id="imgView1" alt="">
+                <img src="/productImages/<%= element?._id %>0.jpg " id="imgView1" alt="">
                 <input name="image1" class="form-control" onchange="viewImage1(event)" type="file">
               </div>
             </div>
@@ -79,7 +79,7 @@
             </div>
             <div class="card-body">
               <div class="input-upload">
-                <img src="/productImages/<%= element._id %>1.jpg " id="imgView2" alt="">
+                <img src="/productImages/<%= element?._id %>1.jpg " id="imgView2" alt="">
                 <input name="image2"  class="form-control"  onchange="viewImage2(event)" type="file">
               </div>
             </div>
@@ -90,7 +90,7 @@
             </div>
             <div class="card-body">
               <div class="input-upload">
-                <img src="/productImages/<%= element._id %>2.jpg " id="imgView3" alt="">
+                <img src="/productImages/<%= element?._id %>2.jpg " id="imgView3" alt="">
                 <input name="image3"  class="form-control"onchange="viewImage3(event)" type="file">
               </div>
             </div>
@@ -101,7 +101,7 @@
             </div>
             <div class="card-body">
               <div class="input-upload">
-                <img src="/productImages/<%= element._id %>3.jpg " id="imgView4" alt="" >
+                <img src="/productImages/<%= element?._id %>3.jpg " id="imgView4" alt="" >
                 <input name="image4"  class="form-control" onchange="viewImage4(event)" type="file">
               </div>
             </div>
@@ -118,7 +118,7 @@
                   <label class="form-label">Category</label>
                   <select name="category" class="form-select">
                     <% category?.forEach(element => { %>
-                    <option><%= element.categories %> </option>
+                    <option><%= element?.categories %> </option>
                     <%  }); %>
                   </select>
                 </div>
@@ -141,16 +141,16 @@
   </section>
   <script>
     function viewImage1(event) {
-      document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+      document.getelementById('imgView1').src = URL.createObjectURL(event.target.files[0])
     }
     function viewImage2(event) {
-      document.getElementById('imgView2').src = URL.createObjectURL(event.target.files[0])
+      document.getelementById('imgView2').src = URL.createObjectURL(event.target.files[0])
     }
     function viewImage3(event) {
-      document.getElementById('imgView3').src = URL.createObjectURL(event.target.files[0])
+      document.getelementById('imgView3').src = URL.createObjectURL(event.target.files[0])
     }
     function viewImage4(event) {
-      document.getElementById('imgView4').src = URL.createObjectURL(event.target.files[0])
+      document.getelementById('imgView4').src = URL.createObjectURL(event.target.files[0])
     }
     
   </script>

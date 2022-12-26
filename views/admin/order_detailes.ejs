@@ -5,7 +5,7 @@
             <p>Details for Order ID: 3453012</p>
         </div>
     </div>
-    <% data.forEach(element => { %>
+    <% data.forEach(element? => { %>
         
     <div class="card" style="margin-bottom: 50px;">
         <header class="card-header">
@@ -17,8 +17,8 @@
                     <small class="text-muted">Order ID: 3453012</small>
                 </div>
                 <div class="col-lg-6 col-md-6 ms-auto text-md-end">
-                    <% if (element.orders.productDetails.status&&element.orders.productDetails.Delivery!='Delivered') { %>
-                    <select class="form-select d-inline-block mb-lg-0 mb-15 mw-200" onchange="deliveryStatus(this,'<%= element.orders._id %>','<%= element.orders.productDetails._id  %>')">
+                    <% if (element?.orders.productDetails.status&&element?.orders.productDetails.Delivery!='Delivered') { %>
+                    <select class="form-select d-inline-block mb-lg-0 mb-15 mw-200" onchange="deliveryStatus(this,'<%= element?.orders._id %>','<%= element?.orders.productDetails._id  %>')">
                         <option>Change status</option>
                         <option>Awaiting payment</option>
                         <option>Confirmed</option>
@@ -26,11 +26,11 @@
                         <option>Delivered</option>
                     </select>
                     
-                        <td ><button class="btn ml-5" style="background-color:rgb(234, 34, 4); border: none; color: #fff;"  onclick="cancelOrder('<%= element.orders.productDetails._id %>','<%=element?.orders._id%>')">Cancel</button></td>
-                  <%  }else if(!element.orders.productDetails.status){ %>
+                        <td ><button class="btn ml-5" style="background-color:rgb(234, 34, 4); border: none; color: #fff;"  onclick="cancelOrder('<%= element?.orders.productDetails._id %>','<%=element?.orders._id%>')">Cancel</button></td>
+                  <%  }else if(!element?.orders.productDetails.status){ %>
                     <td ><button class="btn" style="background-color:rgb(234, 34, 4); border: none; color: #fff;"  disabled>Canceled</button></td>
 
-                <%  } else if(element.orders.productDetails.Delivery=='Product Returned'){ %>
+                <%  } else if(element?.orders.productDetails.Delivery=='Product Returned'){ %>
                     <td ><button class="btn" style="background-color:rgb(234, 34, 4); border: none; color: #fff;"  disabled>Returned</button></td>
 
                 <% }else{ %>
@@ -53,7 +53,7 @@
                         <div class="text">
                             <h6 class="mb-1">Customer</h6>
                             <p class="mb-1">
-                                <%= element.orders.fName  %>  <br> <template class="__cf_email__" data-cfemail="e2838e879aa2879a838f928e87cc818d8f">[email&#160;protected]</template> <br> +91<%= element.orders.mobile%> 
+                                <%= element?.orders.fName  %>  <br> <template class="__cf_email__" data-cfemail="e2838e879aa2879a838f928e87cc818d8f">[email&#160;protected]</template> <br> +91<%= element?.orders.mobile%> 
                             </p>
                             <a href="#">View profile</a>
                         </div>
@@ -67,7 +67,7 @@
                         <div class="text">
                             <h6 class="mb-1">Order info</h6>
                             <p class="mb-1">
-                                Shipping: Fargo express <br> Pay method: <%= element.orders.paymentMethod  %>  <br> Status: <%= element.orders.productDetails.Delivery  %>
+                                Shipping: Fargo express <br> Pay method: <%= element?.orders.paymentMethod  %>  <br> Status: <%= element?.orders.productDetails.Delivery  %>
                             </p>
                             <a href="#">Download info</a>
                         </div>
@@ -105,21 +105,21 @@
                                     <td>
                                         <a class="itemside" href="#">
                                             <div class="left">
-                                                <img src="/productImages/<%= element.orders.productDetails._id?._id %>0.jpg" width="40" height="40" class="img-xs" alt="Item">
+                                                <img src="/productImages/<%= element?.orders.productDetails._id?._id %>0.jpg" width="40" height="40" class="img-xs" alt="Item">
                                             </div>
-                                            <div class="info"> <%= element.orders.productDetails.productName  %>  </div>
+                                            <div class="info"> <%= element?.orders.productDetails.productName  %>  </div>
                                         </a>
                                     </td>
-                                    <td> ₹ <%= element.orders.productDetails.productPrice  %></td>
-                                    <td><%= element.orders.productDetails.quantity  %> </td>
-                                    <td class="text-end"><%= element.orders.productDetails.productPrice  * element.orders.productDetails.quantity  %>  </td>
+                                    <td> ₹ <%= element?.orders.productDetails.productPrice  %></td>
+                                    <td><%= element?.orders.productDetails.quantity  %> </td>
+                                    <td class="text-end"><%= element?.orders.productDetails.productPrice  * element?.orders.productDetails.quantity  %>  </td>
                                 </tr>
                                 <tr>
                                     <td colspan="4">
                                         <article class="float-end">
                                             <dl class="dlist">
                                                 <dt>Subtotal:</dt>
-                                                <dd>₹<%= element.orders.productDetails.productPrice  * element.orders.productDetails.quantity  %> </dd>
+                                                <dd>₹<%= element?.orders.productDetails.productPrice  * element?.orders.productDetails.quantity  %> </dd>
                                             </dl>
                                             <dl class="dlist">
                                                 <dt>Shipping cost:</dt>
@@ -127,12 +127,12 @@
                                             </dl>
                                             <dl class="dlist">
                                                 <dt>Grand total:</dt>
-                                                <dd> <b class="h5"> ₹<%= element.orders.productDetails.productPrice  * element.orders.productDetails.quantity  %></b> </dd>
+                                                <dd> <b class="h5"> ₹<%= element?.orders.productDetails.productPrice  * element?.orders.productDetails.quantity  %></b> </dd>
                                             </dl>
                                             <dl class="dlist">
                                                 <dt class="text-muted">Status:</dt>
                                                 <dd>
-                                                    <% if (element.orders.paymentStatus=='PAID') { %>
+                                                    <% if (element?.orders.paymentStatus=='PAID') { %>
                                                         
                                                         <span class="badge rounded-pill alert-success text-success">Payment done</span>
                                                   <%  } else { %>

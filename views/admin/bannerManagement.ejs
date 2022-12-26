@@ -61,24 +61,24 @@
                                 <a href="#" class="itemside">
                                     <div class="left">
                                         
-                                        <img src="/bannerImages/<%= element._id %>.jpg " class="img-sm img-thumbnail" alt="Item">
+                                        <img src="/bannerImages/<%= element?._id %>.jpg " class="img-sm img-thumbnail" alt="Item">
                                     </div>
                                    
                                 </a>
                             </td>
-                            <td><%= element.mainBannerTitle %></td>
-                            <td><%= element.mainBannerDescription %> </td>
-                            <td><%= element.mainBannerCategory %></td>
+                            <td><%= element?.mainBannerTitle %></td>
+                            <td><%= element?.mainBannerDescription %> </td>
+                            <td><%= element?.mainBannerCategory %></td>
                         
 
                       
                             <td class="text-center">
-                                <% if(element.checked){ %>
-                                    <a href="/admin_panel/banner/disable/<%= element._id %>" class="btn btn-sm font-sm rounded btn-brand">
+                                <% if(element?.checked){ %>
+                                    <a href="/admin_panel/banner/disable/<%= element?._id %>" class="btn btn-sm font-sm rounded btn-brand">
                                         Disable
                                     </a>
                                     <% }else{ %>
-                                    <a href="/admin_panel/banner/enable/<%= element._id %> " class="btn btn-sm font-sm btn-light rounded">
+                                    <a href="/admin_panel/banner/enable/<%= element?._id %> " class="btn btn-sm font-sm btn-light rounded">
                                         </i> Enable
                                     </a>
                                     <%   } %> 

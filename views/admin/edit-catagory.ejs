@@ -9,19 +9,19 @@
         <div class="row">         
           <div class="col-md-12">
             <% category?.forEach(element => { %>
-            <form action="/admin_panel/category/edit_categories/<%= element._id %> " method="POST">
+            <form action="/admin_panel/category/edit_categories/<%= element?._id %> " method="POST">
               <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
               </p>
               <div class="mb-4">
                 <label for="product_name" class="form-label">Name</label>
-                <input value="<%= element.categories %> " name="categories" type="text"
+                <input value="<%= element?.categories %> " name="categories" type="text"
                   placeholder="Type here" class="form-control" id="cate" required />
                   <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
                   </p>
               </div>
               <div class="mb-4">
                 <label class="form-label">Description</label>
-                  <textarea name="description" placeholder="Type here" class="form-control" id="dis" required> <%= element.description %></textarea>
+                  <textarea name="description" placeholder="Type here" class="form-control" id="dis" required> <%= element?.description %></textarea>
               </div>
               <p class='d-flex justify-content-center' style="color: rgb(400, 90, 32);">
               </p>

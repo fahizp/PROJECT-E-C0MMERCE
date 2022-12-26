@@ -50,30 +50,30 @@
                         <div class="col-lg-4 col-sm-4 col-8 flex-grow-1 col-name">
                             <a class="itemside" href="#">
                                 <div class="left">
-                                    <img src="/productImages/<%= element._id %>0.jpg " class="img-sm img-thumbnail"
+                                    <img src="/productImages/<%= element?._id %>0.jpg " class="img-sm img-thumbnail"
                                         alt="Item">
                                 </div>
                                 <div class="info">
                                     <h6 class="mb-0">
-                                        <%= element.name %>
+                                        <%= element?.name %>
                                     </h6>
                                 </div>
                             </a>
                         </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>
-                                <%= element.category %>
+                                <%= element?.category %>
                             </span> </div>
-                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>₹<%= element.price %></span> </div>
+                        <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>₹<%= element?.price %></span> </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-price"> <span>
-                                <%= element.quantity %>
+                                <%= element?.quantity %>
                             </span> </div>
                         <div class="col-lg-2 col-sm-2 col-4 col-action text-end">
-                            <a href="/admin_panel/products/edit_product/<%= element._id %>"
+                            <a href="/admin_panel/products/edit_product/<%= element?._id %>"
                                 class="btn btn-sm font-sm rounded btn-brand">
                                 <i class="material-icons md-edit"></i> Edit
                             </a>
                             <span class="btn btn-sm font-sm btn-light rounded"
-                                onclick="confirm('/admin_panel/products/delete_product/<%= element._id %> ')">
+                                onclick="confirm('/admin_panel/products/delete_product/<%= element?._id %> ')">
                                 <i class="material-icons md-delete_forever"></i> Delete
                             </span>
                         </div>

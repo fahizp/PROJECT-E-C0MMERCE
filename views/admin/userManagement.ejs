@@ -64,13 +64,13 @@
                                         <img src="/imgs/people/avatar1.jpg" class="img-sm img-avatar" alt="Userpic">
                                     </div>
                                     <div class="info pl-3">
-                                        <h6 class="mb-0 title"><%= element.username %></h6>
-                                        <small class="text-muted">User ID:<%= element._id %></small>
+                                        <h6 class="mb-0 title"><%= element?.username %></h6>
+                                        <small class="text-muted">User ID:<%= element?._id %></small>
                                     </div>
                                 </a>
                             </td>
-                            <td><%= element.email %> </td>
-                            <% if(element.status){ %>
+                            <td><%= element?.email %> </td>
+                            <% if(element?.status){ %>
 
                             <td><span class="badge rounded-pill alert-success">Active</span></td>
 
@@ -78,15 +78,15 @@
                             <td><span class="badge rounded-pill alert-danger">Block</span></td>
                              <%   } %> 
 
-                            <td><%= element.phoneNumber %></td>
-                            <td><%=dataToReadable(element?.createdAt)%> </td>
+                            <td><%= element?.phoneNumber %></td>
+                            <td><%=dataToReadable(element??.createdAt)%> </td>
                             <td class="text-end">
-                                <% if(!element.status){ %>
-                                    <a href="/admin_panel/users/Unblock_user/<%= element._id %>" class="btn btn-sm font-sm rounded btn-brand">
+                                <% if(!element?.status){ %>
+                                    <a href="/admin_panel/users/Unblock_user/<%= element?._id %>" class="btn btn-sm font-sm rounded btn-brand">
                                          Unblock
                                     </a>
                                     <% }else{ %>
-                                    <a href="/admin_panel/users/block_user/<%= element._id %> " class="btn btn-sm font-sm btn-light rounded">
+                                    <a href="/admin_panel/users/block_user/<%= element?._id %> " class="btn btn-sm font-sm btn-light rounded">
                                         </i> Block
                                     </a>
                                     <%   } %> 

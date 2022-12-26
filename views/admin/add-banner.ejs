@@ -53,7 +53,7 @@
                   <label class="form-label">Category</label>
                   <select name="category" class="form-select">
                     <% category?.forEach(element => { %>
-                    <option><%= element.categories %> </option>
+                    <option><%= element?.categories %> </option>
                     <%  }); %>
                   </select>
                 </div>
@@ -76,6 +76,6 @@
   </section>
   <script>
     function viewImage1(event) {
-      document.getElementById('imgView1').src = URL.createObjectURL(event.target.files[0])
+      document.getelementById('imgView1').src = URL.createObjectURL(event.target.files[0])
     }
   </script>

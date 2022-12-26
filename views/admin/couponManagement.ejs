@@ -57,19 +57,19 @@
                        
                         
                         <tr>
-                            <td><%= element.coupon %> </td>
-                            <td><%= element.discountType %></td>
-                            <% if (element.amount==0) { %>
-                                <td><%= element.cappedAmount %></td>
+                            <td><%= element?.coupon %> </td>
+                            <td><%= element?.discountType %></td>
+                            <% if (element?.amount==0) { %>
+                                <td><%= element?.cappedAmount %></td>
                            <% } else { %>
-                                <td><%= element.amount %></td>  
+                                <td><%= element?.amount %></td>  
                           <% } %>
                             
-                            <td><%= element.usageValidity %></td>
+                            <td><%= element?.usageValidity %></td>
                             <td><%=dataToReadable(element?.validityTill)%> </td>
                             <td>
                                 <span class="btn btn-sm font-sm btn-light rounded"
-                                onclick="deletecoupon('<%= element._id %> ')">
+                                onclick="deletecoupon('<%= element?._id %> ')">
                                 <i class="material-icons md-delete_forever"></i> Delete
                             </span>
                             </td>

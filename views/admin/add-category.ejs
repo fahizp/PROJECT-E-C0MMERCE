@@ -65,11 +65,11 @@
                                             <%= element.description %>
                                         </td>
                                         <td class="text-center">
-                                            <a href="/admin_panel/category/edit_categories/<%= element._id %> "
+                                            <a href="/admin_panel/category/edit_categories/<%= element?._id %> "
                                                 class="btn btn-sm font-sm rounded btn-brand">
                                                 <i class="material-icons md-edit"></i> Edit
                                             </a>
-                                            <a href="/admin_panel/category/delete_categories/<%= element._id %> "
+                                            <a href="/admin_panel/category/delete_categories/<%= element?._id %> "
                                                 class="btn btn-sm font-sm btn-light rounded">
                                                 <i class="material-icons md-delete_forever"></i> Delete
                                             </a>

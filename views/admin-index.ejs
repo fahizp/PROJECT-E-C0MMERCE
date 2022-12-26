@@ -4,7 +4,7 @@
 } %>
 
 
-<% let year= yearlyData[0].totalCount %>
+<% let year= yearlyData[0]?.totalCount %>
 <section class="content-main">
   <div class="content-header">
     <div>
@@ -35,7 +35,7 @@
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-success-light"><i class="text-success material-icons md-local_shipping"></i></span>
           <div class="text">
-            <h6 class="mb-1 card-title">Orders</h6> <span><%= count[0].count %></span>
+            <h6 class="mb-1 card-title">Orders</h6> <span><%= count[0]?.count %></span>
             <span class="text-sm">
               Excluding orders in transit
             </span>
@@ -48,7 +48,7 @@
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-warning-light"><i class="text-warning material-icons md-qr_code"></i></span>
           <div class="text">
-            <h6 class="mb-1 card-title">Products</h6> <span><%= products.length %></span>
+            <h6 class="mb-1 card-title">Products</h6> <span><%= products?.length %></span>
             <span class="text-sm">
               In <%= category.length %> Categories
             </span>
@@ -118,9 +118,9 @@
               <tr  style="border-bottom: 1px rgba(222, 226, 230, 0.7) solid ;">
              
                 <td><a  class="fw-bold"><%=index+1%></a> </td>
-                <td><%=element._id%></td>
+                <td><%=element.?_id%></td>
                 <td>
-                  Rs <%=element.totalCount%>
+                  Rs <%=element.?totalCount%>
                 </td>
                 <td>
                   <%=element.orders%>
@@ -159,12 +159,12 @@
               <tr style="border-bottom: 1px rgba(222, 226, 230, 0.7) solid ;">
              
                 <td><a  class="fw-bold" ><%=index%></a> </td>
-                <td><%= element.totalOrder?element.totalOrder:0%></td>
+                <td><%= element.totalOrder?element?.totalOrder:0%></td>
                 <td>
-                  <%= element.orders%>
+                  <%= element?.orders%>
                 </td>
                 <td>
-                  Rs <%= element.total%>
+                  Rs <%= element?.total%>
                 </td>
               </tr>
               <% });%>
@@ -198,12 +198,12 @@
               <tr  style="border-bottom: 1px rgba(222, 226, 230, 0.7) solid ;">
              
                 <td><a  class="fw-bold"><%=index+1%></a> </td>
-                <td><%=element._id%></td>
+                <td><%=element?._id%></td>
                 <td>
-                  Rs <%=element.totalCount%>
+                  Rs <%=element?.totalCount%>
                 </td>
                 <td>
-                  <%=element.orders%>
+                  <%=element?.orders%>
                 </td>
               </tr>
               <% });%>
@@ -237,7 +237,6 @@
 <script>
   var doc = new jsPDF()
   function generatePdfMonth() {
-    console.log("hihimoth");
     const dateToRead1 = (month) => {
       // let mm = parseInt(new Date().getMonth())+1
       let months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
