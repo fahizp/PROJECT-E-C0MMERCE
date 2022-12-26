@@ -35,7 +35,7 @@
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-success-light"><i class="text-success material-icons md-local_shipping"></i></span>
           <div class="text">
-            <h6 class="mb-1 card-title">Orders</h6> <span><%= count[0].count %></span>
+            <h6 class="mb-1 card-title">Orders</h6> <span><%= count[0]?.count %></span>
             <span class="text-sm">
               Excluding orders in transit
             </span>
@@ -48,9 +48,9 @@
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-warning-light"><i class="text-warning material-icons md-qr_code"></i></span>
           <div class="text">
-            <h6 class="mb-1 card-title">Products</h6> <span><%= products.length %></span>
+            <h6 class="mb-1 card-title">Products</h6> <span><%= products?.length %></span>
             <span class="text-sm">
-              In <%= category.length %> Categories
+              In <%= category?.length %> Categories
             </span>
           </div>
         </article>
@@ -61,7 +61,7 @@
         <article class="icontext">
           <span class="icon icon-sm rounded-circle bg-info-light"><i class="text-info material-icons md-shopping_basket"></i></span>
           <div class="text">
-            <h6 class="mb-1 card-title">Monthly Earning</h6> <span>₹<%= priceData?pricetoReadable(priceData.total):0 %></span>
+            <h6 class="mb-1 card-title">Monthly Earning</h6> <span>₹<%= priceData?pricetoReadable(priceData?.total):0 %></span>
             <span class="text-sm">
               Based in your local time.
             </span>
@@ -114,7 +114,7 @@
               </tr>
             </thead>
             <tbody>
-              <% yearlyData.forEach((element,index )=> { %>
+              <% yearlyData?.forEach((element,index )=> { %>
               <tr  style="border-bottom: 1px rgba(222, 226, 230, 0.7) solid ;">
              
                 <td><a  class="fw-bold"><%=index+1%></a> </td>
@@ -155,11 +155,11 @@
               </tr>
             </thead>
             <tbody>
-              <% price.arr.forEach((element,index )=> { %>
+              <% price.arr?.forEach((element,index )=> { %>
               <tr style="border-bottom: 1px rgba(222, 226, 230, 0.7) solid ;">
              
                 <td><a  class="fw-bold" ><%=index%></a> </td>
-                <td><%= element.totalOrder?element?.totalOrder:0%></td>
+                <td><%= element?.totalOrder?element?.totalOrder:0%></td>
                 <td>
                   <%= element?.orders%>
                 </td>
