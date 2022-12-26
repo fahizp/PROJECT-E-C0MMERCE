@@ -188,9 +188,6 @@
             flag = 2;
         } else if (passwordval.length < 8) {
             error4.innerText = "Must be minimum 8 characters"
-        } else if (!passwordval.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)) {
-            error4.innerText = "Password should contain atleast one letter and one number"
-            flag = 2;
         }
 
 
