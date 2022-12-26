@@ -12,7 +12,7 @@ const bannerHelpers = require("../helpers/bannerHelpers");
 const reportHelpers = require("../helpers/reportHelpers");
 const voucher_codes = require("voucher-code-generator");
 const { response } = require("../app");
-const XLSX = require("xlsx");
+// const XLSX = require("xlsx");
 
 module.exports = {
   //Admin IndexPage
@@ -692,45 +692,45 @@ module.exports = {
     }
   },
 
-  getExceldata: (req, res) => {
-    try {
-      let year = new Date().getFullYear();
-      reportHelpers
-        .getRevenuebyMonth1(year)
-        .then(async (response) => {
-          const Report = [];
+  // getExceldata: (req, res) => {
+  //   try {
+  //     let year = new Date().getFullYear();
+  //     reportHelpers
+  //       .getRevenuebyMonth1(year)
+  //       .then(async (response) => {
+  //         const Report = [];
 
-          if (response?.length) {
-            response.forEach((e) => {
-              const data = {};
-              data["Month"] = e._id;
-              data["Orders"] = e.orders;
-              data["Revenue"] = e.totalCount;
-              data["Quantity"] = e.totalQuantity;
-              Report.push(data);
-            });
-          }
+  //         if (response?.length) {
+  //           response.forEach((e) => {
+  //             const data = {};
+  //             data["Month"] = e._id;
+  //             data["Orders"] = e.orders;
+  //             data["Revenue"] = e.totalCount;
+  //             data["Quantity"] = e.totalQuantity;
+  //             Report.push(data);
+  //           });
+  //         }
 
-          const workSheet = await XLSX.utils.json_to_sheet(Report);
+  //         const workSheet = await XLSX.utils.json_to_sheet(Report);
 
-          const workBook = await XLSX.utils.book_new();
+  //         const workBook = await XLSX.utils.book_new();
 
-          XLSX.utils.book_append_sheet(workBook, workSheet, "Report");
+  //         XLSX.utils.book_append_sheet(workBook, workSheet, "Report");
 
-          XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
+  //         XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
 
-          XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+  //         XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
 
-          XLSX.writeFile(workBook, "Montly_Data.xlsx");
-        })
-        .catch((err) => {
-          res.render("user/500Page");
-          console.log(err);
-        });
-      res.send({ status: true });
-    } catch (error) {
-      console.log(error);
-      res.render("user/500Page");
-    }
-  },
+  //         XLSX.writeFile(workBook, "Montly_Data.xlsx");
+  //       })
+  //       .catch((err) => {
+  //         res.render("user/500Page");
+  //         console.log(err);
+  //       });
+  //     res.send({ status: true });
+  //   } catch (error) {
+  //     console.log(error);
+  //     res.render("user/500Page");
+  //   }
+  // },
 };

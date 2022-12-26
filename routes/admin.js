@@ -147,7 +147,7 @@ router.get('/orderData',adminController.getOrderdataMontly)
 
 // GenerateExcel  //
 
-router.get('/generateExcel',adminController.getExceldata)
+// router.get('/generateExcel',adminController.getExceldata)
 
 
 module.exports = router;
