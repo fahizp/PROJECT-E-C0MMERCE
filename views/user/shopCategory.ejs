@@ -1,0 +1,131 @@
+
+<main class="main">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="/" rel="nofollow">Home</a>
+                <span></span> Shop
+            </div>
+        </div>
+    </div>
+    <section class="mt-50 mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop-product-fillter">
+                        <div class="totall-product">
+                            <p> We found <strong class="text-brand"><%= product.length %> </strong> items for you!</p>
+                        </div>
+                    </div>
+                   
+                    <div class="row product-grid-3">
+                        <% product?.forEach(element => { %>
+                                
+                         
+                        <div class="col-lg-3 col-md-4">
+                            <div class="product-cart-wrap mb-30">
+                                <div class="product-img-action-wrap">
+                                    <div class="product-img product-img-zoom">
+                                        <a href="shop-product-right.html">
+                                            <img class="default-img" src="/productImages/<%= element._id %>0.jpg" alt="">
+                                            <img class="hover-img" src="/productImages/<%= element._id %>1.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="product-action-1">
+                                        
+                                        <a aria-label="Add To Wishlist" class="action-btn hover-up"onclick="addToWishlist('<%= element.id %>')"><i class="fi-rs-heart"></i></a>
+                                        
+                                    </div>
+                                </div>
+                                <div class="product-content-wrap">
+                                    <div class="product-category">
+                                        <a ><%= element.category %></a>
+                                    </div>
+                                    <h2><a ><%= element.name %></a></h2>
+                                    <div class="rating-result" title="90%">
+                                       
+                                    </div>
+                                    <div class="product-price">
+                                        <span>₹<%= element.offerprice %> </span>
+                                        <span class="old-price">₹<%= element.price %></span>
+                                    </div>
+                                    <div class="product-action-1 show">
+                                        <a aria-label="Add To Cart" class="action-btn hover-up" onclick="addtocart('<%= element.id %>','<%=element.quantity %>')"><i class="fi-rs-shopping-bag-add"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <%  }); %>                         
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    function addtocart(proId, stock) {
+        $.ajax({
+            url: '/check-cart-quantity/' + proId,
+            method: 'get',
+            success: (response) => {
+                console.log(response);
+                if (response.status) {
+                    if (stock - response.quantity <= 0) {
+                        toastOutOfStock()
+                    } else {
+                        $.ajax({
+                            url: '/addtocart/' + proId,
+                            method: 'get',
+                            success: (response) => {
+                                if (response.status) {
+
+                                    let count = $('#cart-count').html()
+                                    count = parseInt(count) + 1
+                                    $('#cart-count').html(count)
+                                    toast()
+                                }
+                            }
+                        })
+                    }
+                } else if (response.status == false && stock == 0) {
+                    toastOutOfStock()
+                } else {
+                    $.ajax({
+                        url: '/addtocart/' + proId,
+                        method: 'get',
+                        success: (response) => {
+                            if (response.status) {
+
+                                let count = $('#cart-count').html()
+                                count = parseInt(count) + 1
+                                $('#cart-count').html(count)
+                                toast()
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    function addToWishlist(proId) {
+    $.ajax({
+      url: '/addtoWishlist/' + proId,
+      method: 'get',
+      success: (response) => {
+        if (response.status) {
+          let count = $('#wishlist-count').html()
+          count = parseInt(count) + 1
+          $('#wishlist-count').html(count)
+          toast2()
+
+
+
+        }
+      }
+    })
+  }
+
+
+</script>

@@ -9,6 +9,7 @@ const otp = require("../helpers/otpHelpers");
 const cartHelpers = require("../helpers/cartHelpers");
 const chartHelpers = require("../helpers/chartHelpers");
 const orderHelpers = require("../helpers/orderHelpers");
+const bannerHelpers = require("../helpers/bannerHelpers");
 const client = require("twilio")(otp.accoundSid, otp.authToken);
 const { Convert } = require("easy-currencies");
 
@@ -34,6 +35,7 @@ module.exports = {
       let user = req?.session?.user;
       let cartCount = await cartHelpers?.getCartCound(user);
       let wishlistCount = await userHelpers?.getwishlistCound(user);
+      let banner = await db.banner.find({})
       let wishlistProducts = await userHelpers?.getwishlistProducts(
         req?.session?.user?._id
       );
@@ -47,6 +49,7 @@ module.exports = {
             cartCount,
             wishlistCount,
             wishlistProducts,
+            banner,
           });
         })
         .catch((err) => {
@@ -918,4 +921,23 @@ module.exports = {
       res.render("user/500Page");
     }
   },
+
+  getBannerShop:async(req,res)=>{
+    try {
+      let user = req.session.user;
+    let cat=  req.query.category
+    let wishlistCount = await userHelpers?.getwishlistCound(user);
+    let cartCount = await cartHelpers.getCartCound(user);
+    userHelpers.getBannerShop(cat).then((product)=>{
+      res.render("user/shopCategory", {
+        wishlistCount,
+        product,
+        cartCount,
+        user,
+      })
+    })
+    } catch (error) {
+      
+    }
+  }
 };

@@ -323,4 +323,21 @@ module.exports = {
       
     });
   },
+
+  getBannerShop:(category)=>{
+    return new Promise((resolve, reject) => {
+      try {
+        db.products.aggregate([
+          {
+            $match:{category:category}
+          }
+        ]).then((res)=>{
+          resolve(res)
+        })
+        
+      } catch (error) {
+        reject({ error: "Unauthorized Action" });
+      }
+    })
+  }
 };

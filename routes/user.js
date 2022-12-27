@@ -179,6 +179,10 @@ router.delete('/deleteWishlistItems',auth.verifyUserAPI ,userController.deleteWi
 
 router.get('/getProductData',userController.getProductData)
 
+// get Banner Shop  //
+
+router.get('/shop_banner',userController.getBannerShop)
+
 
 
 

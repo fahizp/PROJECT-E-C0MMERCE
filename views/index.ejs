@@ -1,4 +1,5 @@
 <main class="main">
+  <% banner.forEach(element => { %>
   <section class="home-slider position-relative pt-50">
     <div class="hero-slider-1 dot-style-1 dot-style-1-position-1">
       <div class="single-hero-slider single-animation-wrap">
@@ -10,7 +11,7 @@
                 <h2 class="animated fw-900">Supper value deals</h2>
                 <h1 class="animated fw-900 text-brand">On all products</h1>
                 <p class="animated">Save more with coupons & up to 70% off</p>
-                <a class="animated btn btn-brush btn-brush-3" href="shop-product-right.html"> Shop Now </a>
+                <a class="animated btn btn-brush btn-brush-3" href="/shop"> Shop Now </a>
               </div>
             </div>
             <div class="col-lg-7 col-md-6">
@@ -30,7 +31,7 @@
                 <h2 class="animated fw-900">Fashion Trending</h2>
                 <h1 class="animated fw-900 text-7">Great Collection</h1>
                 <p class="animated">Save more with coupons & up to 20% off</p>
-                <a class="animated btn btn-brush btn-brush-2" href="shop-product-right.html"> Discover Now </a>
+                <a class="animated btn btn-brush btn-brush-2" href="/shop"> Discover Now </a>
               </div>
             </div>
             <div class="col-lg-7 col-md-6">
@@ -50,7 +51,7 @@
                 <h2 class="animated fw-900">Big Deals From</h2>
                 <h1 class="animated fw-900 text-8">Manufacturer</h1>
                 <p class="animated">Clothing, Shoes, Bags, Wallets...</p>
-                <a class="animated btn btn-brush btn-brush-1" href="shop-product-right.html"> Shop Now </a>
+                <a class="animated btn btn-brush btn-brush-1" href="/shop_banner?category=<%= element?.mainBannerCategory %> "> Shop Now </a>
               </div>
             </div>
             <div class="col-lg-7 col-md-6">
@@ -64,6 +65,7 @@
     </div>
     <div class="slider-arrow hero-slider-1-arrow"></div>
   </section>
+  <% }); %> 
   <section class="product-tabs section-padding position-relative wow fadeIn animated">
     <div class="bg-square"></div>
     <div class="container">
