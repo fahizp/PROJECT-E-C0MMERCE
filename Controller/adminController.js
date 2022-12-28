@@ -139,6 +139,7 @@ module.exports = {
           console.log(err);
         });
     } catch (error) {
+      console.log(error);
       res.render("user/500Page");
     }
   },

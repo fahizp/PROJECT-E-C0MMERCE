@@ -98,7 +98,7 @@ router.get('/my-account/address',auth.verifyUserAPI ,userController.addressGet)
 
 router.post('/verify-payment',auth.verifyUserAPI ,userController.verifypayment)
 
-// Papal Order //
+// Papal Order post //
 
 
 router.post('/create-order',auth.verifyUserAPI ,userController.paypalOrder)
