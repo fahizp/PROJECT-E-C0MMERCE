@@ -147,7 +147,7 @@ module.exports = {
   // Get Product
 
   getProducts: (req, res) => {
-    try {
+    try {git 
       productHelpers
         .getAllproduct(req.query.page, req.query.limit)
         .then((response) => {
