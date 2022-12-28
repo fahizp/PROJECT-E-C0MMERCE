@@ -147,7 +147,7 @@ module.exports = {
   // Get Product
 
   getProducts: (req, res) => {
-    try {git 
+    try { 
       productHelpers
         .getAllproduct(req.query.page, req.query.limit)
         .then((response) => {
@@ -159,6 +159,7 @@ module.exports = {
           });
         })
         .catch((err) => {
+          console.log("potti");
           res.render("user/500Page");
           console.log(err);
         });

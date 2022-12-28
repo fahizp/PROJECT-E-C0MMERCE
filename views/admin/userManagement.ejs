@@ -79,7 +79,7 @@
                              <%   } %> 
 
                             <td><%= element?.phoneNumber %></td>
-                            <td><%=dataToReadable(element??.createdAt)%> </td>
+                            <td><%=dataToReadable(element?.createdAt)%> </td>
                             <td class="text-end">
                                 <% if(!element?.status){ %>
                                     <a href="/admin_panel/users/Unblock_user/<%= element?._id %>" class="btn btn-sm font-sm rounded btn-brand">
