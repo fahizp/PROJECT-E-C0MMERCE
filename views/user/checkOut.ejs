@@ -185,7 +185,7 @@
                                             </tr>
                                             <tr>
                                                 <th>Coupon Discount</th>
-                                                <td id="discPrice" colspan="2">Rs 0
+                                                <td id="discPrice" colspan="2">₹ 0
                                                 </td>
                                             </tr>
                                             <tr>
@@ -664,7 +664,7 @@
                     }
                     console.log(response);
                     if (response.finalAmount) {
-                      document.getElementById('totalCartPrice').innerText = "Rs " + response.finalAmount
+                      document.getElementById('totalCartPrice').innerText = "₹ " + response.finalAmount
                       let errorCoupon = document.getElementById('errorCoupon')
                       errorCoupon.innerText = "Coupen applied successfully."
                       errorCoupon.style.color = 'rgb(53,200,0) '

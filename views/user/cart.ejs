@@ -120,6 +120,7 @@
       beforeSend: () => {
         if (count == -1 && input.value == 1) {
           return confirm("do u want to delete")
+          location.reload()
         }
       },
       success: (response) => {
