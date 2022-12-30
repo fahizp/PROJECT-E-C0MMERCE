@@ -440,7 +440,7 @@ module.exports = {
   getAdminOrders: (req, res) => {
     try {
       orderHelpers
-        .getAdminOrders(req.session.user._id)
+        .getAdminOrders()
         .then((data) => {
           res.render("admin/order_management", {
             data,

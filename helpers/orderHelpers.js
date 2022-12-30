@@ -273,7 +273,7 @@ module.exports = {
     });
   },
 
-  getAdminOrders: (userId) => {
+  getAdminOrders: () => {
     return new Promise((resolve, reject) => {
       try {
         db.order
