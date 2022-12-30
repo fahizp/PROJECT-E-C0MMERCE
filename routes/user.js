@@ -110,8 +110,7 @@ router.get('/paypal-success',auth.verifyUserAPI ,userController.paypalSuccess)
 // Check Cart Quantity  //
 
 router.get('/check-cart-quantity/:id',auth.verifyUserAPI ,userController.checkCartQuantity)
-
-// Shop  //
+ //
 
 router.get('/shop',userController.shop)
 
